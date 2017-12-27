@@ -2,30 +2,30 @@
 
 namespace Etosha.Server.ActionHandlers.Base
 {
-    internal abstract class AbstractActionHandler
-    {
-        internal abstract string ActionName { get; }
+	internal abstract class AbstractActionHandler
+	{
+		internal abstract string ActionName { get; }
 
-        protected abstract AbstractActionResult ExecuteInternal(AbstractAction action);
+		protected abstract AbstractActionResult ExecuteInternal(AbstractAction action);
 
-        internal AbstractActionResult Execute(AbstractAction action)
-        {
-            AbstractActionResult actionResult = ExecuteInternal(action);
+		internal AbstractActionResult Execute(AbstractAction action)
+		{
+			AbstractActionResult actionResult = ExecuteInternal(action);
 
-            return actionResult;
-        }
-    }
+			return actionResult;
+		}
+	}
 
-    internal abstract class AbstractActionHandler<TAction, TResult> : AbstractActionHandler where TAction : AbstractAction
-                                                                                            where TResult : AbstractActionResult
-    {
-        internal sealed override string ActionName => typeof(TAction).Name;
+	internal abstract class AbstractActionHandler<TAction, TResult> : AbstractActionHandler where TAction : AbstractAction
+																							where TResult : AbstractActionResult
+	{
+		internal sealed override string ActionName => typeof(TAction).Name;
 
-        protected sealed override AbstractActionResult ExecuteInternal(AbstractAction action)
-        {
-            return ExecuteInternal(action as TAction);
-        }
+		protected sealed override AbstractActionResult ExecuteInternal(AbstractAction action)
+		{
+			return ExecuteInternal(action as TAction);
+		}
 
-        protected abstract TResult ExecuteInternal(TAction action);
-    }
+		protected abstract TResult ExecuteInternal(TAction action);
+	}
 }

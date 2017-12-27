@@ -6,7 +6,7 @@ namespace Etosha.Server.Entities
     {
         public Guid Id { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; internal set; }
 
         public string CreatedBy { get; set; }
 
