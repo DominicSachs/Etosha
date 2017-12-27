@@ -1,15 +1,16 @@
 ﻿using Etosha.Server.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
 namespace Etosha.Server.EntityFramework
 {
-	internal class AppDbContext : DbContext
+	internal class AppDbContext : IdentityDbContext
 	{
 		public AppDbContext() { }
 
-		public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+		public AppDbContext(DbContextOptions options) : base(options) { }
 
 		public DbSet<Advise> Advises { get; set; }
 
