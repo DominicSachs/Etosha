@@ -1,4 +1,4 @@
-﻿using Etosha.Server.Common.Models;
+﻿using Etosha.Server.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

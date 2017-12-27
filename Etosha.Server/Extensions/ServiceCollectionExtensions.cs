@@ -1,5 +1,5 @@
 ﻿using Etosha.Server.Common.Execution;
-using Etosha.Server.Common.Models;
+using Etosha.Server.Entities;
 using Etosha.Server.EntityFramework;
 using Etosha.Server.Execution;
 using Microsoft.AspNetCore.Identity;
