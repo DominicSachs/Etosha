@@ -4,9 +4,9 @@ namespace Etosha.Server.Entities
 {
 	public class Advise : BaseEntity
 	{
-		public string Code { get; set; }
-
 		public string Description { get; set; }
+
+		public States State { get; set; }
 
 		public Guid CustomerId { get; set; }
 

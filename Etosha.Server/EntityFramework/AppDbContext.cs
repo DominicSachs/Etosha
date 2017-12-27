@@ -1,4 +1,6 @@
-﻿using Etosha.Server.Entities;
+﻿using Etosha.Server.Common.Models;
+using Etosha.Server.Entities;
+using Etosha.Server.EntityFramework.TypeMappings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,7 +8,7 @@ using System.Linq;
 
 namespace Etosha.Server.EntityFramework
 {
-	internal class AppDbContext : IdentityDbContext
+	internal class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
 	{
 		public AppDbContext() { }
 
@@ -32,6 +34,15 @@ namespace Etosha.Server.EntityFramework
 			}
 
 			return base.SaveChanges();
+		}
+
+		protected override void OnModelCreating(ModelBuilder builder)
+		{
+			base.OnModelCreating(builder);
+
+			builder.ApplyConfiguration(new AdviseTypeConfiguration());
+			builder.ApplyConfiguration(new AppUserTypeConfiguration());
+			builder.ApplyConfiguration(new AppRoleTypeConfiguration());
 		}
 	}
 }

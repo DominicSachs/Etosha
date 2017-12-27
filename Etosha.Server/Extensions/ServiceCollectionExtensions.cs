@@ -17,17 +17,12 @@ namespace Etosha.Server.Extensions
 
 		public static void AddIdentityFramework(this IServiceCollection services, PasswordOptions options)
 		{
-			services.AddIdentityCore<AppUser>(setup =>
+			services.AddIdentity<AppUser, AppRole>(setup =>
 			{
 				setup.Password = options;
 			})
 			.AddEntityFrameworkStores<AppDbContext>()
-			.AddRoles<AppRole>()
-			// It seems there is no AddDefaultTokenProviders in NetStandard 2.0 at the moment
-			//.AddTokenProvider<DataProtectorTokenProvider>(TokenOptions.DefaultProvider)
-			.AddTokenProvider<EmailTokenProvider<AppUser>>(TokenOptions.DefaultEmailProvider)
-			.AddTokenProvider<PhoneNumberTokenProvider<AppUser>>(TokenOptions.DefaultPhoneProvider)
-			.AddTokenProvider<AuthenticatorTokenProvider<AppUser>>(TokenOptions.DefaultAuthenticatorProvider);
+			.AddDefaultTokenProviders();
 		}
 
 		public static void AddActionExecutor(this IServiceCollection services)

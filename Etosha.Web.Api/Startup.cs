@@ -2,6 +2,7 @@ using Etosha.Server.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
@@ -22,7 +23,7 @@ namespace Etosha.Web.Api
       var corsBuilder = new CorsPolicyBuilder();
       corsBuilder.AllowAnyHeader();
       corsBuilder.AllowAnyMethod();
-      corsBuilder.WithOrigins("http://localhost:4200"); // for a specific url. Don't add a forward slash on the end!
+      corsBuilder.WithOrigins("http://localhost:4200");
       corsBuilder.AllowCredentials();
 
       services.AddMvcCore()
@@ -34,6 +35,7 @@ namespace Etosha.Web.Api
 
       services.AddActionExecutor();
       services.AddEntityFramework(Configuration["ConnectionStrings:DefaultConnection"]);
+      services.AddIdentityFramework(Configuration.GetSection("PasswordOptions").Get<PasswordOptions>());
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
