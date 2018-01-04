@@ -1,5 +1,4 @@
-﻿using Etosha.Server.Common.Models;
-using Etosha.Server.Entities;
+﻿using Etosha.Server.Entities;
 using Etosha.Server.EntityFramework.TypeMappings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
