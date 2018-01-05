@@ -33,11 +33,10 @@ namespace Etosha.Server.Execution
 			}
 		}
 
-		public TResult Execute<TAction, TResult>(TAction action)
-            where TAction : AbstractAction
-		    where TResult : AbstractActionResult
-		{
-			var handler = _actionHandlers.Find(action) as AbstractActionHandler<TAction, TResult>;
+	    public TResult Execute<TResult>(AbstractAction<TResult> action)
+	        where TResult : AbstractActionResult
+        {
+			var handler = _actionHandlers.Find(action) as AbstractActionHandler<TResult>;
 
 			_logger.LogDebug($"Start executing handler for action {action.Name}");
 

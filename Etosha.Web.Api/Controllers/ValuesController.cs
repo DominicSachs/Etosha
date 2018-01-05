@@ -24,7 +24,7 @@ namespace Etosha.Web.Api.Controllers
       _logger.LogInformation("Getting items");
 
       var action = new ListUserAction(new ActionCallerContext());
-      var result = _actionExecutor.Execute<ListUserAction, ListUserActionResult>(action);
+      var result = _actionExecutor.Execute(action);
 
       return result.Users;
     }

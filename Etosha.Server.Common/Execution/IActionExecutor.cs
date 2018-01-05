@@ -4,8 +4,7 @@ namespace Etosha.Server.Common.Execution
 {
     public interface IActionExecutor
     {
-        TResult Execute<TAction, TResult>(TAction action)
-            where TAction : AbstractAction
+        TResult Execute<TResult>(AbstractAction<TResult> action)
             where TResult : AbstractActionResult;
     }
 }
