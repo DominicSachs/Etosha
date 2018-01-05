@@ -21,8 +21,11 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 			{
 				context.Users.Add(new AppUser("test", "Sam", "Sample", "sam@sample.com"));
 				context.SaveChanges();
+			}
 
-				var actionHandler = new ListUserActionHandler(new AppDbContext(options));
+			using (var context = new AppDbContext(options))
+			{
+				var actionHandler = new ListUserActionHandler(context);
 				var result = actionHandler.Execute(new ListUserAction(new ActionCallerContext()));
 
 				result.Should().BeOfType<ListUserActionResult>();
