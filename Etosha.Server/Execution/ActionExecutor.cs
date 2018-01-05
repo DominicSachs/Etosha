@@ -33,13 +33,15 @@ namespace Etosha.Server.Execution
 			}
 		}
 
-		public TResult Execute<TResult>(AbstractAction<TResult> action) where TResult : AbstractActionResult
+		public TResult Execute<TAction, TResult>(TAction action)
+            where TAction : AbstractAction
+		    where TResult : AbstractActionResult
 		{
-			var handler = _actionHandlers.Find(action);
+			var handler = _actionHandlers.Find(action) as AbstractActionHandler<TAction, TResult>;
 
 			_logger.LogDebug($"Start executing handler for action {action.Name}");
 
-			var result = handler.Execute(action) as TResult;
+			var result = handler.Execute(action);
 
 			_logger.LogDebug($"End executing handler for action {action.Name} with result {JsonUtils.SerializeObject(result)}");
 

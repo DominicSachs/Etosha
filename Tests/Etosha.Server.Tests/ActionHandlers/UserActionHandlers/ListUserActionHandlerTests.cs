@@ -32,9 +32,8 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
             _context.SaveChanges();
 
             var result = _actionHandler.Execute(new ListUserAction(new ActionCallerContext()));
-
-            result.Should().BeOfType<ListUserActionResult>();
-            ((ListUserActionResult)result).Users.Length.Should().Be(1);
+            
+            result.Users.Length.Should().Be(1);
         }
 
         public void Dispose()

@@ -15,7 +15,7 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 			_context = appDbContext;
 		}
 
-		protected override ListUserActionResult ExecuteInternal(ListUserAction action)
+		internal override ListUserActionResult Execute(ListUserAction action)
 		{
 			var users = from u in _context.Users
 						select new User
