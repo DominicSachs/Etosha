@@ -1,4 +1,5 @@
-﻿using Etosha.Server.Common.Actions.Base;
+﻿using System.Threading.Tasks;
+using Etosha.Server.Common.Actions.Base;
 
 namespace Etosha.Server.ActionHandlers.Base
 {
@@ -10,7 +11,7 @@ namespace Etosha.Server.ActionHandlers.Base
     internal abstract class AbstractActionHandler<TResult> : AbstractActionHandler
         where TResult : AbstractActionResult
     {
-        internal abstract TResult Execute(AbstractAction<TResult> action);
+        internal abstract Task<TResult> Execute(AbstractAction<TResult> action);
     }
 
 	internal abstract class AbstractActionHandler<TAction, TResult> : AbstractActionHandler<TResult>
@@ -19,10 +20,10 @@ namespace Etosha.Server.ActionHandlers.Base
 	{
 		internal sealed override string ActionName => typeof(TAction).Name;
 
-	    internal sealed override TResult Execute(AbstractAction<TResult> action)
+	    internal sealed override Task<TResult> Execute(AbstractAction<TResult> action)
 	    {
 	        return ExecuteInternal(action as TAction);
 	    }
-	    protected abstract TResult ExecuteInternal(TAction action);
+	    protected abstract Task<TResult> ExecuteInternal(TAction action);
 	}
 }

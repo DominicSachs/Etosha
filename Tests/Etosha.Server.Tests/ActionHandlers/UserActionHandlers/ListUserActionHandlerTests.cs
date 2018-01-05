@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Etosha.Server.Common.Actions.UserActions;
 using Etosha.Server.Common.Models;
 using Etosha.Server.Entities;
@@ -26,12 +27,12 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
         }
 
         [Fact]
-        public void Should_Return_A_List_Of_Users()
+        public async Task Should_Return_A_List_Of_Users()
         {
             _context.Users.Add(new AppUser("test", "Sam", "Sample", "sam@sample.com"));
             _context.SaveChanges();
 
-            var result = _actionHandler.Execute(new ListUserAction(new ActionCallerContext()));
+            var result = await _actionHandler.Execute(new ListUserAction(new ActionCallerContext()));
             
             result.Users.Length.Should().Be(1);
         }

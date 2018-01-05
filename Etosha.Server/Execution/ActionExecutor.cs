@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Etosha.Server.Execution
 {
@@ -33,7 +34,7 @@ namespace Etosha.Server.Execution
 			}
 		}
 
-	    public TResult Execute<TResult>(AbstractAction<TResult> action)
+	    public Task<TResult> Execute<TResult>(AbstractAction<TResult> action)
 	        where TResult : AbstractActionResult
         {
 			var handler = _actionHandlers.Find(action) as AbstractActionHandler<TResult>;
