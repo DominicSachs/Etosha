@@ -21,8 +21,8 @@ namespace Etosha.Server.ActionHandlers.Base
 
 	    internal sealed override TResult Execute(AbstractAction<TResult> action)
 	    {
-	        return InternalExecute(action as TAction);
+	        return ExecuteInternal(action as TAction);
 	    }
-	    protected abstract TResult InternalExecute(TAction action);
+	    protected abstract TResult ExecuteInternal(TAction action);
 	}
 }
