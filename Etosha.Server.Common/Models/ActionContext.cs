@@ -1,6 +1,7 @@
 ﻿namespace Etosha.Server.Common.Models
 {
-    public class ActionCallerContext
-    {
-    }
+	public class ActionCallerContext
+	{
+
+	}
 }

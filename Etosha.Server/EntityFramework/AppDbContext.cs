@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Etosha.Server.Tests")]
 
 namespace Etosha.Server.EntityFramework
 {
@@ -11,13 +14,13 @@ namespace Etosha.Server.EntityFramework
 	{
 		public AppDbContext() { }
 
-		public AppDbContext(DbContextOptions options) : base(options) { }
+		public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
 		public DbSet<Advise> Advises { get; set; }
 
 		public override int SaveChanges()
 		{
-			var addedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added);
+			var addedEntries = ChangeTracker.Entries<BaseEntity>().Where(x => x.State == EntityState.Added);
 
 			foreach (var item in addedEntries)
 			{
@@ -25,7 +28,7 @@ namespace Etosha.Server.EntityFramework
 				item.Property(nameof(BaseEntity.ModifiedDate)).CurrentValue = DateTime.Now;
 			}
 
-			var modifiedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified);
+			var modifiedEntries = ChangeTracker.Entries<BaseEntity>().Where(x => x.State == EntityState.Modified);
 
 			foreach (var item in modifiedEntries)
 			{
