@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace Etosha.Web.Api.Controllers
 {
@@ -8,18 +7,18 @@ namespace Etosha.Web.Api.Controllers
   public class AdvisesController : Controller
   {
     [HttpGet("{id}")]
-    public IActionResult GetAdvise(Guid id)
+    public IActionResult GetAdvise(int id)
     {
-      if (id != Guid.Empty)
+      if (id == 0)
       {
-        return Ok(new
-        {
-          Name = "Beratung für Sam Sample",
-          ProductCount = 4
-        });
+        return BadRequest();
       }
 
-      return BadRequest();
+      return Ok(new
+      {
+        Name = "Beratung für Sam Sample",
+        ProductCount = 4
+      });
     }
   }
 }

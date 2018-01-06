@@ -8,8 +8,10 @@ namespace Etosha.Server.Entities
 
 		public States State { get; set; }
 
-		public Guid CustomerId { get; set; }
+		public int CustomerId { get; set; }
 
 		public Customer Customer { get; set; }
+
+		public Guid Code { get; set; }
 	}
 }

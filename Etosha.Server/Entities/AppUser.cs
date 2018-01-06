@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 
 namespace Etosha.Server.Entities
 {
-	public class AppUser : IdentityUser<Guid>
+	public class AppUser : IdentityUser<int>
 	{
 		public AppUser() : this(null) { }
 
@@ -11,7 +10,6 @@ namespace Etosha.Server.Entities
 
 		public AppUser(string userName, string firstName, string lastName, string email) : base(userName)
 		{
-			Id = Guid.NewGuid();
 			FirstName = firstName;
 			LastName = lastName;
 			Email = email;

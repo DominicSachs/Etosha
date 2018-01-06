@@ -12,7 +12,7 @@ using System;
 namespace Etosha.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20171227161921_InitialCreate")]
+    [Migration("20180106214453_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,9 +22,41 @@ namespace Etosha.Server.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Etosha.Server.Common.Models.AppRole", b =>
+            modelBuilder.Entity("Etosha.Server.Entities.Advise", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("Code");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<int>("CustomerId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<int>("State");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Advises");
+                });
+
+            modelBuilder.Entity("Etosha.Server.Entities.AppRole", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
@@ -47,9 +79,9 @@ namespace Etosha.Server.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Etosha.Server.Common.Models.AppUser", b =>
+            modelBuilder.Entity("Etosha.Server.Entities.AppUser", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
@@ -107,39 +139,9 @@ namespace Etosha.Server.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Etosha.Server.Entities.Advise", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<DateTime>("CreationDate");
-
-                    b.Property<Guid>("CustomerId");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<int>("State");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Advises");
-                });
-
             modelBuilder.Entity("Etosha.Server.Entities.Customer", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CreatedBy");
@@ -155,7 +157,7 @@ namespace Etosha.Server.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -164,7 +166,7 @@ namespace Etosha.Server.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<Guid>("RoleId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
 
@@ -173,7 +175,7 @@ namespace Etosha.Server.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -182,7 +184,7 @@ namespace Etosha.Server.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -191,7 +193,7 @@ namespace Etosha.Server.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -199,7 +201,7 @@ namespace Etosha.Server.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -208,11 +210,11 @@ namespace Etosha.Server.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UserId");
 
-                    b.Property<Guid>("RoleId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -221,9 +223,9 @@ namespace Etosha.Server.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -244,46 +246,46 @@ namespace Etosha.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Etosha.Server.Common.Models.AppRole")
+                    b.HasOne("Etosha.Server.Entities.AppRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Etosha.Server.Common.Models.AppUser")
+                    b.HasOne("Etosha.Server.Entities.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Etosha.Server.Common.Models.AppUser")
+                    b.HasOne("Etosha.Server.Entities.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Etosha.Server.Common.Models.AppRole")
+                    b.HasOne("Etosha.Server.Entities.AppRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Etosha.Server.Common.Models.AppUser")
+                    b.HasOne("Etosha.Server.Entities.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Etosha.Server.Common.Models.AppUser")
+                    b.HasOne("Etosha.Server.Entities.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

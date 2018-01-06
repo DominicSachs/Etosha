@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace Etosha.Server.EntityFramework
 {
-	internal class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
+	internal class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
 	{
 		public AppDbContext() { }
 
