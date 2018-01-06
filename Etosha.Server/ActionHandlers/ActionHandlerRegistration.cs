@@ -6,7 +6,7 @@ namespace Etosha.Server.ActionHandlers
 {
 	internal class ActionHandlerRegistration
 	{
-		private Dictionary<string, AbstractActionHandler> _items;
+		private readonly Dictionary<string, AbstractActionHandler> _items;
 
 		internal ActionHandlerRegistration()
 		{
@@ -15,10 +15,7 @@ namespace Etosha.Server.ActionHandlers
 
 		internal AbstractActionHandler Find(AbstractAction action)
 		{
-			AbstractActionHandler result = null;
-
-			_items.TryGetValue(action.Name, out result);
-
+		    _items.TryGetValue(action.Name, out var result);
 			return result;
 		}
 

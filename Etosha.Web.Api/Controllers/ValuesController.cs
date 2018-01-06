@@ -4,6 +4,7 @@ using Etosha.Server.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Etosha.Web.Api.Controllers
 {
@@ -19,12 +20,12 @@ namespace Etosha.Web.Api.Controllers
     }
 
     [HttpGet]
-    public IEnumerable<User> Get()
+    public async Task<IEnumerable<User>> Get()
     {
       _logger.LogInformation("Getting items");
 
       var action = new ListUserAction(new ActionCallerContext());
-      var result = _actionExecutor.Execute(action);
+      var result = await _actionExecutor.Execute(action);
 
       return result.Users;
     }

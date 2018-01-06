@@ -3,6 +3,8 @@ using Etosha.Server.Common.Actions.UserActions;
 using Etosha.Server.Common.Models;
 using Etosha.Server.EntityFramework;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Etosha.Server.ActionHandlers.UserActionHandlers
 {
@@ -15,7 +17,7 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 			_context = appDbContext;
 		}
 
-		protected override ListUserActionResult ExecuteInternal(ListUserAction action)
+		protected override async Task<ListUserActionResult> ExecuteInternal(ListUserAction action)
 		{
 			var users = from u in _context.Users
 						select new User
@@ -27,7 +29,7 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 							UserName = u.UserName
 						};
 
-			return new ListUserActionResult(action, users.ToArray());
+			return new ListUserActionResult(action, await users.ToArrayAsync());
 		}
 	}
 }
