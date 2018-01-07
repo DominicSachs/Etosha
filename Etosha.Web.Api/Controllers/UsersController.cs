@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace Etosha.Web.Api.Controllers
 {
   [Route("api/[controller]")]
-  public class ValuesController : Controller
+  public class UsersController : Controller
   {
-    private readonly ILogger<ValuesController> _logger;
+    private readonly ILogger<UsersController> _logger;
     private readonly IActionExecutor _actionExecutor;
-    public ValuesController(ILogger<ValuesController> logger, IActionExecutor executor)
+    public UsersController(ILogger<UsersController> logger, IActionExecutor executor)
     {
       _logger = logger;
       _actionExecutor = executor;
@@ -32,10 +32,12 @@ namespace Etosha.Web.Api.Controllers
 
     // GET api/values/5
     [HttpGet("{id}")]
-    public string Get(int id)
+    public async Task<User> Get(int id)
     {
-      _logger.LogInformation($"Get item by id: {id}");
-      return "value";
+      var action = new GetUserAction(new ActionCallerContext(), id);
+      var result = await _actionExecutor.Execute(action);
+
+      return result.User;
     }
 
     // POST api/values
