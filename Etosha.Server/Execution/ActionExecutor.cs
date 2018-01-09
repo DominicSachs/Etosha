@@ -29,15 +29,17 @@ namespace Etosha.Server.Execution
 
 				foreach (var type in baseType.Assembly.GetTypes().Where(t => !t.IsAbstract && baseType.IsAssignableFrom(t)))
 				{
-					_actionHandlers.Register((AbstractActionHandler)ActivatorUtilities.CreateInstance(serviceProvider, type));
+					//_actionHandlers.Register((AbstractActionHandler)ActivatorUtilities.CreateInstance(serviceProvider, type));
+					_actionHandlers.Register2((AbstractActionHandler)ActivatorUtilities.CreateInstance(serviceProvider, type));
 				}
 			}
 		}
 
-	    public Task<TResult> Execute<TResult>(AbstractAction<TResult> action)
-	        where TResult : AbstractActionResult
-        {
-			var handler = _actionHandlers.Find(action) as AbstractActionHandler<TResult>;
+		public Task<TResult> Execute<TResult>(AbstractAction<TResult> action)
+			where TResult : AbstractActionResult
+		{
+			//var handler = _actionHandlers.Find(action) as AbstractActionHandler<TResult>;
+			var handler = _actionHandlers.Find(action, _serviceProvider) as AbstractActionHandler<TResult>;
 
 			_logger.LogDebug($"Start executing handler for action {action.Name}");
 
