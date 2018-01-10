@@ -5,6 +5,7 @@
         <th>Nachname</th>
         <th>Benutzername</th>
         <th>Email</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -13,6 +14,10 @@
         <td data-title="Nachname">{{ u.lastName }}</td>
         <td data-title="Benutzername">{{ u.userName }}</td>
         <td data-title="Email">{{ u.email }}</td>
+        <td>
+          <a routerLink="/users/{{u.id}}"><i class="material-icons">edit</i></a>
+          <a href="#"><i class="material-icons">delete</i></a>
+        </td>
       </tr>
     </tbody>
 </table>

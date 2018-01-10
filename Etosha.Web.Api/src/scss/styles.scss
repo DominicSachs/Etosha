@@ -1,1 +1,9 @@
 @import './variables';
+
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid $color-apple;
+}
+  
+.ng-invalid:not(form)  {
+    border-left: 5px solid $color-apple-blossom;
+}
