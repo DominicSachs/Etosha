@@ -1,3 +1,5 @@
+<div>
+<a href="#" routerLink="/users/create"><i class="material-icons">person add</i></a>
 <table class="table table-striped">
     <thead>
       <tr>
@@ -15,9 +17,10 @@
         <td data-title="Benutzername">{{ u.userName }}</td>
         <td data-title="Email">{{ u.email }}</td>
         <td>
-          <a routerLink="/users/{{u.id}}"><i class="material-icons">edit</i></a>
+          <a routerLink="/users/edit/{{u.id}}"><i class="material-icons">edit</i></a>
           <a href="#"><i class="material-icons">delete</i></a>
         </td>
       </tr>
     </tbody>
 </table>
+</div>

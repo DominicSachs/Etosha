@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from './user.service';
 import { User } from './user.model';
@@ -10,12 +10,12 @@ import { User } from './user.model';
   styleUrls: ['./useredit.component.scss']
 })
 export class UserEditComponent implements OnInit, OnDestroy {
-  user: User;
   userForm: FormGroup;
   private routeSubscription: any;
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private formBuilder: FormBuilder) {
+  constructor(private route: ActivatedRoute, private userService: UserService, private formBuilder: FormBuilder, private router: Router) {
     this.userForm = this.formBuilder.group({
+      id: '',
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required]
@@ -24,21 +24,33 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeSubscription = this.route.params.subscribe(params => {
-      let id = +params['id']; // (+) converts string 'id' to a number
-      this.userService.getUser(id)
-        .subscribe(u => {
-          console.log(u);
-          this.userForm.patchValue({
-            firstName: u.firstName,
-            lastName: u.lastName,
-            email: u.email
+      let id = +params['id'];
+      if (id) {
+        this.userService.getUser(id)
+          .subscribe(u => {
+            this.userForm.patchValue({
+              firstName: u.firstName,
+              lastName: u.lastName,
+              email: u.email
+            });
           });
-          this.user = u;
-        });
-   });
+      }
+
+      this.userForm.patchValue({ id: id || 0 });
+    });
   }
 
   ngOnDestroy() {
     this.routeSubscription.unsubscribe();
+  }
+
+  // use object destructing
+  onSubmit({ value, valid }: { value: User, valid: boolean }) {
+    if (valid) {
+      this.userService.saveUser(value)
+        .subscribe(user => {
+          this.router.navigateByUrl('/users');
+        });
+    }
   }
 }
