@@ -1,25 +1,32 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { UsersComponent } from './users.component';
+import { UserService } from './user.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of'
+import { User } from './user.model';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
-  let fixture: ComponentFixture<UsersComponent>;
+  let userService: UserService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ UsersComponent ]
-    })
-    .compileComponents();
-  }));
+  userService = <any>{
+    getUsers: () => Observable.of([])   
+  };
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsersComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new UsersComponent(userService);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should load users on init', () => {
+    const users: User[] = [
+      { id: 1, firstName: 'A', lastName: 'A', userName: 'a@a.com', email: 'a@a.com' },
+      { id: 2, firstName: 'B', lastName: 'B', userName: 'b@b.com', email: 'b@b.com' }
+    ];
+
+    spyOn(userService, 'getUsers').and.returnValue(Observable.of(users));
+
+    component.ngOnInit();
+
+    expect(component.users.length).toBe(2)
+    expect(userService.getUsers).toHaveBeenCalled();
   });
 });
