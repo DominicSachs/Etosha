@@ -1,7 +1,7 @@
 import { UsersComponent } from './users.component';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of'
+import 'rxjs/add/observable/of';
 import { User } from './user.model';
 
 describe('UsersComponent', () => {
@@ -9,7 +9,7 @@ describe('UsersComponent', () => {
   let userService: UserService;
 
   userService = <any>{
-    getUsers: () => Observable.of([])   
+    getUsers: () => Observable.of([])
   };
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('UsersComponent', () => {
 
     component.ngOnInit();
 
-    expect(component.users.length).toBe(2)
+    expect(component.users.length).toBe(2);
     expect(userService.getUsers).toHaveBeenCalled();
   });
 });

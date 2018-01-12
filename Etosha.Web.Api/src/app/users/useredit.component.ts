@@ -5,7 +5,6 @@ import { UserService } from './user.service';
 import { User } from './user.model';
 
 @Component({
-  selector: 'app-useredit',
   templateUrl: './useredit.component.html',
   styleUrls: ['./useredit.component.scss']
 })
@@ -24,7 +23,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeSubscription = this.route.params.subscribe(params => {
-      let id = +params['id'];
+      const id = +params['id'];
       if (id) {
         this.userService.getUser(id)
           .subscribe(u => {

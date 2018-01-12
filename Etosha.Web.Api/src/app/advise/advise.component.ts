@@ -3,7 +3,6 @@ import { AdviseService } from './advise.service';
 import { error } from 'selenium-webdriver';
 
 @Component({
-  selector: 'advise',
   templateUrl: './advise.component.html',
   styleUrls: ['./advise.component.scss']
 })
@@ -17,9 +16,8 @@ export class AdviseComponent implements OnInit {
         data => {
           console.log(data);
        },
-       error => {
-          console.log(error)
+       e => {
+          console.log(e);
        });
   }
-
 }

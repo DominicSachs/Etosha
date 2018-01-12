@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of'
+import 'rxjs/add/observable/of';
 import { environment } from '../../environments/environment';
 import { UserService } from './user.service';
 import { User } from './user.model';
@@ -10,7 +10,7 @@ describe('UserService', () => {
   let service: UserService;
 
   httpClient = <any>{
-    get: _ => Observable.of({})   
+    get: _ => Observable.of({})
   };
 
   beforeEach(() => {

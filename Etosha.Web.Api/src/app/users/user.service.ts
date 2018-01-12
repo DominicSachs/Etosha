@@ -17,7 +17,7 @@ export class UserService {
   }
 
   saveUser(user: User): Observable<User> {
-    if(user.id === 0) {
+    if (user.id === 0) {
       return this.httpClient.post<User>(`${environment.apiEndpoint}/users`, user);
     }
 
