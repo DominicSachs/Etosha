@@ -17,10 +17,10 @@ export class UserService {
   }
 
   saveUser(user: User): Observable<User> {
-    if (user.id === 0) {
-      return this.httpClient.post<User>(`${environment.apiEndpoint}/users`, user);
+    if (user.id) {
+      return this.httpClient.put<User>(`${environment.apiEndpoint}/users/${user.id}`, user);
     }
 
-    return this.httpClient.put<User>(`${environment.apiEndpoint}/users/${user.id}`, user);
+    return this.httpClient.post<User>(`${environment.apiEndpoint}/users`, user);
   }
 }

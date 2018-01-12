@@ -10,7 +10,9 @@ describe('UserService', () => {
   let service: UserService;
 
   httpClient = <any>{
-    get: _ => Observable.of({})
+    get: _ => Observable.of({}),
+    post: _ => Observable.of({}),
+    put: _ => Observable.of({})
   };
 
   beforeEach(() => {
@@ -44,6 +46,27 @@ describe('UserService', () => {
       expect(result.lastName).toBe('A');
       expect(result.userName).toBe('a@a.com');
       expect(result.email).toBe('a@a.com');
+      done();
+    });
+  });
+  
+  it('should post a new user', done => {
+    const user: User = { id: 0, firstName: 'A', lastName: 'A', userName: 'a@a.com', email: 'a@a.com' };
+
+    spyOn(httpClient, 'post').and.returnValue(Observable.of(user));
+
+    service.saveUser(user).subscribe(result => {
+      expect(httpClient.post).toHaveBeenCalledWith(environment.apiEndpoint + '/users', user);
+      done();
+    });
+  });
+  
+  it('should put an existing user', done => {
+    const user: User = { id: 1, firstName: 'A', lastName: 'A', userName: 'a@a.com', email: 'a@a.com' };
+    spyOn(httpClient, 'put').and.returnValue(Observable.of(user));
+
+    service.saveUser(user).subscribe(result => {
+      expect(httpClient.put).toHaveBeenCalledWith(environment.apiEndpoint + '/users/1', user);
       done();
     });
   });
