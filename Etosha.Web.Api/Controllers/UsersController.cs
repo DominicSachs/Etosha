@@ -30,7 +30,6 @@ namespace Etosha.Web.Api.Controllers
       return result.Users;
     }
 
-    // GET api/values/5
     [HttpGet("{id}")]
     public async Task<User> Get(int id)
     {
@@ -40,22 +39,22 @@ namespace Etosha.Web.Api.Controllers
       return result.User;
     }
 
-    // POST api/values
     [HttpPost]
-    public void Post([FromBody]string value)
+    public User Post([FromBody]User user)
     {
+      return user;
     }
 
-    // PUT api/values/5
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody]string value)
+    public User Put(int id, [FromBody]User user)
     {
+      return user;
     }
 
-    // DELETE api/values/5
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+      return Ok();
     }
   }
 }

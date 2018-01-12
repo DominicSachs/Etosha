@@ -7,7 +7,8 @@ import { UserEditComponent } from './users/useredit.component';
 export const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full', },
   { path: 'users', component: UsersComponent },
-  { path: 'users/:id', component: UserEditComponent },
+  { path: 'users/create', component: UserEditComponent },
+  { path: 'users/edit/:id', component: UserEditComponent },
   { path: 'advice/:id', component: AdviseComponent }
 ];
 
