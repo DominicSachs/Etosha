@@ -49,7 +49,7 @@ describe('UserService', () => {
       done();
     });
   });
-  
+
   it('should post a new user', done => {
     const user: User = { id: 0, firstName: 'A', lastName: 'A', userName: 'a@a.com', email: 'a@a.com' };
 
@@ -60,7 +60,7 @@ describe('UserService', () => {
       done();
     });
   });
-  
+
   it('should put an existing user', done => {
     const user: User = { id: 1, firstName: 'A', lastName: 'A', userName: 'a@a.com', email: 'a@a.com' };
     spyOn(httpClient, 'put').and.returnValue(Observable.of(user));

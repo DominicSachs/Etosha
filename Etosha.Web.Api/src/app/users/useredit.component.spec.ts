@@ -4,6 +4,7 @@ import { UserEditComponent } from './useredit.component';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './user.model';
+import { ISubscription } from 'rxjs/Subscription';
 
 describe('UsereditComponent', () => {
     let activatedRoute: ActivatedRoute;
@@ -36,8 +37,17 @@ describe('UsereditComponent', () => {
         expect(component.userForm.value.id).toBe(0);
     });
 
+    it('should unsubscribe', () => {
+        const testSubscription = Observable.of({}).subscribe();
+        spyOn(activatedRoute.params, 'subscribe').and.returnValue(testSubscription);
+        spyOn(testSubscription, 'unsubscribe');
+        component.ngOnInit();
+        component.ngOnDestroy();
+        expect(testSubscription.unsubscribe).toHaveBeenCalled();
+    });
+
     it('should init an existing user', () => {
-        var user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
+        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
         spyOn(userService, 'getUser').and.returnValue(Observable.of(user));
         component.ngOnInit();
         expect(component.userForm.value.id).toBe(user.id);
@@ -47,15 +57,15 @@ describe('UsereditComponent', () => {
 
         expect(userService.getUser).toHaveBeenCalledWith(1);
     });
-    
+
     it('should do nothing on submit if !valid', () => {
         spyOn(userService, 'saveUser');
         component.onSubmit({ value: new User(), valid: false });
         expect(userService.saveUser).not.toHaveBeenCalled();
     });
-    
+
     it('should do nothing on submit if !valid', () => {
-        var user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
+        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
         spyOn(userService, 'saveUser').and.returnValue(Observable.of(user));
         spyOn(router, 'navigateByUrl');
         component.onSubmit({ value: user, valid: true });
