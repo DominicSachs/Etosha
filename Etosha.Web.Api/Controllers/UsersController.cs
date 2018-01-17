@@ -42,13 +42,16 @@ namespace Etosha.Web.Api.Controllers
     [HttpPost]
     public User Post([FromBody]User user)
     {
-      return user;
+      var action = new SaveUserAction(new ActionCallerContext(), user);
+      return action.User;
     }
 
     [HttpPut("{id}")]
     public User Put(int id, [FromBody]User user)
     {
-      return user;
+      user.Id = id;
+      var action = new SaveUserAction(new ActionCallerContext(), user);
+      return action.User;
     }
 
     [HttpDelete("{id}")]

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from './user.service';
 import { User } from './user.model';
+import { Regex } from '../shared/validation/regex.model';
 
 @Component({
   templateUrl: './useredit.component.html',
@@ -17,7 +18,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
       id: '',
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required]
+      email: ['', [Validators.required, Validators.pattern(Regex.EMAIL_REGEX)]]
     });
   }
 
