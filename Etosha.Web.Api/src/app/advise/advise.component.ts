@@ -16,10 +16,9 @@ export class AdviseComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-       },
-       error => {
-          console.log(error)
-       });
+        },
+        e => {
+          console.log(e);
+        });
   }
-
 }
