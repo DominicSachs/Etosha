@@ -1,25 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AdviseService } from './advise.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import { AdviseComponent } from './advise.component';
 
 describe('AdviseComponent', () => {
-  let component: AdviseComponent;
-  let fixture: ComponentFixture<AdviseComponent>;
+    let adviseService: AdviseService;
+    let component: AdviseComponent;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AdviseComponent ]
-    })
-    .compileComponents();
-  }));
+    adviseService = <any>{
+        getAdvice: () => Observable.of({})
+    };
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AdviseComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        component = new AdviseComponent(adviseService);
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should init an advice', () => {
+        spyOn(adviseService, 'getAdvice').and.returnValue(Observable.of({}));
+        component.ngOnInit();
+        expect(adviseService.getAdvice).toHaveBeenCalled();
+    });
 });
