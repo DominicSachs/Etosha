@@ -3,7 +3,7 @@ using Etosha.Server.Common.Models;
 
 namespace Etosha.Server.Common.Actions.UserActions
 {
-	public class SaveUserAction : AbstractAction<GetUserActionResult>
+	public class SaveUserAction : AbstractAction<SaveUserActionResult>
 	{
 		public SaveUserAction(ActionCallerContext context, User user) : base(context)
 		{

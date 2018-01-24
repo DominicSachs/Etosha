@@ -21,14 +21,7 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 		{
 			var users = from u in _context.Users
 						where u.Id == action.UserId
-						select new User
-						{
-							Id = u.Id,
-							FirstName = u.FirstName,
-							LastName = u.LastName,
-							Email = u.Email,
-							UserName = u.UserName
-						};
+						select new User(u.Id, u.FirstName, u.LastName, u.Email, u.UserName);
 
 			return new GetUserActionResult(action, await users.SingleOrDefaultAsync());
 		}

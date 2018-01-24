@@ -40,23 +40,30 @@ namespace Etosha.Web.Api.Controllers
     }
 
     [HttpPost]
-    public User Post([FromBody]User user)
+    public async Task<User> Post([FromBody]User user)
     {
       var action = new SaveUserAction(new ActionCallerContext(), user);
-      return action.User;
+      var result = await _actionExecutor.Execute(action);
+
+      return result.User;
     }
 
     [HttpPut("{id}")]
-    public User Put(int id, [FromBody]User user)
+    public async Task<User> Put(int id, [FromBody]User user)
     {
       user.Id = id;
       var action = new SaveUserAction(new ActionCallerContext(), user);
-      return action.User;
+      var result = await _actionExecutor.Execute(action);
+
+      return result.User;
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
+      var action = new DeleteUserAction(new ActionCallerContext(), id);
+      await _actionExecutor.Execute(action);
+
       return Ok();
     }
   }
