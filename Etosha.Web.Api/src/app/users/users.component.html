@@ -3,22 +3,22 @@
 <table class="table table-striped">
     <thead>
       <tr>
-        <th>Vorname</th>
-        <th>Nachname</th>
-        <th>Benutzername</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Username</th>
         <th>Email</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let u of users">
-        <td data-title="Vorname">{{ u.firstName }}</td>
-        <td data-title="Nachname">{{ u.lastName }}</td>
-        <td data-title="Benutzername">{{ u.userName }}</td>
+        <td data-title="Firstname">{{ u.firstName }}</td>
+        <td data-title="Lastname">{{ u.lastName }}</td>
+        <td data-title="Username">{{ u.userName }}</td>
         <td data-title="Email">{{ u.email }}</td>
         <td>
-          <a routerLink="/users/edit/{{u.id}}"><i class="material-icons">edit</i></a>
-          <a routerLink="/users/delete/{{u.id}}"><i class="material-icons">delete</i></a>
+          <a routerLink="/users/edit/{{u.id}}" title="Edit"><i class="material-icons">edit</i></a>
+          <a routerLink="/users/delete/{{u.id}}" title="Delete"><i class="material-icons">delete</i></a>
         </td>
       </tr>
     </tbody>

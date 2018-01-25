@@ -3,7 +3,6 @@ using Etosha.Server.Common.Execution;
 using Etosha.Server.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Etosha.Web.Api.Controllers
@@ -20,42 +19,45 @@ namespace Etosha.Web.Api.Controllers
     }
 
     [HttpGet]
-    public async Task<IEnumerable<User>> Get()
+    public async Task<IActionResult> Get()
     {
-      _logger.LogInformation("Getting items");
-
       var action = new ListUserAction(new ActionCallerContext());
       var result = await _actionExecutor.Execute(action);
 
-      return result.Users;
+      return Ok(result.Users);
     }
 
     [HttpGet("{id}")]
-    public async Task<User> Get(int id)
+    public async Task<IActionResult> Get(int id)
     {
       var action = new GetUserAction(new ActionCallerContext(), id);
       var result = await _actionExecutor.Execute(action);
 
-      return result.User;
+      if (result.User == null)
+      {
+        return NotFound();
+      }
+
+      return Ok(result.User);
     }
 
     [HttpPost]
-    public async Task<User> Post([FromBody]User user)
+    public async Task<IActionResult> Post([FromBody]User user)
     {
       var action = new SaveUserAction(new ActionCallerContext(), user);
       var result = await _actionExecutor.Execute(action);
 
-      return result.User;
+      return NoContent();
     }
 
     [HttpPut("{id}")]
-    public async Task<User> Put(int id, [FromBody]User user)
+    public async Task<IActionResult> Put(int id, [FromBody]User user)
     {
       user.Id = id;
       var action = new SaveUserAction(new ActionCallerContext(), user);
       var result = await _actionExecutor.Execute(action);
 
-      return result.User;
+      return NoContent();
     }
 
     [HttpDelete("{id}")]
@@ -64,7 +66,7 @@ namespace Etosha.Web.Api.Controllers
       var action = new DeleteUserAction(new ActionCallerContext(), id);
       await _actionExecutor.Execute(action);
 
-      return Ok();
+      return NoContent();
     }
   }
 }
