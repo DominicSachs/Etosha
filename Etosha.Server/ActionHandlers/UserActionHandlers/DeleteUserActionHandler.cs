@@ -15,7 +15,8 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 
 		public DeleteUserActionHandler(AppDbContext appDbContext, UserManager<AppUser> userManager)
 		{
-			_context = appDbContext;
+		    _context = appDbContext;
+		    _userManager = userManager;
 		}
 
 		protected override async Task<DeleteUserActionResult> ExecuteInternal(DeleteUserAction action)
@@ -25,6 +26,7 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 					   select u;
 
 			await _userManager.DeleteAsync(user.Single());
+
 			return new DeleteUserActionResult(action);
 		}
 	}

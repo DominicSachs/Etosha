@@ -12,7 +12,8 @@ describe('UserService', () => {
   httpClient = <any>{
     get: _ => Observable.of({}),
     post: _ => Observable.of({}),
-    put: _ => Observable.of({})
+    put: _ => Observable.of({}),
+    delete: _ => Observable.of({})
   };
 
   beforeEach(() => {
@@ -67,6 +68,16 @@ describe('UserService', () => {
 
     service.saveUser(user).subscribe(result => {
       expect(httpClient.put).toHaveBeenCalledWith(environment.apiEndpoint + '/users/1', user);
+      done();
+    });
+  });
+
+  it('should delete an existing user', done => {
+    const user: User = { id: 1, firstName: 'A', lastName: 'A', userName: 'a@a.com', email: 'a@a.com' };
+    spyOn(httpClient, 'delete').and.returnValue(Observable.of(user));
+
+    service.deleteUser(user).subscribe(result => {
+      expect(httpClient.delete).toHaveBeenCalledWith(environment.apiEndpoint + '/users/1');
       done();
     });
   });

@@ -28,7 +28,7 @@ export class UserDeleteComponent implements OnInit, OnDestroy {
   }
 
   delete() {
-    this.userService.deleteUser(this.user.id).subscribe(user => {
+    this.userService.deleteUser(this.user).subscribe(user => {
         this.router.navigateByUrl('/users');
       });
   }

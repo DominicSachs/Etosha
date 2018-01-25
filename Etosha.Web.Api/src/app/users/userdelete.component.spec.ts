@@ -1,17 +1,15 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
-import { UserEditComponent } from './useredit.component';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './user.model';
 import { ISubscription } from 'rxjs/Subscription';
+import { UserDeleteComponent } from './userdelete.component';
 
-describe('UsereditComponent', () => {
+describe('UserDeleteComponent', () => {
     let activatedRoute: ActivatedRoute;
     let router: Router;
-    let component: UserEditComponent;
+    let component: UserDeleteComponent;
     let userService: UserService;
-    let formBuilder: FormBuilder;
 
     beforeEach(() => {
         activatedRoute = <any>{
@@ -24,17 +22,10 @@ describe('UsereditComponent', () => {
 
         userService = <any>{
             getUser: (id: number) => Observable.of({}),
-            saveUser: (user: User) => Observable.of({})
+            deleteUser: (user: User) => Observable.of({})
         };
 
-        formBuilder = new FormBuilder();
-        component = new UserEditComponent(activatedRoute, userService, formBuilder, router);
-    });
-
-    it('should init a new user with id 0', () => {
-        activatedRoute.params = Observable.of({});
-        component.ngOnInit();
-        expect(component.userForm.value.id).toBe(0);
+        component = new UserDeleteComponent(activatedRoute, userService, router);
     });
 
     it('should unsubscribe', () => {
@@ -43,6 +34,7 @@ describe('UsereditComponent', () => {
         spyOn(testSubscription, 'unsubscribe');
         component.ngOnInit();
         component.ngOnDestroy();
+
         expect(testSubscription.unsubscribe).toHaveBeenCalled();
     });
 
@@ -50,26 +42,18 @@ describe('UsereditComponent', () => {
         const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
         spyOn(userService, 'getUser').and.returnValue(Observable.of(user));
         component.ngOnInit();
-        expect(component.userForm.value.id).toBe(user.id);
-        expect(component.userForm.value.firstName).toBe(user.firstName);
-        expect(component.userForm.value.lastName).toBe(user.lastName);
-        expect(component.userForm.value.email).toBe(user.email);
 
+        expect(component.user).toBe(user);
         expect(userService.getUser).toHaveBeenCalledWith(1);
     });
 
     it('should do nothing on submit if !valid', () => {
-        spyOn(userService, 'saveUser');
-        component.onSubmit({ value: new User(), valid: false });
-        expect(userService.saveUser).not.toHaveBeenCalled();
-    });
-
-    it('should submit, call saveUser and navigate by url', () => {
-        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
-        spyOn(userService, 'saveUser').and.returnValue(Observable.of(user));
+        component.user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
+        spyOn(userService, 'deleteUser').and.returnValue(Observable.of({}));
         spyOn(router, 'navigateByUrl');
-        component.onSubmit({ value: user, valid: true });
-        expect(userService.saveUser).toHaveBeenCalledWith(user);
+        component.delete();
+
+        expect(userService.deleteUser).toHaveBeenCalledWith(component.user);
         expect(router.navigateByUrl).toHaveBeenCalledWith('/users');
     });
 });
