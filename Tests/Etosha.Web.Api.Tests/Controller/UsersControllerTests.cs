@@ -1,74 +1,102 @@
-using System.Threading.Tasks;
+using Etosha.Server.Common.Actions.UserActions;
 using Etosha.Server.Common.Execution;
+using Etosha.Server.Common.Models;
 using Etosha.Web.Api.Controllers;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Etosha.Web.Api.Tests.Controller
 {
-    public sealed class UsersControllerTests
-    {
-        private readonly IActionExecutor _executor;
-        private readonly ILogger<UsersController> _logger;
-        private readonly UsersController _testObject;
+	public sealed class UsersControllerTests
+	{
+		private readonly IActionExecutor _executor;
+		private readonly ILogger<UsersController> _logger;
+		private readonly UsersController _testObject;
 
-        public UsersControllerTests()
-        {
-            _executor = Substitute.For<IActionExecutor>();
-            _logger = Substitute.For<ILogger<UsersController>>();
-            _testObject = new UsersController(_logger, _executor);
-        }
+		public UsersControllerTests()
+		{
+			_executor = Substitute.For<IActionExecutor>();
+			_logger = Substitute.For<ILogger<UsersController>>();
+			_testObject = new UsersController(_logger, _executor);
+		}
 
-        public async Task Should_Return_A_User()
-        {
+		[Fact]
+		public async Task Get_Should_Return_A_List_Of_User()
+		{
+			var users = new[]
+			{
+				new User(1, "Sam", "Sample", "sam@sample.com", "sam"),
+				new User(2, "Ema", "Example", "ema@example.com", "ema")
+			};
 
-        }
-        //[HttpGet]
-        //public async Task<IEnumerable<User>> Get()
-        //{
-        //  _logger.LogInformation("Getting items");
+			_executor.Execute(Arg.Any<ListUserAction>()).Returns(new ListUserActionResult(new ListUserAction(null), users));
 
-        //  var action = new ListUserAction(new ActionCallerContext());
-        //  var result = await _actionExecutor.Execute(action);
+			var result = await _testObject.Get();
 
-        //  return result.Users;
-        //}
+			result.Should().BeOfType<OkObjectResult>();
+			((OkObjectResult)result).Value.Should().BeOfType<User[]>();
+		}
 
-        //[HttpGet("{id}")]
-        //public async Task<User> Get(int id)
-        //{
-        //  var action = new GetUserAction(new ActionCallerContext(), id);
-        //  var result = await _actionExecutor.Execute(action);
+		[Fact]
+		public async Task Get_Should_Return_A_NotFound()
+		{
+			_executor.Execute(Arg.Any<GetUserAction>()).Returns(new GetUserActionResult(new GetUserAction(null, 1), null));
 
-        //  return result.User;
-        //}
+			var result = await _testObject.Get(1);
 
-        //[HttpPost]
-        //public async Task<User> Post([FromBody]User user)
-        //{
-        //  var action = new SaveUserAction(new ActionCallerContext(), user);
-        //  var result = await _actionExecutor.Execute(action);
+			result.Should().BeOfType<NotFoundResult>();
+		}
 
-        //  return result.User;
-        //}
+		[Fact]
+		public async Task Get_Should_Return_A_User()
+		{
+			var user = new User(1, "Sam", "Sample", "sam@sample.com", "sam");
 
-        //[HttpPut("{id}")]
-        //public async Task<User> Put(int id, [FromBody]User user)
-        //{
-        //  user.Id = id;
-        //  var action = new SaveUserAction(new ActionCallerContext(), user);
-        //  var result = await _actionExecutor.Execute(action);
+			_executor.Execute(Arg.Any<GetUserAction>()).Returns(new GetUserActionResult(new GetUserAction(null, 1), user));
 
-        //  return result.User;
-        //}
+			var result = await _testObject.Get(1);
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //  var action = new DeleteUserAction(new ActionCallerContext(), id);
-        //  await _actionExecutor.Execute(action);
+			result.Should().BeOfType<OkObjectResult>();
+			((OkObjectResult)result).Value.Should().BeOfType<User>();
+			((User)((OkObjectResult)result).Value).Should().BeEquivalentTo(user);
+		}
 
-        //  return Ok();
-        //}
-    }
+		[Fact]
+		public async Task Post_Should_Return_A_NoContentResult()
+		{
+			var user = new User(0, "Sam", "Sample", "sam@sample.com", "sam");
+
+			_executor.Execute(Arg.Any<SaveUserAction>()).Returns(new SaveUserActionResult(new SaveUserAction(null, user), user));
+
+			var result = await _testObject.Post(user);
+
+			result.Should().BeOfType<NoContentResult>();
+		}
+
+		[Fact]
+		public async Task Put_Should_Return_A_NoContentResult()
+		{
+			var user = new User(1, "Sam", "Sample", "sam@sample.com", "sam");
+
+			_executor.Execute(Arg.Any<SaveUserAction>()).Returns(new SaveUserActionResult(new SaveUserAction(null, user), user));
+
+			var result = await _testObject.Put(1, user);
+
+			result.Should().BeOfType<NoContentResult>();
+		}
+
+		[Fact]
+		public async Task Delete_Should_Return_A_NoContentResult()
+		{
+			_executor.Execute(Arg.Any<DeleteUserAction>()).Returns(new DeleteUserActionResult(new DeleteUserAction(null, 1)));
+
+			var result = await _testObject.Delete(1);
+
+			result.Should().BeOfType<NoContentResult>();
+		}
+	}
 }
