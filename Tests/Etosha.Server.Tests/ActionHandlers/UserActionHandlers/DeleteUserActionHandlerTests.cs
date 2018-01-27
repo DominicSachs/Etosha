@@ -1,42 +1,53 @@
-﻿namespace Etosha.Server.Tests.ActionHandlers.UserActionHandlers
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Etosha.Server.ActionHandlers.UserActionHandlers;
+using Etosha.Server.Common.Actions.UserActions;
+using Etosha.Server.Common.Models;
+using Etosha.Server.Entities;
+using Etosha.Server.EntityFramework;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NSubstitute;
+using Xunit;
+
+namespace Etosha.Server.Tests.ActionHandlers.UserActionHandlers
 {
-	//public sealed class DeleteUserActionHandlerTests
-	//{
-	//[Fact]
-	//public async Task Should_Delete_A_User()
-	//{
-	//	var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase("DeleteUser").Options;
+    public sealed class DeleteUserActionHandlerTests
+    {
+        private UserManager<AppUser> _userManager;
 
-	//	var userStore = Substitute.For<IUserStore<AppUser>>();
-	//	using (var context = new AppDbContext(options))
-	//	{
-	//		var user = context.Users.Add(new AppUser("test", "Sam", "Sample", "sam@sample.com")).Entity;
-	//		var userManager = new UserManager<AppUser>(userStore, null, null, null, null, null, null, null, null);
-	//		await userManager.CreateAsync(user);
-	//		//await context.SaveChangesAsync();
-	//		var testObject = new DeleteUserActionHandler(context, userManager);
-	//		await testObject.Execute(new DeleteUserAction(new ActionCallerContext(), user.Id));
+        public DeleteUserActionHandlerTests()
+        {
+            var userStore = Substitute.For<IUserStore<AppUser>>();
+            _userManager = Substitute.For<UserManager<AppUser>>(
+                userStore,
+                Substitute.For<IOptions<IdentityOptions>>(),
+                Substitute.For<IPasswordHasher<AppUser>>(),
+                Enumerable.Empty<IUserValidator<AppUser>>(),
+                Enumerable.Empty<IPasswordValidator<AppUser>>(),
+                Substitute.For<ILookupNormalizer>(),
+                new IdentityErrorDescriber(),
+                Substitute.For<IServiceProvider>(),
+                Substitute.For<ILogger<UserManager<AppUser>>>());
+        }
 
-	//		await userManager.DeleteAsync(Arg.Any<AppUser>()).Received(1);
-	//	}
-	//}
+        [Fact]
+        public async Task Should_Delete_A_User()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase("DeleteUser").Options;
+           _userManager.When(u => u.DeleteAsync(Arg.Any<AppUser>())).Do(ci => { });
+            using (var context = new AppDbContext(options))
+            {
+                var user = context.Users.Add(new AppUser("test", "Sam", "Sample", "sam@sample.com")).Entity;
+                await context.SaveChangesAsync();
+                var testObject = new DeleteUserActionHandler(context, _userManager);
+                await testObject.Execute(new DeleteUserAction(new ActionCallerContext(), user.Id));
 
-	//[Fact]
-	//public async Task Should_Return_Null_Without_An_Exception_If_User_Not_Found()
-	//{
-	//    var result = await _testObject.Execute(new GetUserAction(new ActionCallerContext(), -1));
-
-	//    result.User.Should().BeNull();
-	//}
-
-	//public void Dispose()
-	//{
-	//    using (var context = new AppDbContext(_dbContextOptions))
-	//    {
-	//        var users = context.Users.ToList();
-	//        context.Users.RemoveRange(users);
-	//        context.SaveChanges();
-	//    }
-	//}
-	//}
+                await _userManager.Received(1).DeleteAsync(Arg.Any<AppUser>());
+            }
+        }
+    }
 }
