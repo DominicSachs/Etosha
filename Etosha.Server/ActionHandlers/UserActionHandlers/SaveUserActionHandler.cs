@@ -30,6 +30,7 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 				var autoPassword = PasswordGenerator.GenerateRandomPassword();
 				var newUser = new AppUser(user.Email, user.FirstName, user.LastName, user.Email);
 				await _userManager.CreateAsync(newUser, autoPassword);
+				action.User.Id = newUser.Id;
 			}
 			else
 			{
