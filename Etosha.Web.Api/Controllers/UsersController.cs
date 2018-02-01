@@ -1,12 +1,14 @@
 using Etosha.Server.Common.Actions.UserActions;
 using Etosha.Server.Common.Execution;
 using Etosha.Server.Common.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Etosha.Web.Api.Controllers
 {
+  [Authorize]
   [Route("api/[controller]")]
   public class UsersController : Controller
   {

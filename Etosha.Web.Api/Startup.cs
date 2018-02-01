@@ -1,4 +1,6 @@
 using Etosha.Server.Extensions;
+using Etosha.Web.Api.Extensions;
+using Etosha.Web.Api.Infrastructure.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -31,11 +33,15 @@ namespace Etosha.Web.Api
         .AddCors(setup =>
         {
           setup.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
-        });
+        })
+        .AddAuthorization()
+        .AddDataAnnotations();
 
       services.AddActionExecutor();
       services.AddEntityFramework(Configuration["ConnectionStrings:DefaultConnection"]);
       services.AddIdentityFramework(Configuration.GetSection("PasswordOptions").Get<PasswordOptions>());
+      services.AddSingleton<IWebTokenBuilder, WebTokenBuilder>();
+      services.AddJsonWebTokenConfiguration(Configuration);
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -44,6 +50,9 @@ namespace Etosha.Web.Api
       {
         app.UseDeveloperExceptionPage();
       }
+      app.UseCors("SiteCorsPolicy");
+      app.UseDefaultFiles();
+      app.UseStaticFiles();
 
       app.Use(async (context, next) =>
       {
@@ -57,10 +66,7 @@ namespace Etosha.Web.Api
       });
 
       app.UseAuthentication();
-      app.UseCors("SiteCorsPolicy");
       app.UseMvcWithDefaultRoute();
-      app.UseDefaultFiles();
-      app.UseStaticFiles();
     }
   }
 }
