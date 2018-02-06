@@ -4,7 +4,7 @@ namespace Etosha.Server.Common.Models
 {
     public class LoginModel
     {
-        [Required(AllowEmptyStrings = false)]
+        [Required]
         public string Email { get; set; }
 
         [Required]

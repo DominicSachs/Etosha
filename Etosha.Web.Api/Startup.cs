@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 using System.IO;
 
 namespace Etosha.Web.Api
@@ -29,6 +30,10 @@ namespace Etosha.Web.Api
       corsBuilder.AllowCredentials();
 
       services.AddMvcCore()
+        .AddJsonOptions(settings =>
+        {
+          settings.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        })
         .AddJsonFormatters()
         .AddCors(setup =>
         {
@@ -37,7 +42,7 @@ namespace Etosha.Web.Api
         .AddAuthorization()
         .AddDataAnnotations();
 
-      services.AddActionExecutor();
+      services.AddEtoshaServices();
       services.AddEntityFramework(Configuration["ConnectionStrings:DefaultConnection"]);
       services.AddIdentityFramework(Configuration.GetSection("PasswordOptions").Get<PasswordOptions>());
       services.AddSingleton<IWebTokenBuilder, WebTokenBuilder>();
