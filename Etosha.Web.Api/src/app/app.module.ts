@@ -1,11 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 import { AdviseModule } from './advise/advise.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { AuthService } from './shared/services/auth.service';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,9 +19,18 @@ import { UsersModule } from './users/users.module';
     HttpClientModule,
     AppRoutingModule,
     AdviseModule,
-    UsersModule
+    UsersModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

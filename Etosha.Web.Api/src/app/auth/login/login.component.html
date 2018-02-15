@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="card-wrapper">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title text-center">
+            <i class="material-icons user-icon">account_circle</i>
+          </h4>
+          <div *ngIf="hasError" class="alert alert-danger" role="alert">
+            The username or password is incorrect.
+          </div>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+            <div class="form-group">
+              <label for="email">E-Mail Address</label>
+              <input id="email" type="email" class="form-control" name="email" formControlName="email" autofocus>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <a class="float-right">
+                  Forgot Password?
+              </a>
+              <input id="password" type="password" class="form-control" name="password" formControlName="password">
+            </div>
+            <div class="form-group no-margin">
+                <button [disabled]="!loginForm.valid" type="submit" class="btn btn-primary btn-block">Login</button>
+            </div>
+          </form>
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>

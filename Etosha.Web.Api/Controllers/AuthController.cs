@@ -2,6 +2,7 @@ using Etosha.Server.Common.Models;
 using Etosha.Server.Providers.Interfaces;
 using Etosha.Web.Api.Infrastructure.Security;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Etosha.Web.Api.Controllers
@@ -12,9 +13,11 @@ namespace Etosha.Web.Api.Controllers
   {
     private readonly IWebTokenBuilder _webTokenBuilder;
     private readonly IAuthenticationProvider _authenticationProvider;
+    private readonly ILogger<AuthController> _logger;
 
-    public AuthController(IWebTokenBuilder webTokenBuilder, IAuthenticationProvider authenticationProvider)
+    public AuthController(ILogger<AuthController> logger, IWebTokenBuilder webTokenBuilder, IAuthenticationProvider authenticationProvider)
     {
+      _logger = logger;
       _webTokenBuilder = webTokenBuilder;
       _authenticationProvider = authenticationProvider;
     }
@@ -24,6 +27,7 @@ namespace Etosha.Web.Api.Controllers
     {
       if (!ModelState.IsValid)
       {
+        _logger.LogError($"Invalid model for user: ${model?.Email} and password with length ${model?.Password?.Length ?? 0}");
         return BadRequest(ModelState);
       }
 
@@ -31,11 +35,12 @@ namespace Etosha.Web.Api.Controllers
 
       if (user == null)
       {
-        return NotFound();
+        _logger.LogError($"User not found for user: ${model?.Email} and password with length ${model?.Password?.Length ?? 0}");
+        return BadRequest();
       }
 
-      string token = _webTokenBuilder.GenerateToken(new User(1, "Sam", "Sample", "sam@sample.com", "sam"));
-      return Ok(token);
+      string token = _webTokenBuilder.GenerateToken(user);
+      return Ok(new { user.FirstName, user.LastName, Token = token });
     }
   }
 }
