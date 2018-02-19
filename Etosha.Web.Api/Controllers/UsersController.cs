@@ -14,6 +14,7 @@ namespace Etosha.Web.Api.Controllers
   {
     private readonly ILogger<UsersController> _logger;
     private readonly IActionExecutor _actionExecutor;
+
     public UsersController(ILogger<UsersController> logger, IActionExecutor executor)
     {
       _logger = logger;
