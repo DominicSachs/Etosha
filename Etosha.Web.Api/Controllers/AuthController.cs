@@ -39,7 +39,7 @@ namespace Etosha.Web.Api.Controllers
         return BadRequest();
       }
 
-      string token = _webTokenBuilder.GenerateToken(user);
+      var token = _webTokenBuilder.GenerateToken(user);
       return Ok(new { user.FirstName, user.LastName, Token = token });
     }
   }

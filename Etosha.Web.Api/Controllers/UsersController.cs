@@ -47,7 +47,7 @@ namespace Etosha.Web.Api.Controllers
     public async Task<IActionResult> Post([FromBody]User user)
     {
       var action = new SaveUserAction(new ActionCallerContext(), user);
-      var result = await _actionExecutor.Execute(action);
+      await _actionExecutor.Execute(action);
 
       return NoContent();
     }
@@ -57,7 +57,7 @@ namespace Etosha.Web.Api.Controllers
     {
       user.Id = id;
       var action = new SaveUserAction(new ActionCallerContext(), user);
-      var result = await _actionExecutor.Execute(action);
+      await _actionExecutor.Execute(action);
 
       return NoContent();
     }

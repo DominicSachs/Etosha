@@ -14,14 +14,13 @@ namespace Etosha.Web.Api.Tests.Controller
 	public sealed class UsersControllerTests
 	{
 		private readonly IActionExecutor _executor;
-		private readonly ILogger<UsersController> _logger;
-		private readonly UsersController _testObject;
+	    private readonly UsersController _testObject;
 
 		public UsersControllerTests()
 		{
-			_executor = Substitute.For<IActionExecutor>();
-			_logger = Substitute.For<ILogger<UsersController>>();
-			_testObject = new UsersController(_logger, _executor);
+		    _executor = Substitute.For<IActionExecutor>();
+			var logger = Substitute.For<ILogger<UsersController>>();
+			_testObject = new UsersController(logger, _executor);
 		}
 
 		[Fact]
