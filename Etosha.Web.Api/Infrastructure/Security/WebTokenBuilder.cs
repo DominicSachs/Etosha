@@ -26,8 +26,6 @@ namespace Etosha.Web.Api.Infrastructure.Security
           new Claim(JwtRegisteredClaimNames.Email, user.Email),
           new Claim(JwtRegisteredClaimNames.Jti, _jwtOptions.Jti),
           new Claim(JwtRegisteredClaimNames.Iat, _jwtOptions.IssuedAt.ToUnixEpochDate().ToString(), ClaimValueTypes.Integer64),
-        //identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol),
-        //identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.Id)
       };
 
       var token = new JwtSecurityToken(
