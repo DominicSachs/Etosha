@@ -11,43 +11,40 @@ using System.Threading.Tasks;
 
 namespace Etosha.Server.Execution
 {
-	internal class ActionExecutor : IActionExecutor
-	{
-		private readonly IServiceProvider _serviceProvider;
-		private readonly ILogger<IActionExecutor> _logger;
-		private static ActionHandlerRegistration _actionHandlers;
+    internal class ActionExecutor : IActionExecutor
+    {
+        private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger<IActionExecutor> _logger;
+        private static ActionHandlerRegistration _actionHandlers;
 
-		public ActionExecutor(IServiceProvider serviceProvider, ILogger<ActionExecutor> logger)
-		{
-			_serviceProvider = serviceProvider;
-			_logger = logger;
+        public ActionExecutor(IServiceProvider serviceProvider, ILogger<ActionExecutor> logger)
+        {
+            _serviceProvider = serviceProvider;
+            _logger = logger;
 
-			if (_actionHandlers == null)
-			{
-				_actionHandlers = new ActionHandlerRegistration();
-				var baseType = typeof(AbstractActionHandler);
+            if (_actionHandlers == null)
+            {
+                _actionHandlers = new ActionHandlerRegistration();
+                var baseType = typeof(AbstractActionHandler);
 
-				foreach (var type in baseType.Assembly.GetTypes().Where(t => !t.IsAbstract && baseType.IsAssignableFrom(t)))
-				{
-					//_actionHandlers.Register((AbstractActionHandler)ActivatorUtilities.CreateInstance(serviceProvider, type));
-					_actionHandlers.Register2((AbstractActionHandler)ActivatorUtilities.CreateInstance(serviceProvider, type));
-				}
-			}
-		}
+                foreach (var type in baseType.Assembly.GetTypes().Where(t => !t.IsAbstract && baseType.IsAssignableFrom(t)))
+                {
+                    _actionHandlers.Register((AbstractActionHandler)ActivatorUtilities.CreateInstance(serviceProvider, type));
+                }
+            }
+        }
 
-		public Task<TResult> Execute<TResult>(AbstractAction<TResult> action)
-			where TResult : AbstractActionResult
-		{
-			//var handler = _actionHandlers.Find(action) as AbstractActionHandler<TResult>;
-			var handler = _actionHandlers.Find(action, _serviceProvider) as AbstractActionHandler<TResult>;
+        public Task<TResult> Execute<TResult>(AbstractAction<TResult> action) where TResult : AbstractActionResult
+        {
+            var handler = _actionHandlers.Find(action, _serviceProvider) as AbstractActionHandler<TResult>;
 
-			_logger.LogDebug($"Start executing handler for action {action.Name}");
+            _logger.LogDebug($"Start executing handler for action {action.Name}");
 
-			var result = handler.Execute(action);
+            var result = handler.Execute(action);
 
-			_logger.LogDebug($"End executing handler for action {action.Name} with result {JsonUtils.SerializeObject(result)}");
+            _logger.LogDebug($"End executing handler for action {action.Name} with result {JsonUtils.SerializeObject(result)}");
 
-			return result;
-		}
-	}
+            return result;
+        }
+    }
 }

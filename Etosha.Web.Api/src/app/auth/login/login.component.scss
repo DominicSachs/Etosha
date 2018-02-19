@@ -1,0 +1,11 @@
+@import '../../../scss/variables';
+
+.card-wrapper {
+    width: 400px;
+    margin: 0 auto;
+
+    .user-icon {
+        font-size: 72px;
+        color: gray;
+    }
+}
