@@ -1,5 +1,7 @@
 using Etosha.Server.Extensions;
 using Etosha.Web.Api.Extensions;
+using Etosha.Web.Api.Hubs;
+using Etosha.Web.Api.Infrastructure.SampleData;
 using Etosha.Web.Api.Infrastructure.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -47,6 +49,11 @@ namespace Etosha.Web.Api
       services.AddIdentityFramework(Configuration.GetSection("PasswordOptions").Get<PasswordOptions>());
       services.AddSingleton<IWebTokenBuilder, WebTokenBuilder>();
       services.AddJsonWebTokenConfiguration(Configuration);
+
+
+      services.AddSignalR();
+      services.AddScoped<StockTickerHub>();
+      services.AddSingleton<StockTicker>();
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -56,8 +63,12 @@ namespace Etosha.Web.Api
         app.UseDeveloperExceptionPage();
       }
       app.UseCors("SiteCorsPolicy");
-      app.UseDefaultFiles();
-      app.UseStaticFiles();
+      app.UseFileServer();
+
+      app.UseSignalR(routes =>
+      {
+        routes.MapHub<StockTickerHub>("stocks");
+      });
 
       app.Use(async (context, next) =>
       {

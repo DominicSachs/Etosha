@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
-import { AdviseModule } from './advise/advise.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './shared/guards/auth.guard';
@@ -18,7 +17,6 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    AdviseModule,
     UsersModule,
     AuthModule
   ],
