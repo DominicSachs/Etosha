@@ -1,3 +1,51 @@
-<p>
-  stocks-board works!
-</p>
+<stocks-ticker [stocks]="stocks"></stocks-ticker>
+
+<table class="table">
+  <colgroup>
+    <col />
+    <col width="200px" />
+    <col width="200px" />
+    <col width="200px" />
+    <col width="200px" />
+    <col width="350px" />
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Price</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Change</th>
+      <th>Percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let s of stocks" [ngClass]="!s.hasChanged ? '' : s.lastChange >= 0 ? 'table-success' : 'table-danger'">
+      <td data-title="Symbol">{{ s.symbol }}</td>
+      <td data-title="Price">{{ s.price }}</td>
+      <td data-title="High">{{ s.dayHigh }}</td>
+      <td data-title="Low">{{ s.dayLow }}</td>
+      <td data-title="Change">
+        {{ s.change }}
+        <i *ngIf="s.lastChange >= 0" class="material-icons">trending_up</i>
+        <i *ngIf="s.lastChange < 0" class="material-icons">trending_down</i>
+      </td>
+      <td data-title="Percent">{{ s.percentChange | percent:'1.2-2' }}</td>
+    </tr>
+  </tbody>
+</table>
+<!-- 
+<ngx-charts-area-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="single"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [autoScale]="autoScale">
+    </ngx-charts-area-chart> -->

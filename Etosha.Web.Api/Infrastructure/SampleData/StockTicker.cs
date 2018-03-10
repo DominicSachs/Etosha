@@ -38,8 +38,7 @@ namespace Etosha.Web.Api.Infrastructure.SampleData
     }
 
     public IEnumerable<Stock> GetAllStocks() => _stocks.Values;
-
-
+    
     public IObservable<Stock> StreamStocks()
     {
       return Observable.Create(

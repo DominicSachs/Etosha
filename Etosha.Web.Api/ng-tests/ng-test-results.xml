@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
-<testsuite name="HeadlessChrome 64.0.3282 (Windows 10.0.0)" package="" timestamp="2018-02-23T10:44:53" id="0" hostname="LPA-H-NB-171" tests="37" errors="0" failures="0" time="0">
+<testsuite name="HeadlessChrome 64.0.3282 (Windows 10.0.0)" package="" timestamp="2018-03-02T20:54:54" id="0" hostname="DESKTOP-H5UJQ1J" tests="38" errors="0" failures="0" time="0">
   <properties>
-    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/64.0.3282.167 Safari/537.36"/>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/64.0.3282.186 Safari/537.36"/>
   </properties>
-  <testcase name="AdviseComponent should init an advice" time="0" classname="AdviseComponent"/>
   <testcase name="LoginComponent should construct a form" time="0" classname="LoginComponent"/>
   <testcase name="LoginComponent should navigate to return url" time="0" classname="LoginComponent"/>
   <testcase name="LoginComponent should navigate to default page without return url" time="0" classname="LoginComponent"/>
@@ -14,6 +13,8 @@
   <testcase name="TokenInterceptor should navigate to login on 401" time="0" classname="TokenInterceptor"/>
   <testcase name="TokenInterceptor should navigate to login on 403" time="0" classname="TokenInterceptor"/>
   <testcase name="TokenInterceptor should throw an error if not 401 or 403" time="0" classname="TokenInterceptor"/>
+  <testcase name="FixedSizedList Model should add three items" time="0" classname="FixedSizedList Model"/>
+  <testcase name="FixedSizedList Model should remove the first item" time="0" classname="FixedSizedList Model"/>
   <testcase name="AuthService isAuthenticated should return false" time="0" classname="AuthService"/>
   <testcase name="AuthService isAuthenticated should return false" time="0" classname="AuthService"/>
   <testcase name="AuthService getToken should return string from localStorage" time="0" classname="AuthService"/>
@@ -41,8 +42,7 @@
   <testcase name="UsereditComponent should submit, call saveUser and navigate by url" time="0" classname="UsereditComponent"/>
   <testcase name="UsersComponent should load users on init" time="0" classname="UsersComponent"/>
   <system-out>
-    <![CDATA[HeadlessChrome 64.0.3282 (Windows 10.0.0) LOG: Object{}
-
+    <![CDATA[
 ]]>
   </system-out>
   <system-err/>

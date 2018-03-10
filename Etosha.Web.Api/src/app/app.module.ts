@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AuthService } from './shared/services/auth.service';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { StocksModule } from './stocks/stocks.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
     HttpClientModule,
     AppRoutingModule,
     UsersModule,
-    AuthModule
+    AuthModule,
+    StocksModule
   ],
   providers: [
     AuthGuard,

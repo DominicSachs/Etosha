@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HubConnection } from '@aspnet/signalr-client';
 import { environment } from '../../environments/environment';
+import { Stock } from './stock.model';
 
 @Component({
   selector: 'app-stocks-board',
@@ -9,15 +10,45 @@ import { environment } from '../../environments/environment';
 })
 export class StocksBoardComponent implements OnInit {
   private hubConnection: HubConnection;
-
-  constructor() { }
+  private stocks: Array<Stock>;
 
   ngOnInit() {
     this.hubConnection = new HubConnection(environment.webSocketEndpoint);
 
     this.hubConnection
-          .start()
-          .then(() => console.log('Connection started!'))
-          .catch(err => console.log('Error while establishing connection :('));
+      .start()
+      .then(() => {
+        this.stocks = [];
+        this.hubConnection.invoke('GetMarketState').then((state: string) => {
+          if (state === 'Open') {
+            this.streamStocks();
+          } else {
+            this.hubConnection.invoke('OpenMarket');
+          }
+        });
+      });
+  }
+
+  streamStocks(): void {
+    this.hubConnection.stream('StreamStocks').subscribe({
+      next: (stock: any) => {
+        this.addOrUpdate(stock);
+      },
+      error: () => { },
+      complete: () => { }
+    });
+  }
+
+  private addOrUpdate(stock: Stock): void {
+    const index = this.stocks.findIndex(s => s.symbol === stock.symbol);
+
+    if (index === -1) {
+      this.stocks.push(stock);
+    } else {
+      stock.hasChanged = this.stocks[index].lastChange !== stock.lastChange;
+      this.stocks[index] = stock;
+    }
+
+    this.stocks.sort((a: Stock, b: Stock) => a.symbol.localeCompare(b.symbol));
   }
 }
