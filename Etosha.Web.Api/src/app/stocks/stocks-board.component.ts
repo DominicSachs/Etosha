@@ -10,7 +10,7 @@ import { Stock } from './stock.model';
 })
 export class StocksBoardComponent implements OnInit {
   private hubConnection: HubConnection;
-  private stocks: Array<Stock>;
+  stocks: Array<Stock>;
 
   ngOnInit() {
     this.hubConnection = new HubConnection(environment.webSocketEndpoint);

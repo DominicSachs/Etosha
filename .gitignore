@@ -21,6 +21,8 @@ RawBlameHistory
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+ng-tests/
+
 # User-specific files
 *.suo
 *.user
