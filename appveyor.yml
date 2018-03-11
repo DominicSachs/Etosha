@@ -44,6 +44,9 @@ test_script:
 - ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\src')
 - ps: Set-Location -Path $path
 - ps: ng test --watch false --reporters=junit
+- ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\ng-tests')
+- ps: Set-Location -Path $path
+- ps: Get-ChildItem -Path $path
 
 after_test:
 - ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\ng-tests')
