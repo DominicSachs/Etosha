@@ -27,9 +27,10 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
+    autoWatch: false,
     browsers: ['ChromeHeadless'],
     singleRun: false,
+    concurrency: Infinity,
     junitReporter: {
       outputDir: 'ng-tests',
       outputFile: 'ng-test-results.xml',
