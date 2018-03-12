@@ -17,7 +17,7 @@ environment:
   PATH: '%AppData%\npm;%AppData%\npm\node_modules\@angular\cli\bin;%PATH%'
   nodejs_version: 8
 install:
-- ps: choco install googlechrome -debug --ignore-checksums
+- ps: choco install googlechrome
 - ps: Install-Product node $env:nodejs_version
 - cmd: npm -g i npm@latest
 - cmd: npm -g i @angular/cli@latest
@@ -44,13 +44,9 @@ test_script:
 - ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\src')
 - ps: Set-Location -Path $path
 - ps: ng test --watch false --single-run --reporters=junit
-- ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\ng-tests')
-- ps: Set-Location -Path $path
-- ps: Get-ChildItem -Path $path
 
 after_test:
 - ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\ng-tests')
 - ps: Set-Location -Path $path
-- ps: Get-ChildItem -Path $path
 - ps: $wc = New-Object 'System.Net.WebClient'
 - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\ng-test-results.xml))
