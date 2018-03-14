@@ -1,3 +1,7 @@
+.mobile-label {
+    display: none;
+}
+
 @media only screen and (max-width: 800px) {
     table, thead, tbody, th, td, tr { 
 		display: block; 

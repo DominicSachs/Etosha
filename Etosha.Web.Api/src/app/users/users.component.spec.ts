@@ -26,7 +26,7 @@ describe('UsersComponent', () => {
 
     component.ngOnInit();
 
-    expect(component.users.length).toBe(2);
+    expect(component.dataSource.data.length).toBe(2);
     expect(userService.getUsers).toHaveBeenCalled();
   });
 });

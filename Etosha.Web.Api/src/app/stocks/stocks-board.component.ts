@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 import { HubConnection } from '@aspnet/signalr-client';
 import { environment } from '../../environments/environment';
 import { Stock } from './stock.model';
-import { StocksDataSource } from './stock-datasource.model';
 
 @Component({
   selector: 'app-stocks-board',
@@ -13,7 +13,7 @@ export class StocksBoardComponent implements OnInit {
   private hubConnection: HubConnection;
   displayedColumns = ['symbol', 'price', 'dayHigh', 'dayLow', 'change', 'percentChange'];
   stocks: Array<Stock>;
-  dataSource: StocksDataSource;
+  dataSource: MatTableDataSource<Stock>;
 
   ngOnInit() {
     this.hubConnection = new HubConnection(environment.webSocketEndpoint);
@@ -53,6 +53,6 @@ export class StocksBoardComponent implements OnInit {
     }
 
     this.stocks.sort((a: Stock, b: Stock) => a.symbol.localeCompare(b.symbol));
-    this.dataSource = new StocksDataSource(this.stocks);
+    this.dataSource = new MatTableDataSource(this.stocks);
   }
 }
