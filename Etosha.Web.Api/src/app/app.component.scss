@@ -1,0 +1,22 @@
+mat-sidenav-container {
+    height: calc(100vh - 64px);
+}
+
+.mat-toolbar {
+    position: relative;
+    z-index: 2;
+    .mat-raised-button {
+        color: #3f51b5;
+    }
+
+    .mat-button {
+        min-width: 40px;
+        margin-right: 20px;
+    }    
+}
+
+.mat-sidenav-container {   
+    .mat-sidenav {
+        width: 200px;
+    }
+}

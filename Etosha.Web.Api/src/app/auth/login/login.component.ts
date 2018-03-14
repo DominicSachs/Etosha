@@ -13,11 +13,12 @@ import { AuthService } from '../../shared/services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   hasError = false;
+  hide = true;
   private returnUrl: string;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private route: ActivatedRoute, private router: Router) {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern(Regex.EMAIL_REGEX)]],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(Regex.EMAIL_REGEX)])],
       password: ['', Validators.required]
     });
   }
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit({ value, valid }: { value: LoginModel, valid: boolean }) {
+    console.log(value);
     if (valid) {
       this.hasError = false;
       this.authService.login(value)

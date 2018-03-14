@@ -1,4 +1,4 @@
-<stocks-ticker [stocks]="stocks"></stocks-ticker>
+<!-- <stocks-ticker [stocks]="stocks"></stocks-ticker>
 
 <table class="table">
   <colgroup>
@@ -33,7 +33,38 @@
       <td data-title="Percent">{{ s.percentChange | percent:'1.2-2' }}</td>
     </tr>
   </tbody>
-</table>
+</table> -->
+
+<mat-table #table [dataSource]="dataSource">
+  <ng-container matColumnDef="symbol">
+    <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+    <mat-cell *matCellDef="let stock"> {{ stock.symbol }} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+    <mat-cell *matCellDef="let stock"> {{ stock.price }} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="dayHigh">
+    <mat-header-cell *matHeaderCellDef> High </mat-header-cell>
+    <mat-cell *matCellDef="let stock"> {{ stock.dayHigh }} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="dayLow">
+    <mat-header-cell *matHeaderCellDef> Low </mat-header-cell>
+    <mat-cell *matCellDef="let stock"> {{ stock.dayLow }} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="change">
+    <mat-header-cell *matHeaderCellDef> Change </mat-header-cell>
+    <mat-cell *matCellDef="let stock"> {{ stock.change }} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="percentChange">
+    <mat-header-cell *matHeaderCellDef> Percent </mat-header-cell>
+    <mat-cell *matCellDef="let stock"> {{ stock.percentChange }} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+  
 <!-- 
 <ngx-charts-area-chart
       [view]="view"
