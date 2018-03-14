@@ -1,82 +1,54 @@
-<!-- <stocks-ticker [stocks]="stocks"></stocks-ticker>
-
-<table class="table">
-  <colgroup>
-    <col />
-    <col width="200px" />
-    <col width="200px" />
-    <col width="200px" />
-    <col width="200px" />
-    <col width="350px" />
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Symbol</th>
-      <th>Price</th>
-      <th>High</th>
-      <th>Low</th>
-      <th>Change</th>
-      <th>Percent</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let s of stocks" [ngClass]="!s.hasChanged ? '' : s.lastChange >= 0 ? 'table-success' : 'table-danger'">
-      <td data-title="Symbol">{{ s.symbol }}</td>
-      <td data-title="Price">{{ s.price }}</td>
-      <td data-title="High">{{ s.dayHigh }}</td>
-      <td data-title="Low">{{ s.dayLow }}</td>
-      <td data-title="Change">
-        {{ s.change }}
-        <i *ngIf="s.lastChange >= 0" class="material-icons">trending_up</i>
-        <i *ngIf="s.lastChange < 0" class="material-icons">trending_down</i>
-      </td>
-      <td data-title="Percent">{{ s.percentChange | percent:'1.2-2' }}</td>
-    </tr>
-  </tbody>
-</table> -->
-
+<div class="stock-ticker">
+  <stocks-ticker [stocks]="stocks"></stocks-ticker>
+</div>
 <mat-table #table [dataSource]="dataSource">
   <ng-container matColumnDef="symbol">
     <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
-    <mat-cell *matCellDef="let stock"> {{ stock.symbol }} </mat-cell>
+    <mat-cell *matCellDef="let stock">
+      <span class="mobile-label">Symbol:</span>
+      {{ stock.symbol }}
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="price">
     <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
-    <mat-cell *matCellDef="let stock"> {{ stock.price }} </mat-cell>
+    <mat-cell *matCellDef="let stock">
+      <span class="mobile-label">Price:</span>
+      {{ stock.price }}
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="dayHigh">
     <mat-header-cell *matHeaderCellDef> High </mat-header-cell>
-    <mat-cell *matCellDef="let stock"> {{ stock.dayHigh }} </mat-cell>
+    <mat-cell *matCellDef="let stock">
+      <span class="mobile-label">High:</span>
+      {{ stock.dayHigh }}
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="dayLow">
     <mat-header-cell *matHeaderCellDef> Low </mat-header-cell>
-    <mat-cell *matCellDef="let stock"> {{ stock.dayLow }} </mat-cell>
+    <mat-cell *matCellDef="let stock">
+      <span class="mobile-label">Low:</span>
+      {{ stock.dayLow }}
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="change">
     <mat-header-cell *matHeaderCellDef> Change </mat-header-cell>
-    <mat-cell *matCellDef="let stock"> {{ stock.change }} </mat-cell>
+    <mat-cell *matCellDef="let stock">
+      <span class="mobile-label">Change:</span>
+      {{ stock.change }}
+      <mat-icon>{{ stock.lastChange >= 0 ? 'trending_up' : 'trending_down' }}</mat-icon>
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="percentChange">
     <mat-header-cell *matHeaderCellDef> Percent </mat-header-cell>
-    <mat-cell *matCellDef="let stock"> {{ stock.percentChange }} </mat-cell>
+    <mat-cell *matCellDef="let stock">
+      <span class="mobile-label">Percent:</span>
+      {{ stock.percentChange | percent:'1.2-2' }}
+    </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row 
+    *matRowDef="let row; columns: displayedColumns;"
+    [ngClass]="!row.hasChanged ? '' : row.lastChange >= 0 ? 'success' : 'danger'">
+  </mat-row>
 </mat-table>
-  
-<!-- 
-<ngx-charts-area-chart
-      [view]="view"
-      [scheme]="colorScheme"
-      [results]="single"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
-      [autoScale]="autoScale">
-    </ngx-charts-area-chart> -->

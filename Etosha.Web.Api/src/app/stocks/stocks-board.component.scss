@@ -1,40 +1,32 @@
-@media only screen and (max-width: 800px) {
-    table, thead, tbody, th, td, tr { 
-		display: block; 
-    }
-    
-    thead tr {
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-    }
-    
-    tr { 
-        border: 1px solid #ccc;
-        margin-top: 10px;
+.mobile-label {
+    display: none;
+}
+
+@media(max-width: 600px) {
+    .stock-ticker {
+        display: none;
     }
 
-    td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-		white-space: normal;
-        text-align:left;
-        
-        &:before {
-            /* Now like a table header */
-            position: absolute;
-            /* Top/left values mimic padding */
-            top: 6px;
-            left: 6px;
-            width: 45%; 
-            padding-right: 10px; 
-            white-space: nowrap;
-            text-align:left;
-            font-weight: bold;
-            content: attr(data-title);
+    .mobile-label {
+        width: 100px;
+        display: inline-block;
+        font-weight: bold;
+    }
+    
+    .mat-header-row {
+        display: none;
+    }
+    .mat-row {
+        flex-direction: column;
+        align-items: start;
+        padding: 8px 24px;
+        min-height: 0;
+
+        .mat-cell {
+            font-size: 18px;
+            .mat-icon {
+                font-size: 18px;
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ export class StocksBoardComponent implements OnInit {
   displayedColumns = ['symbol', 'price', 'dayHigh', 'dayLow', 'change', 'percentChange'];
   stocks: Array<Stock>;
   dataSource: StocksDataSource;
- 
+
   ngOnInit() {
     this.hubConnection = new HubConnection(environment.webSocketEndpoint);
 

@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app.routing';
-import { MaterialModule } from './shared/modules/material.module'
+import { MaterialModule } from './shared/modules/material.module';
 import { AppComponent } from './app.component';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
