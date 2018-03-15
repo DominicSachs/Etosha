@@ -14,9 +14,9 @@
   <mat-sidenav-container>
     <mat-sidenav fxLayout="column" #sidenav mode="over">
       <mat-nav-list>
-        <a mat-list-item href="#" routerLinkActive="active" routerLink="/">Home</a>
-        <a mat-list-item href="#" routerLinkActive="active" routerLink="/users">Benutzer</a>
-        <a mat-list-item href="#" routerLinkActive="active" routerLink="/stocks">Stocks</a>
+        <a mat-list-item href="#" routerLinkActive="active" routerLink="/" (click)="sidenav.toggle()">Home</a>
+        <a mat-list-item href="#" routerLinkActive="active" routerLink="/users" (click)="sidenav.toggle()">Benutzer</a>
+        <a mat-list-item href="#" routerLinkActive="active" routerLink="/stocks" (click)="sidenav.toggle()">Stocks</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content fxLayout="column">

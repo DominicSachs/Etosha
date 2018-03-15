@@ -30,6 +30,10 @@ export class StocksBoardComponent implements OnInit {
           }
         });
       });
+
+      this.hubConnection.on('marketOpened', () => {
+        this.streamStocks();
+      });
   }
 
   private streamStocks(): void {
