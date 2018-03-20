@@ -15,9 +15,7 @@ namespace Etosha.Server.EntityFramework
 		public AppDbContext() { }
 
 		public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
-		public DbSet<Advise> Advises { get; set; }
-
+        
 		public override int SaveChanges()
 		{
 			var addedEntries = ChangeTracker.Entries<BaseEntity>().Where(x => x.State == EntityState.Added);
@@ -41,10 +39,9 @@ namespace Etosha.Server.EntityFramework
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
-
-			builder.ApplyConfiguration(new AdviseTypeConfiguration());
+            
 			builder.ApplyConfiguration(new AppUserTypeConfiguration());
-			builder.ApplyConfiguration(new AppRoleTypeConfiguration());
+		    builder.ApplyConfiguration(new AppRoleTypeConfiguration());
 		}
 	}
 }

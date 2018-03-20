@@ -8,6 +8,7 @@ namespace Etosha.Server.EntityFramework.TypeMappings
 	{
 		public void Configure(EntityTypeBuilder<AppUser> builder)
 		{
+            builder.HasKey(p => p.Id);
 			builder.Property(p => p.FirstName).IsRequired().HasMaxLength(256);
 			builder.Property(p => p.FirstName).IsRequired().HasMaxLength(256);
 			builder.Property(p => p.Email).IsRequired();

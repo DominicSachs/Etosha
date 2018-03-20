@@ -22,11 +22,11 @@ namespace Etosha.Server.EntityFramework
 				await roleManager.CreateAsync(new AppRole(Constants.UserRoleName));
 
 				var user = new AppUser("admin", "The", "Administrator", "admin@admin.com");
-				await userManager.CreateAsync(user, "a");
+                await userManager.CreateAsync(user, "a");
 				await userManager.AddToRoleAsync(user, Constants.AdministratorRoleName);
 
 				user = new AppUser("sam", "Sam", "Sample", "sam@sample.com");
-				await userManager.CreateAsync(user, "a");
+                await userManager.CreateAsync(user, "a");
 				await userManager.AddToRoleAsync(user, Constants.UserRoleName);
 			}
 		}
