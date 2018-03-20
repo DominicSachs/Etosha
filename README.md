@@ -4,3 +4,5 @@
 [![AppVeyor tests](https://img.shields.io/appveyor/tests/dominicsachs/etosha.svg?style=plastic)](https://ci.appveyor.com/project/DominicSachs/etosha/build/tests)
 
 ## Sample Application for .NET Standard and Angular Projects
+
+## [Demo](http://etosha.azurewebsites.net)
