@@ -11,7 +11,7 @@ using System;
 namespace Etosha.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180317210421_InitialCreate")]
+    [Migration("20180321175727_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

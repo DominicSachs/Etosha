@@ -3,12 +3,15 @@
     <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)" novalidate>
       <mat-form-field>
         <input matInput placeholder="Firstname" type="text" name="firstName" formControlName="firstName" autofocus />
+        <mat-error *ngIf="userForm.controls.firstName.errors?.required">You must enter a value.</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Lastname" type="text" name="lastName" formControlName="lastName" />
+        <mat-error *ngIf="userForm.controls.lastName.errors?.required">You must enter a value.</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Email" type="text" name="email" formControlName="email" />
+        <mat-error *ngIf="userForm.controls.email.errors?.required">You must enter a value.</mat-error>
       </mat-form-field>
       <mat-card-actions align="end">
         <button mat-raised-button type="submit" [disabled]="!userForm.valid" color="primary">Save</button>

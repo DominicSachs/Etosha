@@ -36,6 +36,7 @@ namespace Etosha.Web.Api
     public static IWebHost BuildWebHost(string[] args) =>
         WebHost.CreateDefaultBuilder(args)
             .UseStartup<Startup>()
+            .UseUrls("http://localhost:52017")
             .CaptureStartupErrors(true)
             .Build();
   }
