@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiEndpoint: 'http://localhost:52016/api',
-  webSocketEndpoint: 'http://localhost:52017/stocks'
+  apiEndpoint: 'https://etosha.azurewebsites.net/api',
+  webSocketEndpoint: 'https://etosha.azurewebsites.net/stocks'
 };

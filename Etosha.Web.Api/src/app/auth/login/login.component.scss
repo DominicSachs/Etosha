@@ -1,11 +1,28 @@
 @import '../../../scss/variables';
+:host {
+    height: 100%;
+    min-height: 100%;
+}
 
-.card-wrapper {
-    width: 400px;
-    margin: 0 auto;
+.login-wrapper {
+    .mat-card-avatar {
+        height: 72px;
+        width: 72px;
+        .mat-icon {
+            font-size: 72px;
+            color: gray;
+        }
+    }
 
-    .user-icon {
-        font-size: 72px;
-        color: gray;
+    .mat-card-actions {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .mat-form-field {
+        width: 100%;
+
+        .password-visible {
+            cursor: pointer;
+        }
     }
 }

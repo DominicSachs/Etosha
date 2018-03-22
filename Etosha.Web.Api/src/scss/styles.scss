@@ -1,9 +1,20 @@
+@import '../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
 @import './variables';
 
-.ng-touched.ng-valid:not(form) /*, .ng-valid[required], .ng-valid.required*/  {
-    border-left: 5px solid $color-apple;
+html, body {
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
-  
-.ng-touched.ng-invalid:not(form) /*, .ng-invalid:not(form) */ {
-    border-left: 5px solid $color-apple-blossom;
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px $color-white inset;
+}
+
+.success {
+    background: $color-lima;
+}
+.danger {
+    background: $color-wild-strawberry;
 }

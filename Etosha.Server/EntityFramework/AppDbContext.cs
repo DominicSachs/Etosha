@@ -10,43 +10,40 @@ using System.Runtime.CompilerServices;
 
 namespace Etosha.Server.EntityFramework
 {
-	internal class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
-	{
-		public AppDbContext() { }
+    internal class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
+    {
+        public AppDbContext() { }
 
-		public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-		public DbSet<Advise> Advises { get; set; }
+        public override int SaveChanges()
+        {
+            var addedEntries = ChangeTracker.Entries<BaseEntity>().Where(x => x.State == EntityState.Added);
 
-		public override int SaveChanges()
-		{
-			var addedEntries = ChangeTracker.Entries<BaseEntity>().Where(x => x.State == EntityState.Added);
+            foreach (var item in addedEntries)
+            {
+                item.Property(nameof(BaseEntity.CreationDate)).CurrentValue = DateTime.Now;
+                item.Property(nameof(BaseEntity.ModifiedDate)).CurrentValue = DateTime.Now;
+            }
 
-			foreach (var item in addedEntries)
-			{
-				item.Property(nameof(BaseEntity.CreationDate)).CurrentValue = DateTime.Now;
-				item.Property(nameof(BaseEntity.ModifiedDate)).CurrentValue = DateTime.Now;
-			}
+            var modifiedEntries = ChangeTracker.Entries<BaseEntity>().Where(x => x.State == EntityState.Modified);
 
-			var modifiedEntries = ChangeTracker.Entries<BaseEntity>().Where(x => x.State == EntityState.Modified);
+            foreach (var item in modifiedEntries)
+            {
+                item.Property(nameof(BaseEntity.ModifiedDate)).CurrentValue = DateTime.Now;
+            }
 
-			foreach (var item in modifiedEntries)
-			{
-				item.Property(nameof(BaseEntity.ModifiedDate)).CurrentValue = DateTime.Now;
-			}
+            return base.SaveChanges();
+        }
 
-			return base.SaveChanges();
-		}
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
-		protected override void OnModelCreating(ModelBuilder builder)
-		{
-			base.OnModelCreating(builder);
-
-			builder.ApplyConfiguration(new AdviseTypeConfiguration());
-			builder.ApplyConfiguration(new AppUserTypeConfiguration());
-			builder.ApplyConfiguration(new AppRoleTypeConfiguration());
-		}
-	}
+            builder.ApplyConfiguration(new AppUserTypeConfiguration());
+            builder.ApplyConfiguration(new AppRoleTypeConfiguration());
+        }
+    }
 }
 
 // dotnet ef migrations add InitialCreate --startup-project ../Etosha.Web.Api/

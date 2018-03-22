@@ -1,32 +1,24 @@
-<div class="container">
-  <div class="row justify-content-md-center">
-    <div class="card-wrapper">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title text-center">
-            <i class="material-icons user-icon">account_circle</i>
-          </h4>
-          <div *ngIf="hasError" class="alert alert-danger" role="alert">
-            The username or password is incorrect.
-          </div>
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
-            <div class="form-group">
-              <label for="email">E-Mail Address</label>
-              <input id="email" type="email" class="form-control" name="email" formControlName="email" autofocus>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <a class="float-right">
-                  Forgot Password?
-              </a>
-              <input id="password" type="password" class="form-control" name="password" formControlName="password">
-            </div>
-            <div class="form-group no-margin">
-                <button [disabled]="!loginForm.valid" type="submit" class="btn btn-primary btn-block">Login</button>
-            </div>
-          </form>
-        </div>  
-      </div>
-    </div>
-  </div>
+<div class="login-wrapper" fxFlexFill fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.lt-sm="start stretch">
+  <mat-card>
+    <mat-card-header fxLayoutAlign="center center">
+      <div mat-card-avatar><mat-icon>account_circle</mat-icon></div>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+        <mat-form-field>
+          <input matInput placeholder="Email" type="email" name="email" formControlName="email" autofocus autocomplete="off" />
+          <mat-error *ngIf="loginForm.controls.email.errors?.required">You must enter a value.</mat-error>
+          <mat-error *ngIf="loginForm.controls.email.errors?.pattern">Email has an invalid format.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" name="password" formControlName="password" autocomplete="off" />
+          <mat-icon matSuffix class="password-visible" (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+          <mat-error *ngIf="loginForm.controls.password.errors?.required">You must enter a value.</mat-error>
+        </mat-form-field>
+        <mat-card-actions align="end">
+          <button mat-raised-button type="submit" [disabled]="!loginForm.valid" color="primary">Login</button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

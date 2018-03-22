@@ -1,6 +1,5 @@
 <div class="ticker-item">
   {{ stock.symbol }}
-  <i *ngIf="stock.lastChange >= 0" class="material-icons">trending_up</i>
-  <i *ngIf="stock.lastChange < 0" class="material-icons">trending_down</i>
+  <mat-icon>{{ stock.lastChange >= 0 ? 'trending_up' : 'trending_down' }}</mat-icon>
   {{ stock.price }}
 </div>

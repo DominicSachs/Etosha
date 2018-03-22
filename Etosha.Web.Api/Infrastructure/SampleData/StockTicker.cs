@@ -180,10 +180,10 @@ namespace Etosha.Web.Api.Infrastructure.SampleData
       switch (marketState)
       {
         case MarketState.Open:
-          await Hub.Clients.All.InvokeAsync("marketOpened");
+          await Hub.Clients.All.SendAsync("marketOpened");
           break;
         case MarketState.Closed:
-          await Hub.Clients.All.InvokeAsync("marketClosed");
+          await Hub.Clients.All.SendAsync("marketClosed");
           break;
         default:
           break;
@@ -192,12 +192,12 @@ namespace Etosha.Web.Api.Infrastructure.SampleData
 
     private async Task BroadcastMarketReset()
     {
-      await Hub.Clients.All.InvokeAsync("marketReset");
+      await Hub.Clients.All.SendAsync("marketReset");
     }
 
     private async Task BroadcastStockPrice(Stock stock)
     {
-      await Hub.Clients.All.InvokeAsync("updateStockPrice", stock);
+      await Hub.Clients.All.SendAsync("updateStockPrice", stock);
     }
   }
 

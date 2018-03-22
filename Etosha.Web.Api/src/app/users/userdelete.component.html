@@ -1,11 +1,13 @@
-<div class="container mt-lg-3">
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Delete</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ user?.firstName }} {{ user?.lastName }}</h6>
-      <p class="card-text">Do you want delete {{ user?.firstName }} {{ user?.lastName }}?</p>
-      <button class="btn btn-primary" (click)="delete()">Delete</button>
-      <a class="btn btn-default" routerLink="/users">Cancel</a>
-    </div>
-  </div>
-</div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Delete</mat-card-title>
+    <mat-card-subtitle>{{ user?.firstName }} {{ user?.lastName }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Do you want delete {{ user?.firstName }} {{ user?.lastName }}?</p>
+    <mat-card-actions align="end">
+      <button mat-raised-button type="button" (click)="delete()" color="primary">Save</button>
+      <a mat-button routerLink="/users">Cancel</a>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HubConnection } from '@aspnet/signalr-client';
+import { MatTableDataSource } from '@angular/material';
+import { HubConnection } from '@aspnet/signalr';
 import { environment } from '../../environments/environment';
 import { Stock } from './stock.model';
 
@@ -10,7 +11,9 @@ import { Stock } from './stock.model';
 })
 export class StocksBoardComponent implements OnInit {
   private hubConnection: HubConnection;
+  displayedColumns = ['symbol', 'price', 'dayHigh', 'dayLow', 'change', 'percentChange'];
   stocks: Array<Stock>;
+  dataSource: MatTableDataSource<Stock>;
 
   ngOnInit() {
     this.hubConnection = new HubConnection(environment.webSocketEndpoint);
@@ -27,9 +30,13 @@ export class StocksBoardComponent implements OnInit {
           }
         });
       });
+
+      this.hubConnection.on('marketOpened', () => {
+        this.streamStocks();
+      });
   }
 
-  streamStocks(): void {
+  private streamStocks(): void {
     this.hubConnection.stream('StreamStocks').subscribe({
       next: (stock: any) => {
         this.addOrUpdate(stock);
@@ -50,5 +57,6 @@ export class StocksBoardComponent implements OnInit {
     }
 
     this.stocks.sort((a: Stock, b: Stock) => a.symbol.localeCompare(b.symbol));
+    this.dataSource = new MatTableDataSource(this.stocks);
   }
 }
