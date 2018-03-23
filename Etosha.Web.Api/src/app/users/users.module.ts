@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../shared/modules/material.module';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { SharedModule } from '../shared/modules/shared.module';
 import { UsersComponent } from './users.component';
 import { UserService } from './user.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,12 +10,10 @@ import { UserDeleteComponent } from './userdelete.component';
 
 @NgModule({
   imports: [
-    CommonModule,
+    SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule,
-    MaterialModule,
-    FlexLayoutModule
+    RouterModule
   ],
   declarations: [UsersComponent, UserEditComponent, UserDeleteComponent],
   providers: [UserService]

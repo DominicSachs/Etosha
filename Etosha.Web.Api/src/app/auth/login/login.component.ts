@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit({ value, valid }: { value: LoginModel, valid: boolean }) {
-    console.log(value);
     if (valid) {
       this.hasError = false;
       this.authService.login(value)
