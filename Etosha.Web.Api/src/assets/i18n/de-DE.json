@@ -1,0 +1,36 @@
+{
+    "actions": {
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen",
+        "delete": "Löschen",
+        "edit": "Bearbeiten",
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "save": "Speichern"
+    },
+    "menu": {
+        "home": "Startseite",
+        "users": "Benutzer",
+        "stocks": "Aktien"
+    },
+    "stocks": {
+        "change": "Änderung",
+        "dayHigh": "Tageshoch",
+        "dayLow": "Tagestief",
+        "percent": "Prozent",
+        "price": "Preis",
+        "symbol": "Symbol"
+    },
+    "user": {
+        "deleteConfirm": "Möchten Sie den Benutzer wirklich löschen",
+        "email": "E-Mail",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "password": "Passwort",
+        "userName": "Benutzername"
+    },
+    "validation": {
+        "required": "Sie müssen einen Wert angeben.",
+        "email": "Die E-Mail hat ein ungültiges Format."
+    }
+}

@@ -1,0 +1,15 @@
+::ng-deep .language-wrapper {
+    width: 80px;
+
+    .de-DE {
+        background: url('/assets/images/de.svg') center/40px no-repeat;
+    }
+    
+    .en-US {
+        background: url('/assets/images/us.svg') center/40px no-repeat;
+    }
+}
+
+::ng-deep .mat-select-panel .mat-option {
+    line-height: 1em !important;
+}
