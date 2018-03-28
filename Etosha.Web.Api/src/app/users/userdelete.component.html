@@ -1,13 +1,13 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Delete</mat-card-title>
+    <mat-card-title>{{ 'actions.delete' | translate }}</mat-card-title>
     <mat-card-subtitle>{{ user?.firstName }} {{ user?.lastName }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>Do you want delete {{ user?.firstName }} {{ user?.lastName }}?</p>
+    <p>{{ 'user.deleteConfirm' | translate }}: {{ user?.firstName }} {{ user?.lastName }}?</p>
     <mat-card-actions align="end">
-      <button mat-raised-button type="button" (click)="delete()" color="primary">Save</button>
-      <a mat-button routerLink="/users">Cancel</a>
+      <button mat-raised-button type="button" (click)="delete()" color="primary">{{ 'actions.delete' | translate }}</button>
+      <a mat-button routerLink="/users">{{ 'actions.cancel' | translate }}</a>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>

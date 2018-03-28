@@ -1,39 +1,39 @@
-<a href="#" routerLink="/users/create"><mat-icon>person add</mat-icon></a>
+<a href="#" routerLink="/users/create" [title]="'actions.add' | translate"><mat-icon>person add</mat-icon></a>
 
 <mat-table #table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="firstName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.firstName' | translate }}</mat-header-cell>
     <mat-cell *matCellDef="let item">
-      <span class="mobile-label">Firstname:</span>
+      <span class="mobile-label">{{ 'user.firstName' | translate }}:</span>
       {{ item.firstName }}
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="lastName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Lastname</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.lastName' | translate }}</mat-header-cell>
     <mat-cell *matCellDef="let item">
-      <span class="mobile-label">Lastname:</span>
+      <span class="mobile-label">{{ 'user.lastName' | translate }}:</span>
       {{ item.lastName }}
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="email">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.email' | translate }}</mat-header-cell>
     <mat-cell *matCellDef="let item">
-      <span class="mobile-label">Email:</span>
+      <span class="mobile-label">{{ 'user.email' | translate }}:</span>
       {{ item.email }}
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="userName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.userName' | translate }}</mat-header-cell>
     <mat-cell *matCellDef="let item">
-      <span class="mobile-label">Username:</span>
+      <span class="mobile-label">{{ 'user.userName' | translate }}:</span>
       {{ item.userName }}
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef fxFlex="5"></mat-header-cell>
     <mat-cell *matCellDef="let item" fxFlex="5">
-      <a routerLink="/users/edit/{{item.id}}" title="Edit"><mat-icon>edit</mat-icon></a>
-      <a routerLink="/users/delete/{{item.id}}" title="Delete"><mat-icon>delete</mat-icon></a>
+      <a routerLink="/users/edit/{{item.id}}" [title]="'actions.edit' | translate"><mat-icon>edit</mat-icon></a>
+      <a routerLink="/users/delete/{{item.id}}" [title]="'actions.delete' | translate"><mat-icon>delete</mat-icon></a>
     </mat-cell>
   </ng-container>
 

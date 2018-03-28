@@ -5,18 +5,19 @@
     </button>
   </span>
   <span>Etosha</span>
-  <div fxFlex fxLayoutAlign="end start">
-    <a mat-raised-button *ngIf="!(isLoggedIn | async)" routerLink="/login" href="#">Login</a>
-    <button mat-raised-button *ngIf="(isLoggedIn | async)" (click)="logout()">Logout</button>
+  <div fxFlex fxLayoutAlign="end start" fxLayoutGap="20px">
+    <language-choice></language-choice>
+    <a mat-raised-button *ngIf="!(isLoggedIn | async)" routerLink="/login" href="#">{{ 'actions.login' | translate }}</a>
+    <button mat-raised-button *ngIf="(isLoggedIn | async)" (click)="logout()">{{ 'actions.logout' | translate }}</button>
   </div>
 </mat-toolbar>
 <div layout="row" layout-fill flex>
   <mat-sidenav-container>
     <mat-sidenav fxLayout="column" #sidenav mode="over">
       <mat-nav-list>
-        <a mat-list-item href="#" routerLinkActive="active" routerLink="/" (click)="sidenav.toggle()">Home</a>
-        <a mat-list-item href="#" routerLinkActive="active" routerLink="/users" (click)="sidenav.toggle()">Benutzer</a>
-        <a mat-list-item href="#" routerLinkActive="active" routerLink="/stocks" (click)="sidenav.toggle()">Stocks</a>
+        <a mat-list-item href="#" routerLinkActive="active" routerLink="/" (click)="sidenav.toggle()">{{ 'menu.home' | translate }}</a>
+        <a mat-list-item href="#" routerLinkActive="active" routerLink="/users" (click)="sidenav.toggle()">{{ 'menu.users' | translate }}</a>
+        <a mat-list-item href="#" routerLinkActive="active" routerLink="/stocks" (click)="sidenav.toggle()">{{ 'menu.stocks' | translate }}</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content fxLayout="column">
