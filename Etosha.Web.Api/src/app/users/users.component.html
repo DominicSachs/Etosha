@@ -36,7 +36,6 @@
       <a routerLink="/users/delete/{{item.id}}" [title]="'actions.delete' | translate"><mat-icon>delete</mat-icon></a>
     </mat-cell>
   </ng-container>
-
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>

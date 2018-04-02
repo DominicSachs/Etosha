@@ -4,18 +4,19 @@ using Etosha.Server.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Etosha.Web.Api.Controllers
 {
   [Authorize]
   [Route("api/[controller]")]
-  public class UsersController : Controller
+  public class UsersController : BaseController
   {
     private readonly ILogger<UsersController> _logger;
     private readonly IActionExecutor _actionExecutor;
 
-    public UsersController(ILogger<UsersController> logger, IActionExecutor executor)
+    public UsersController(ClaimsPrincipal claimsPrincipal, ILogger<UsersController> logger, IActionExecutor executor) : base(claimsPrincipal)
     {
       _logger = logger;
       _actionExecutor = executor;
@@ -24,7 +25,7 @@ namespace Etosha.Web.Api.Controllers
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-      var action = new ListUserAction(new ActionCallerContext());
+      var action = new ListUserAction(_actionCallContext);
       var result = await _actionExecutor.Execute(action);
 
       return Ok(result.Users);
@@ -33,7 +34,7 @@ namespace Etosha.Web.Api.Controllers
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-      var action = new GetUserAction(new ActionCallerContext(), id);
+      var action = new GetUserAction(_actionCallContext, id);
       var result = await _actionExecutor.Execute(action);
 
       if (result.User == null)
@@ -47,7 +48,7 @@ namespace Etosha.Web.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> Post([FromBody]User user)
     {
-      var action = new SaveUserAction(new ActionCallerContext(), user);
+      var action = new SaveUserAction(_actionCallContext, user);
       await _actionExecutor.Execute(action);
 
       return NoContent();
@@ -57,7 +58,7 @@ namespace Etosha.Web.Api.Controllers
     public async Task<IActionResult> Put(int id, [FromBody]User user)
     {
       user.Id = id;
-      var action = new SaveUserAction(new ActionCallerContext(), user);
+      var action = new SaveUserAction(_actionCallContext, user);
       await _actionExecutor.Execute(action);
 
       return NoContent();
@@ -66,7 +67,7 @@ namespace Etosha.Web.Api.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      var action = new DeleteUserAction(new ActionCallerContext(), id);
+      var action = new DeleteUserAction(_actionCallContext, id);
       await _actionExecutor.Execute(action);
 
       return NoContent();

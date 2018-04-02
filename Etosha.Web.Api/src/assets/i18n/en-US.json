@@ -26,6 +26,7 @@
         "email": "Email",
         "firstName": "Firstname",
         "lastName": "Lastname",
+        "role": "Role",
         "password": "Password",
         "userName": "Username"
     },

@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { Regex } from '../shared/validation/regex.model';
+import { RoleService } from '../shared/services/role.service';
+import { UserRole } from '../shared/models/role.model';
 
 @Component({
   templateUrl: './useredit.component.html',
@@ -11,27 +13,34 @@ import { Regex } from '../shared/validation/regex.model';
 })
 export class UserEditComponent implements OnInit, OnDestroy {
   userForm: FormGroup;
+  roles: Array<UserRole>;
   private routeSubscription: any;
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private userService: UserService, private formBuilder: FormBuilder,
+              private router: Router, private roleService: RoleService) {
     this.userForm = this.formBuilder.group({
       id: '',
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern(Regex.EMAIL_REGEX)]]
+      email: ['', [Validators.required, Validators.pattern(Regex.EMAIL_REGEX)]],
+      roleId: ['', Validators.required]
     });
   }
 
   ngOnInit() {
     this.routeSubscription = this.route.params.subscribe(params => {
       const id = +params['id'];
+
+      this.roleService.getRoles().subscribe(r => this.roles = r);
+
       if (id) {
         this.userService.getUser(id)
           .subscribe(u => {
             this.userForm.patchValue({
               firstName: u.firstName,
               lastName: u.lastName,
-              email: u.email
+              email: u.email,
+              roleId: u.roleId
             });
           });
       }

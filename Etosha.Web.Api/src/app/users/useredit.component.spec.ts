@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './user.model';
 import { ISubscription } from 'rxjs/Subscription';
+import { RoleService } from '../shared/services/role.service';
 
 describe('UsereditComponent', () => {
     let activatedRoute: ActivatedRoute;
@@ -12,6 +13,7 @@ describe('UsereditComponent', () => {
     let component: UserEditComponent;
     let userService: UserService;
     let formBuilder: FormBuilder;
+    let roleService: RoleService;
 
     beforeEach(() => {
         activatedRoute = <any>{
@@ -27,8 +29,12 @@ describe('UsereditComponent', () => {
             saveUser: (user: User) => Observable.of({})
         };
 
+        roleService = <any>{
+            getRoles: (id: number) => Observable.of([]),
+        };
+
         formBuilder = new FormBuilder();
-        component = new UserEditComponent(activatedRoute, userService, formBuilder, router);
+        component = new UserEditComponent(activatedRoute, userService, formBuilder, router, roleService);
     });
 
     it('should init a new user with id 0', () => {
@@ -47,7 +53,7 @@ describe('UsereditComponent', () => {
     });
 
     it('should init an existing user', () => {
-        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
+        const user: User = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
         spyOn(userService, 'getUser').and.returnValue(Observable.of(user));
         component.ngOnInit();
         expect(component.userForm.value.id).toBe(user.id);
@@ -65,7 +71,7 @@ describe('UsereditComponent', () => {
     });
 
     it('should submit, call saveUser and navigate by url', () => {
-        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
+        const user: User = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
         spyOn(userService, 'saveUser').and.returnValue(Observable.of(user));
         spyOn(router, 'navigateByUrl');
         component.onSubmit({ value: user, valid: true });

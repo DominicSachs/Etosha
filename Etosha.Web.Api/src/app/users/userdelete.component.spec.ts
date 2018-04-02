@@ -39,7 +39,7 @@ describe('UserDeleteComponent', () => {
     });
 
     it('should init an existing user', () => {
-        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
+        const user: User = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
         spyOn(userService, 'getUser').and.returnValue(Observable.of(user));
         component.ngOnInit();
 
@@ -48,7 +48,7 @@ describe('UserDeleteComponent', () => {
     });
 
     it('should do nothing on submit if !valid', () => {
-        component.user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
+        component.user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
         spyOn(userService, 'deleteUser').and.returnValue(Observable.of({}));
         spyOn(router, 'navigateByUrl');
         component.delete();
