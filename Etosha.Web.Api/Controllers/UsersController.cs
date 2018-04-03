@@ -48,8 +48,8 @@ namespace Etosha.Web.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> Post([FromBody]User user)
     {
-      var action = new SaveUserAction(_actionCallContext, user);
-      await _actionExecutor.Execute(action);
+      var saveAction = new SaveUserAction(_actionCallContext, user);
+      var createResult = await _actionExecutor.Execute(saveAction);
 
       return NoContent();
     }

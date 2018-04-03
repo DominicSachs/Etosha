@@ -50,9 +50,7 @@ namespace Etosha.Server.Tests.ActionHandlers.UserActionHandlers
         public async Task Should_Create_A_User()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase("SaveUser").Options;
-#pragma warning disable 4014
             _userManager.When(u => u.CreateAsync(Arg.Any<AppUser>(), Arg.Any<string>())).Do(ci =>
-#pragma warning restore 4014
             {
                 var userParam = ci.ArgAt<AppUser>(0);
                 userParam.Id = 1;
@@ -60,7 +58,6 @@ namespace Etosha.Server.Tests.ActionHandlers.UserActionHandlers
 
             using (var context = new AppDbContext(options))
             {
-                context.Users.Add(new AppUser("test", "Sam", "Sample", "sam@sample.com") { Id = 1 });
                 var role = context.Roles.Add(new AppRole("Administrators")).Entity;
                 context.UserRoles.Add(new IdentityUserRole<int> { UserId = 1, RoleId = role.Id });
 
@@ -70,10 +67,7 @@ namespace Etosha.Server.Tests.ActionHandlers.UserActionHandlers
                 var result = await testObject.Execute(new SaveUserAction(new ActionCallContext(), user));
 
                 await _userManager.Received(1).CreateAsync(Arg.Any<AppUser>(), Arg.Any<string>());
-                result.User.FirstName.Should().Be(user.FirstName);
-                result.User.LastName.Should().Be(user.LastName);
-                result.User.Email.Should().Be(user.Email);
-                result.User.UserName.Should().Be(user.UserName);
+                result.Id.Should().Be(1);
             }
         }
 

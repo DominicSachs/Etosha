@@ -25,15 +25,7 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
             var users = from u in _context.Users
                         join ur in _context.UserRoles on u.Id equals ur.UserId
                         where u.Id != action.ActionCallContext.UserId
-                        select new User
-                        {
-                            Id = u.Id,
-                            FirstName = u.FirstName,
-                            LastName = u.LastName,
-                            Email = u.Email,
-                            UserName = u.UserName,
-                            RoleId = ur.RoleId
-                        };
+                        select new User(u.Id, u.FirstName, u.LastName, u.Email, u.UserName, ur.RoleId);
 
             return new ListUserActionResult(action, await users.ToArrayAsync());
         }

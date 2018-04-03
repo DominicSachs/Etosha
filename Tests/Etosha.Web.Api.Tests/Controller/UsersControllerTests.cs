@@ -70,7 +70,7 @@ namespace Etosha.Web.Api.Tests.Controller
         {
             var user = new User(0, "Sam", "Sample", "sam@sample.com", "sam");
 
-            _executor.Execute(Arg.Any<SaveUserAction>()).Returns(new SaveUserActionResult(new SaveUserAction(null, user), user));
+            _executor.Execute(Arg.Any<SaveUserAction>()).Returns(new SaveUserActionResult(new SaveUserAction(null, user), 1));
 
             var result = await _testObject.Post(user);
 
@@ -82,7 +82,7 @@ namespace Etosha.Web.Api.Tests.Controller
         {
             var user = new User(1, "Sam", "Sample", "sam@sample.com", "sam");
 
-            _executor.Execute(Arg.Any<SaveUserAction>()).Returns(new SaveUserActionResult(new SaveUserAction(null, user), user));
+            _executor.Execute(Arg.Any<SaveUserAction>()).Returns(new SaveUserActionResult(new SaveUserAction(null, user), 1));
 
             var result = await _testObject.Put(1, user);
 

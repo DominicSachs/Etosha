@@ -1,13 +1,10 @@
 ﻿using Etosha.Server.ActionHandlers.Base;
 using Etosha.Server.Common.Actions.UserActions;
-using Etosha.Server.Common.Models;
 using Etosha.Server.Common.Validation;
 using Etosha.Server.Entities;
 using Etosha.Server.EntityFramework;
 using Etosha.Server.Infrastructure;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Etosha.Server.ActionHandlers.UserActionHandlers
@@ -34,10 +31,9 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 
             if (action.User.Id == 0)
             {
-                var autoPassword = PasswordGenerator.GenerateRandomPassword();
                 dbUser = new AppUser(user.Email, user.FirstName, user.LastName, user.Email);
-                await _userManager.CreateAsync(dbUser, autoPassword);
-                action.User.Id = dbUser.Id;
+                var password = PasswordGenerator.GenerateRandomPassword();
+                await _userManager.CreateAsync(dbUser, password);
             }
             else
             {
@@ -51,12 +47,7 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 
             await SetUserRole(dbUser, user.RoleId);
 
-            var createdUser = from u in _context.Users
-                              join ur in _context.UserRoles on u.Id equals ur.UserId
-                              where u.Id == user.Id
-                              select new User(u.Id, u.FirstName, u.LastName, u.Email, u.UserName, ur.RoleId);
-
-            return new SaveUserActionResult(action, await createdUser.SingleOrDefaultAsync());
+            return new SaveUserActionResult(action, dbUser.Id);
         }
 
         private async Task SetUserRole(AppUser user, int roleId)
