@@ -7,6 +7,7 @@ import { UserService } from './user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UserEditComponent } from './useredit.component';
 import { UserDeleteComponent } from './userdelete.component';
+import { RoleService } from '../shared/services/role.service';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { UserDeleteComponent } from './userdelete.component';
     RouterModule
   ],
   declarations: [UsersComponent, UserEditComponent, UserDeleteComponent],
-  providers: [UserService]
+  providers: [UserService, RoleService]
 })
 export class UsersModule { }

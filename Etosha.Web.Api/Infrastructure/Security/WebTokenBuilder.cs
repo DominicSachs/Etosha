@@ -22,9 +22,10 @@ namespace Etosha.Web.Api.Infrastructure.Security
     {
       var claims = new[]
       {
-          new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+          new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+          new Claim(ClaimTypes.Name, user.UserName),
           new Claim(JwtRegisteredClaimNames.Email, user.Email),
-          new Claim(JwtRegisteredClaimNames.Jti, _jwtOptions.Jti),
+          new Claim(JwtRegisteredClaimNames.Jti, _jwtOptions.Jti.ToString()),
           new Claim(JwtRegisteredClaimNames.Iat, _jwtOptions.IssuedAt.ToUnixEpochDate().ToString(), ClaimValueTypes.Integer64),
       };
 

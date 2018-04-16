@@ -1,35 +1,33 @@
 ﻿using Etosha.Server.ActionHandlers.Base;
 using Etosha.Server.Common.Actions.UserActions;
 using Etosha.Server.Common.Models;
+using Etosha.Server.Common.Validation;
 using Etosha.Server.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace Etosha.Server.ActionHandlers.UserActionHandlers
 {
-	internal class ListUserActionHandler : AbstractActionHandler<ListUserAction, ListUserActionResult>
-	{
-		private readonly AppDbContext _context;
+    internal class ListUserActionHandler : AbstractActionHandler<ListUserAction, ListUserActionResult>
+    {
+        private readonly AppDbContext _context;
 
-		public ListUserActionHandler(AppDbContext appDbContext)
-		{
-			_context = appDbContext;
-		}
+        public ListUserActionHandler(AppDbContext appDbContext)
+        {
+            _context = appDbContext;
+        }
 
-		protected override async Task<ListUserActionResult> ExecuteInternal(ListUserAction action)
-		{
-			var users = from u in _context.Users
-						select new User
-						{
-							Id = u.Id,
-							FirstName = u.FirstName,
-							LastName = u.LastName,
-							Email = u.Email,
-							UserName = u.UserName
-						};
+        protected override async Task<ListUserActionResult> ExecuteInternal(ListUserAction action)
+        {
+            Require.ThatNotNull(action.ActionCallContext, nameof(action.ActionCallContext));
 
-			return new ListUserActionResult(action, await users.ToArrayAsync());
-		}
-	}
+            var users = from u in _context.Users
+                        join ur in _context.UserRoles on u.Id equals ur.UserId
+                        where u.Id != action.ActionCallContext.UserId
+                        select new User(u.Id, u.FirstName, u.LastName, u.Email, u.UserName, ur.RoleId);
+
+            return new ListUserActionResult(action, await users.ToArrayAsync());
+        }
+    }
 }

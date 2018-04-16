@@ -20,8 +20,9 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 		protected override async Task<GetUserActionResult> ExecuteInternal(GetUserAction action)
 		{
 			var users = from u in _context.Users
-						where u.Id == action.UserId
-						select new User(u.Id, u.FirstName, u.LastName, u.Email, u.UserName);
+                        join ur in _context.UserRoles on u.Id equals ur.UserId
+                        where u.Id == action.UserId
+						select new User(u.Id, u.FirstName, u.LastName, u.Email, u.UserName, ur.RoleId);
 
 			return new GetUserActionResult(action, await users.SingleOrDefaultAsync());
 		}

@@ -13,6 +13,14 @@
         <input matInput [placeholder]="'user.email' | translate" type="text" name="email" formControlName="email" />
         <mat-error *ngIf="userForm.controls.email.errors?.required">{{ 'validation.required' | translate }}</mat-error>
       </mat-form-field>
+      <mat-form-field>
+        <mat-select [placeholder]="'user.role' | translate" formControlName="roleId">
+          <mat-option *ngFor="let r of roles" [value]="r.id">
+            {{ r.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="userForm.controls.roleId.errors?.required">{{ 'validation.required' | translate }}</mat-error>
+      </mat-form-field>
       <mat-card-actions align="end">
         <button mat-raised-button type="submit" [disabled]="!userForm.valid" color="primary">{{ 'actions.save' | translate }}</button>
         <a mat-button routerLink="/users">{{ 'actions.cancel' | translate }}</a>

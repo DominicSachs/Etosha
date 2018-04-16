@@ -44,7 +44,7 @@ namespace Etosha.Server.Tests.ActionHandlers.UserActionHandlers
 				var user = context.Users.Add(new AppUser("Sam", "Sample", "sam@sample.com", "test")).Entity;
 				await context.SaveChangesAsync();
 				var testObject = new DeleteUserActionHandler(context, _userManager);
-				await testObject.Execute(new DeleteUserAction(new ActionCallerContext(), user.Id));
+				await testObject.Execute(new DeleteUserAction(new ActionCallContext(), user.Id));
 
 				await _userManager.Received(1).DeleteAsync(Arg.Any<AppUser>());
 			}

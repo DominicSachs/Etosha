@@ -38,11 +38,11 @@ namespace Etosha.Server.Execution
         {
             var handler = _actionHandlers.Find(action, _serviceProvider) as AbstractActionHandler<TResult>;
 
-            _logger.LogDebug($"Start executing handler for action {action.Name}");
+            _logger.LogDebug($"Start executing handler for action {action.Name}.");
 
             var result = handler.Execute(action);
 
-            _logger.LogDebug($"End executing handler for action {action.Name} with result {JsonUtils.SerializeObject(result)}");
+            _logger.LogDebug($"End executing handler for action {action.Name}.");
 
             return result;
         }

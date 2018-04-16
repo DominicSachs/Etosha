@@ -5,7 +5,7 @@ namespace Etosha.Server.Common.Actions.UserActions
 {
 	public class DeleteUserAction : AbstractAction<DeleteUserActionResult>
 	{
-		public DeleteUserAction(ActionCallerContext context, int id) : base(context)
+		public DeleteUserAction(ActionCallContext context, int id) : base(context)
 		{
 			UserId = id;
 		}
