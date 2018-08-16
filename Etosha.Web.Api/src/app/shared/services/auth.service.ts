@@ -1,12 +1,13 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { LoginModel } from '../models/login.model';
 import { TokenModel } from '../models/token.model';
 import { BaseService } from './base.service';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { Observable ,  BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -31,8 +32,8 @@ export class AuthService extends BaseService {
     }
 
     login(model: LoginModel): Observable<boolean> {
-        return this.httpClient.post<TokenModel>(`${environment.apiEndpoint}/auth/login`, model)
-            .map((result: TokenModel) => {
+        return this.httpClient.post<TokenModel>(`${environment.apiEndpoint}/auth/login`, model).pipe(
+            map((result: TokenModel) => {
                 if (result.token) {
                     localStorage.setItem('auth_token', result.token);
                     this.isLoginSubject.next(true);
@@ -41,7 +42,7 @@ export class AuthService extends BaseService {
                     this.isLoginSubject.next(false);
                     return false;
                 }
-            });
+            }));
     }
 
     logout() {

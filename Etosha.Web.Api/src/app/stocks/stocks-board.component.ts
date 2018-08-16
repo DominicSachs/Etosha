@@ -16,7 +16,12 @@ export class StocksBoardComponent implements OnInit {
   dataSource: MatTableDataSource<Stock>;
 
   ngOnInit() {
-    this.hubConnection = new HubConnection(environment.webSocketEndpoint);
+    new signalR.HubConnectionBuilder()
+        .withUrl(this.webSocketEndpoint
+        .configureLogging(signalR.LogLevel.Information)
+        .build();)
+    
+    //this.hubConnection = new HubConnection(environment.webSocketEndpoint);
 
     this.hubConnection
       .start()

@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs/Observable';
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 
 export abstract class BaseService {
     constructor() { }
@@ -7,7 +8,7 @@ export abstract class BaseService {
         const applicationError = error.headers.get('Application-Error');
 
         if (applicationError) {
-            return Observable.throw(applicationError);
+            return observableThrowError(applicationError);
         }
 
         let modelStateErrors = '';
@@ -22,6 +23,6 @@ export abstract class BaseService {
         }
 
         modelStateErrors = modelStateErrors = '' ? null : modelStateErrors;
-        return Observable.throw(modelStateErrors || 'Server error');
+        return observableThrowError(modelStateErrors || 'Server error');
     }
 }

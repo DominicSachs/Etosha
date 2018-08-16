@@ -1,11 +1,10 @@
+
+import {throwError as observableThrowError, of as observableOf,  Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/of';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -16,14 +15,14 @@ export class TokenInterceptor implements HttpInterceptor {
         request = request.clone({ setHeaders: { Authorization: `Bearer ${this.authService.getToken()}` } });
     }
 
-    return next.handle(request)
-            .catch(res => {
+    return next.handle(request).pipe(
+            catchError(res => {
                 if (res.status === 401 || res.status === 403) {
                     this.router.navigate(['login']);
-                    return Observable.of({});
+                    return observableOf(<any>{ });
                 } else {
-                    return Observable.throw(res);
+                    return observableThrowError(res);
                 }
-            });
+            }));
   }
 }
