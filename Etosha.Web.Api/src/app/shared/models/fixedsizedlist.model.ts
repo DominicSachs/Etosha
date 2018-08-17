@@ -1,5 +1,5 @@
 export class FixedSizedList<T> {
-    items: Array<T>;
+    items: T[];
 
     constructor(private length: number) {
         this.items = [];

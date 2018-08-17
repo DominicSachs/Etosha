@@ -1,17 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from './user.service';
-import { User } from './user.model';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Regex } from '../shared/validation/regex.model';
+import { User } from './user.model';
+import { UserService } from './user.service';
 
 @Component({
   templateUrl: './useredit.component.html',
   styleUrls: ['./useredit.component.scss']
 })
 export class UserEditComponent implements OnInit, OnDestroy {
-  userForm: FormGroup;
   private routeSubscription: any;
+  userForm: FormGroup;
 
   constructor(private route: ActivatedRoute, private userService: UserService, private formBuilder: FormBuilder, private router: Router) {
     this.userForm = this.formBuilder.group({

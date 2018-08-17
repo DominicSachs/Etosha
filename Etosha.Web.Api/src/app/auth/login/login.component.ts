@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Regex } from '../../shared/validation/regex.model';
 import { LoginModel } from '../../shared/models/login.model';
 import { AuthService } from '../../shared/services/auth.service';
+import { Regex } from '../../shared/validation/regex.model';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +11,11 @@ import { AuthService } from '../../shared/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  private returnUrl: string;
+
   loginForm: FormGroup;
   hasError = false;
   hide = true;
-  private returnUrl: string;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private route: ActivatedRoute, private router: Router) {
     this.loginForm = this.formBuilder.group({
@@ -28,7 +29,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit({ value, valid }: { value: LoginModel, valid: boolean }) {
-    console.log(value);
     if (valid) {
       this.hasError = false;
       this.authService.login(value)

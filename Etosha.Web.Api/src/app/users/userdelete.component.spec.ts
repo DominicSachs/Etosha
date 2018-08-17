@@ -1,8 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from './user.service';
 import { Observable } from 'rxjs/Observable';
-import { User } from './user.model';
 import { ISubscription } from 'rxjs/Subscription';
+import { User } from './user.model';
+import { UserService } from './user.service';
 import { UserDeleteComponent } from './userdelete.component';
 
 describe('UserDeleteComponent', () => {

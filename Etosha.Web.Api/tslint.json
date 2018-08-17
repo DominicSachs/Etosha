@@ -2,135 +2,95 @@
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
+  "extends": [
+    "tslint:recommended",
+    "tslint-angular",
+    "rxjs-tslint-rules"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**",
+      "**/*.d.ts"
+    ]
+  },
   "rules": {
-    "arrow-return-shorthand": true,
-    "callable-types": true,
-    "class-name": true,
-    "comment-format": [
+    /* we don't want single argument lambdas to have those redundant braces */
+    "arrow-parens": [
       true,
-      "check-space"
+      "ban-single-arg-parens"
     ],
-    "curly": true,
-    "deprecation": {
-      "severity": "warn"
-    },
-    "eofline": true,
-    "forin": true,
-    "import-blacklist": [
+    /* we don't want disabled or focused tests */
+    "ban": [
       true,
-      "rxjs/Rx"
+      "fdescribe",
+      "xdescribe",
+      "xit",
+      "fit"
     ],
-    "import-spacing": true,
-    "indent": [
+    /* we don't prefix our interfaces */
+    "interface-name": [
       true,
-      "spaces"
+      "never-prefix"
     ],
-    "interface-over-type-literal": true,
-    "label-position": true,
+    /* we have failed to keep our lines under 300 characters */
     "max-line-length": [
       true,
-      140
+      300
     ],
-    "member-access": false,
+    /* we want forbid to use the default public modifier */
+    "member-access": [
+      true,
+      "no-public"
+    ],
+    /* we want to force an consistent member ordering in every file. */
     "member-ordering": [
       true,
       {
         "order": [
-          "static-field",
-          "instance-field",
-          "static-method",
-          "instance-method"
+          "private-static-field",
+          "private-instance-field",
+          "protected-static-field",
+          "protected-instance-field",
+          "public-static-field",
+          "public-instance-field",
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "public-instance-method",
+          "public-static-method",
+          "protected-instance-method",
+          "protected-static-method",
+          "private-instance-method",
+          "private-static-method"
         ]
       }
     ],
-    "no-arg": true,
-    "no-bitwise": true,
-    "no-console": [
+    /* we're OK with this since we're not using JSX */
+    "no-angle-bracket-type-assertion": false,
+    /* we do rename our inputs */
+    "no-input-rename": false,
+    /* we do rename our outputs */
+    "no-output-rename": false,
+    /* we do use require() for our theme specific resources */
+    "no-require-imports": false,
+    /* that's why we need this too */
+    "no-var-requires": false,
+    /* we think these shorthands are ugly */
+    "object-literal-shorthand": [
       true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
+      "never"
     ],
-    "no-construct": true,
-    "no-debugger": true,
-    "no-duplicate-super": true,
-    "no-empty": false,
-    "no-empty-interface": true,
-    "no-eval": true,
-    "no-inferrable-types": [
-      true,
-      "ignore-params"
-    ],
-    "no-misused-new": true,
-    "no-non-null-assertion": true,
-    "no-shadowed-variable": true,
-    "no-string-literal": false,
-    "no-string-throw": true,
-    "no-switch-case-fall-through": true,
-    "no-trailing-whitespace": true,
-    "no-unnecessary-initializer": true,
-    "no-unused-expression": true,
-    "no-use-before-declare": true,
-    "no-var-keyword": true,
-    "object-literal-sort-keys": false,
-    "one-line": [
-      true,
-      "check-open-brace",
-      "check-catch",
-      "check-else",
-      "check-whitespace"
-    ],
-    "prefer-const": true,
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "radix": true,
-    "semicolon": [
-      true,
-      "always"
-    ],
-    "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
-    "typedef-whitespace": [
+    /* we're using plain functions sometimes */
+    "only-arrow-functions": false,
+    /* we don't like trailing commas in the multi line expressions */
+    "trailing-comma": [
       true,
       {
-        "call-signature": "nospace",
-        "index-signature": "nospace",
-        "parameter": "nospace",
-        "property-declaration": "nospace",
-        "variable-declaration": "nospace"
+        "multiline": "never",
+        "singleline": "never"
       }
     ],
-    "typeof-compare": true,
-    "unified-signatures": true,
-    "variable-name": false,
-    "whitespace": [
-      true,
-      "check-branch",
-      "check-decl",
-      "check-operator",
-      "check-separator",
-      "check-type"
-    ],
-    "directive-selector": [
-      true,
-      "attribute",
-      "camelCase"
-    ],
-    "no-output-on-prefix": true,
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
-    "use-host-property-decorator": true,
-    "no-input-rename": true,
-    "no-output-rename": true,
-    "use-life-cycle-interface": true,
-    "use-pipe-transform-interface": true,
-    "component-class-suffix": true,
-    "directive-class-suffix": true
+    /* we have to disable view encapsulation because of the CoBa main.css */
+    "use-view-encapsulation": false
   }
 }

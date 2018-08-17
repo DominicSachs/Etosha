@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
-import { UserService } from './user.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
 import { User } from './user.model';
+import { UserService } from './user.service';
 
 @Component({
   templateUrl: './users.component.html',

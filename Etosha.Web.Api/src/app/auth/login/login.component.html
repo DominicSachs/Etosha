@@ -12,7 +12,7 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" name="password" formControlName="password" autocomplete="off" />
-          <mat-icon matSuffix class="password-visible" (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+          <mat-icon matSuffix class="password-visible" (click)="hide = !hide">{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
           <mat-error *ngIf="loginForm.controls.password.errors?.required">You must enter a value.</mat-error>
         </mat-form-field>
         <mat-card-actions align="end">

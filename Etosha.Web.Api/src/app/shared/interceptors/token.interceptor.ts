@@ -1,9 +1,9 @@
 
-import {throwError as observableThrowError, of as observableOf,  Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable, of as observableOf,  throwError as observableThrowError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()

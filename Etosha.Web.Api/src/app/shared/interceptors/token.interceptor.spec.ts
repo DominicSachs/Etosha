@@ -1,8 +1,9 @@
-import { Router } from '@angular/router';
 import { HttpRequest } from '@angular/common/http';
-import { TokenInterceptor } from './token.interceptor';
-import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../services/auth.service';
+import { TokenInterceptor } from './token.interceptor';
 
 describe('TokenInterceptor', () => {
   let testObject: TokenInterceptor;
@@ -34,7 +35,7 @@ describe('TokenInterceptor', () => {
   });
 
   it('should navigate to login on 401', done => {
-    const next = <any>{ handle: _ => Observable.throw({ status: 401 }) };
+    const next = <any>{ handle: _ => throwError({ status: 401 }) };
 
     testObject.intercept(new HttpRequest('get', '/', {}), next).subscribe(_ => {
       expect(router.navigate).toHaveBeenCalledWith(['login']);
@@ -43,7 +44,7 @@ describe('TokenInterceptor', () => {
   });
 
   it('should navigate to login on 403', done => {
-    const next = <any>{ handle: _ => Observable.throw({ status: 403 }) };
+    const next = <any>{ handle: _ => throwError({ status: 403 }) };
 
     testObject.intercept(new HttpRequest('get', '/', {}), next).subscribe(_ => {
       expect(router.navigate).toHaveBeenCalledWith(['login']);
@@ -52,7 +53,7 @@ describe('TokenInterceptor', () => {
   });
 
   it('should throw an error if not 401 or 403', done => {
-    const next = <any>{ handle: _ => Observable.throw({ status: 400 }) };
+    const next = <any>{ handle: _ => throwError({ status: 400 }) };
 
     testObject.intercept(new HttpRequest('get', '/', {}), next).subscribe(_ => { }, error => {
       expect(error.status).toEqual(400);

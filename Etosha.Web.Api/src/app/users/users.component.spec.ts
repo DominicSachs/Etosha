@@ -1,8 +1,8 @@
-import { UsersComponent } from './users.component';
-import { UserService } from './user.service';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs/Observable';
 import { User } from './user.model';
+import { UserService } from './user.service';
+import { UsersComponent } from './users.component';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;

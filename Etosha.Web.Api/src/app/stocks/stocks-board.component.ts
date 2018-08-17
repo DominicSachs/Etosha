@@ -12,16 +12,16 @@ import { Stock } from './stock.model';
 export class StocksBoardComponent implements OnInit {
   private hubConnection: HubConnection;
   displayedColumns = ['symbol', 'price', 'dayHigh', 'dayLow', 'change', 'percentChange'];
-  stocks: Array<Stock>;
+  stocks: Stock[];
   dataSource: MatTableDataSource<Stock>;
 
   ngOnInit() {
     new signalR.HubConnectionBuilder()
         .withUrl(this.webSocketEndpoint
         .configureLogging(signalR.LogLevel.Information)
-        .build();)
-    
-    //this.hubConnection = new HubConnection(environment.webSocketEndpoint);
+        .build(); )
+
+    // this.hubConnection = new HubConnection(environment.webSocketEndpoint);
 
     this.hubConnection
       .start()
@@ -36,7 +36,7 @@ export class StocksBoardComponent implements OnInit {
         });
       });
 
-      this.hubConnection.on('marketOpened', () => {
+    this.hubConnection.on('marketOpened', () => {
         this.streamStocks();
       });
   }

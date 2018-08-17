@@ -1,6 +1,6 @@
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AuthGuard } from './auth.guard';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { AuthGuard } from './auth.guard';
 
 describe('AuthGuard', () => {
   let testObject: AuthGuard;

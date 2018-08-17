@@ -8,5 +8,5 @@ import { Stock } from '../stock.model';
 })
 export class StocksTickerComponent {
     @Input()
-    stocks: Array<Stock>;
+    stocks: Stock[];
 }

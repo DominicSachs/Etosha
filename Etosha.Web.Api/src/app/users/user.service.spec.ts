@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
-import { UserService } from './user.service';
 import { User } from './user.model';
+import { UserService } from './user.service';
 
 describe('UserService', () => {
   let httpClient: HttpClient;

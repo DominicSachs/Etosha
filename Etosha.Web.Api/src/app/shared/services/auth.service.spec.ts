@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from './auth.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { LoginModel } from '../models/login.model';
 import { TokenModel } from '../models/token.model';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   let testObject: AuthService;

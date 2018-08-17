@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from './user.service';
 import { User } from './user.model';
+import { UserService } from './user.service';
 
 @Component({
   templateUrl: './userdelete.component.html'
 })
 export class UserDeleteComponent implements OnInit, OnDestroy {
-  user: User;
   private routeSubscription: any;
+  user: User;
 
   constructor(private route: ActivatedRoute, private userService: UserService, private router: Router) { }
 

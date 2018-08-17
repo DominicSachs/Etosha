@@ -1,10 +1,10 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { UserEditComponent } from './useredit.component';
-import { UserService } from './user.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { User } from './user.model';
 import { ISubscription } from 'rxjs/Subscription';
+import { User } from './user.model';
+import { UserService } from './user.service';
+import { UserEditComponent } from './useredit.component';
 
 describe('UsereditComponent', () => {
     let activatedRoute: ActivatedRoute;

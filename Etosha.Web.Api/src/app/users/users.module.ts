@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { MaterialModule } from '../shared/modules/material.module';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { UsersComponent } from './users.component';
-import { UserService } from './user.service';
 import { HttpClientModule } from '@angular/common/http';
-import { UserEditComponent } from './useredit.component';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../shared/modules/material.module';
+import { UserService } from './user.service';
 import { UserDeleteComponent } from './userdelete.component';
+import { UserEditComponent } from './useredit.component';
+import { UsersComponent } from './users.component';
 
 @NgModule({
   imports: [
