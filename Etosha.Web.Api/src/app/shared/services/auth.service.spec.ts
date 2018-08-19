@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, of } from 'rxjs';
 import { LoginModel } from '../models/login.model';
 import { TokenModel } from '../models/token.model';
 import { AuthService } from './auth.service';
@@ -11,7 +10,7 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     httpClient = <any>{
-        post: _ => Observable.of({})
+        post: _ => of({})
     };
 
     testObject = new AuthService(httpClient);
@@ -54,7 +53,7 @@ describe('AuthService', () => {
   describe('login', () => {
     it('should return true and add token to localStorage', done => {
         spyOn(window.localStorage, 'setItem');
-        spyOn(httpClient, 'post').and.returnValue(Observable.of(<TokenModel>{ token: 'token' }));
+        spyOn(httpClient, 'post').and.returnValue(of(<TokenModel>{ token: 'token' }));
         const model: LoginModel = { email: 'sam@sample.com', password: 'a' };
 
         testObject.login(model).subscribe(result => {
@@ -66,7 +65,7 @@ describe('AuthService', () => {
 
     it('should return false and nothing add to localStorage', done => {
         spyOn(window.localStorage, 'setItem');
-        spyOn(httpClient, 'post').and.returnValue(Observable.of(<TokenModel>{ token: null }));
+        spyOn(httpClient, 'post').and.returnValue(of(<TokenModel>{ token: null }));
         const model: LoginModel = { email: 'sam@sample.com', password: 'a' };
 
         testObject.login(model).subscribe(result => {

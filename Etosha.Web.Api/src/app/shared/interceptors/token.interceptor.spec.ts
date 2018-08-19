@@ -1,7 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { TokenInterceptor } from './token.interceptor';
 
@@ -28,7 +27,7 @@ describe('TokenInterceptor', () => {
     spyOn(next, 'handle').and.callFake(request => {
       expect(request.headers.get('Authorization')).toEqual('Bearer token');
       done();
-      return Observable.of({});
+      return of({});
     });
 
     testObject.intercept(new HttpRequest('get', '/', {}), next).subscribe(_ => { });

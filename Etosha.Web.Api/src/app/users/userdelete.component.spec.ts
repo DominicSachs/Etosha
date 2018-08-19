@@ -1,6 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { ISubscription } from 'rxjs/Subscription';
+import { of } from 'rxjs';
 import { User } from './user.model';
 import { UserService } from './user.service';
 import { UserDeleteComponent } from './userdelete.component';
@@ -13,7 +12,7 @@ describe('UserDeleteComponent', () => {
 
     beforeEach(() => {
         activatedRoute = <any>{
-            params: Observable.of({ id: 1 })
+            params: of({ id: 1 })
         };
 
         router = <any>{
@@ -21,15 +20,15 @@ describe('UserDeleteComponent', () => {
         };
 
         userService = <any>{
-            getUser: (id: number) => Observable.of({}),
-            deleteUser: (user: User) => Observable.of({})
+            getUser: (id: number) => of({}),
+            deleteUser: (user: User) => of({})
         };
 
         component = new UserDeleteComponent(activatedRoute, userService, router);
     });
 
     it('should unsubscribe', () => {
-        const testSubscription = Observable.of({}).subscribe();
+        const testSubscription = of({}).subscribe();
         spyOn(activatedRoute.params, 'subscribe').and.returnValue(testSubscription);
         spyOn(testSubscription, 'unsubscribe');
         component.ngOnInit();
@@ -40,7 +39,7 @@ describe('UserDeleteComponent', () => {
 
     it('should init an existing user', () => {
         const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
-        spyOn(userService, 'getUser').and.returnValue(Observable.of(user));
+        spyOn(userService, 'getUser').and.returnValue(of(user));
         component.ngOnInit();
 
         expect(component.user).toBe(user);
@@ -49,7 +48,7 @@ describe('UserDeleteComponent', () => {
 
     it('should do nothing on submit if !valid', () => {
         component.user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
-        spyOn(userService, 'deleteUser').and.returnValue(Observable.of({}));
+        spyOn(userService, 'deleteUser').and.returnValue(of({}));
         spyOn(router, 'navigateByUrl');
         component.delete();
 

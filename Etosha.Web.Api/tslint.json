@@ -14,12 +14,10 @@
     ]
   },
   "rules": {
-    /* we don't want single argument lambdas to have those redundant braces */
     "arrow-parens": [
       true,
       "ban-single-arg-parens"
     ],
-    /* we don't want disabled or focused tests */
     "ban": [
       true,
       "fdescribe",
@@ -27,22 +25,21 @@
       "xit",
       "fit"
     ],
-    /* we don't prefix our interfaces */
+    "deprecation": {
+      "severity": "warning"
+    },
     "interface-name": [
       true,
       "never-prefix"
     ],
-    /* we have failed to keep our lines under 300 characters */
     "max-line-length": [
       true,
       300
     ],
-    /* we want forbid to use the default public modifier */
     "member-access": [
       true,
       "no-public"
     ],
-    /* we want to force an consistent member ordering in every file. */
     "member-ordering": [
       true,
       {
@@ -65,32 +62,25 @@
         ]
       }
     ],
-    /* we're OK with this since we're not using JSX */
     "no-angle-bracket-type-assertion": false,
-    /* we do rename our inputs */
     "no-input-rename": false,
-    /* we do rename our outputs */
     "no-output-rename": false,
-    /* we do use require() for our theme specific resources */
     "no-require-imports": false,
-    /* that's why we need this too */
     "no-var-requires": false,
-    /* we think these shorthands are ugly */
     "object-literal-shorthand": [
       true,
       "never"
     ],
-    /* we're using plain functions sometimes */
     "only-arrow-functions": false,
-    /* we don't like trailing commas in the multi line expressions */
+    "rxjs-no-finnish": {
+      "severity": "error"
+    },
     "trailing-comma": [
       true,
       {
         "multiline": "never",
         "singleline": "never"
       }
-    ],
-    /* we have to disable view encapsulation because of the CoBa main.css */
-    "use-view-encapsulation": false
+    ]
   }
 }

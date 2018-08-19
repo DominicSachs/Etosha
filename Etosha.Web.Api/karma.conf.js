@@ -26,7 +26,13 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    customLaunchers: {
+      HeadlessChrome: {
+        base: 'ChromeHeadless',
+        flags: ['--disable-gpu', '--disable-extensions']
+      }
+    },
+    browsers: ['HeadlessChrome'],
     singleRun: true,
     junitReporter: {
       outputDir: 'ng-tests',
