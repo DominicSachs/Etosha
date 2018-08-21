@@ -17,10 +17,10 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
+      dir: require('path').join(__dirname, '../coverage'), 
+      reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
     },
-    
     reporters: ['progress', 'kjhtml', 'junit'],
     port: 9876,
     colors: true,
@@ -29,7 +29,7 @@ module.exports = function (config) {
     customLaunchers: {
       HeadlessChrome: {
         base: 'ChromeHeadless',
-        flags: ['--disable-gpu', '--disable-extensions']
+        flags: ['--disable-gpu', '--no-sandbox']
       }
     },
     browsers: ['HeadlessChrome'],
