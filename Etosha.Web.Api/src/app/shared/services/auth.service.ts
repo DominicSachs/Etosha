@@ -1,13 +1,12 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject ,  Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { LoginModel } from '../models/login.model';
 import { TokenModel } from '../models/token.model';
 import { BaseService } from './base.service';
-
-import { BehaviorSubject ,  Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService extends BaseService {

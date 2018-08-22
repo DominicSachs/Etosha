@@ -46,7 +46,7 @@ describe('UsereditComponent', () => {
     });
 
     it('should init an existing user', () => {
-        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
+        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
         spyOn(userService, 'getUser').and.returnValue(of(user));
         component.ngOnInit();
         expect(component.userForm.value.id).toBe(user.id);
@@ -64,7 +64,7 @@ describe('UsereditComponent', () => {
     });
 
     it('should submit, call saveUser and navigate by url', () => {
-        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com' };
+        const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
         spyOn(userService, 'saveUser').and.returnValue(of(user));
         spyOn(router, 'navigateByUrl');
         component.onSubmit({ value: user, valid: true });

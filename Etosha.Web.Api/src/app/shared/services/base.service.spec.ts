@@ -33,11 +33,11 @@ describe('BaseService', () => {
   });
 
   it('sould return server error', () => {
-    const response = { headers: new Headers({'foo': 'bar'}), error: { type: 'BadRequest' } };
+    const response = { headers: new Headers({foo: 'bar'}), error: { type: 'BadRequest' } };
 
     testObject.handleError(response).subscribe(
       () => { },
-      (error) => {
+      error => {
         expect(error).toBe('Server error');
       });
   });
