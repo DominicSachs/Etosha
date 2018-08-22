@@ -5,7 +5,7 @@ namespace Etosha.Server.Common.Actions.UserActions
 {
 	public class ListUserAction : AbstractAction<ListUserActionResult>
 	{
-		public ListUserAction(ActionCallerContext context) : base(context) { }
+		public ListUserAction(ActionCallContext context) : base(context) { }
 	}
 
 	public class ListUserActionResult : AbstractActionResult<ListUserAction>

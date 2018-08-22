@@ -6,17 +6,17 @@
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
         <mat-form-field>
-          <input matInput placeholder="Email" type="email" name="email" formControlName="email" autofocus autocomplete="off" />
-          <mat-error *ngIf="loginForm.controls.email.errors?.required">You must enter a value.</mat-error>
-          <mat-error *ngIf="loginForm.controls.email.errors?.pattern">Email has an invalid format.</mat-error>
+          <input matInput [placeholder]="'user.email' | translate" type="email" name="email" formControlName="email" autofocus autocomplete="off" />
+          <mat-error *ngIf="loginForm.controls.email.errors?.required">{{ 'validation.required' | translate }}</mat-error>
+          <mat-error *ngIf="loginForm.controls.email.errors?.pattern">{{ 'validation.email' | translate }}</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" name="password" formControlName="password" autocomplete="off" />
+          <input matInput [placeholder]="'user.password' | translate" [type]="hide ? 'password' : 'text'" name="password" formControlName="password" autocomplete="off" />
           <mat-icon matSuffix class="password-visible" (click)="hide = !hide">{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
-          <mat-error *ngIf="loginForm.controls.password.errors?.required">You must enter a value.</mat-error>
+          <mat-error *ngIf="loginForm.controls.password.errors?.required">{{ 'validation.required' | translate }}</mat-error>
         </mat-form-field>
         <mat-card-actions align="end">
-          <button mat-raised-button type="submit" [disabled]="!loginForm.valid" color="primary">Login</button>
+          <button mat-raised-button type="submit" [disabled]="!loginForm.valid" color="primary">{{ 'actions.login' | translate }}</button>
         </mat-card-actions>
       </form>
     </mat-card-content>

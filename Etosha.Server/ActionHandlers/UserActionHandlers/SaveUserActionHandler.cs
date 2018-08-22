@@ -1,12 +1,10 @@
 ﻿using Etosha.Server.ActionHandlers.Base;
 using Etosha.Server.Common.Actions.UserActions;
-using Etosha.Server.Common.Models;
+using Etosha.Server.Common.Validation;
 using Etosha.Server.Entities;
 using Etosha.Server.EntityFramework;
 using Etosha.Server.Infrastructure;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Etosha.Server.ActionHandlers.UserActionHandlers
@@ -15,26 +13,31 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
     {
         private readonly AppDbContext _context;
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
 
-        public SaveUserActionHandler(AppDbContext appDbContext, UserManager<AppUser> userManager)
+        public SaveUserActionHandler(AppDbContext appDbContext, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             _context = appDbContext;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         protected override async Task<SaveUserActionResult> ExecuteInternal(SaveUserAction action)
         {
+            Require.ThatNotNull(action.User, nameof(action.User));
+
             var user = action.User;
+            var dbUser = default(AppUser);
+
             if (action.User.Id == 0)
             {
-                var autoPassword = PasswordGenerator.GenerateRandomPassword();
-                var newUser = new AppUser(user.Email, user.FirstName, user.LastName, user.Email);
-                await _userManager.CreateAsync(newUser, autoPassword);
-                action.User.Id = newUser.Id;
+                dbUser = new AppUser(user.Email, user.FirstName, user.LastName, user.Email);
+                var password = PasswordGenerator.GenerateRandomPassword();
+                await _userManager.CreateAsync(dbUser, password);
             }
             else
             {
-                var dbUser = await _userManager.FindByIdAsync(user.Id.ToString());
+                dbUser = await _userManager.FindByIdAsync(user.Id.ToString());
                 dbUser.FirstName = user.FirstName;
                 dbUser.LastName = user.LastName;
                 dbUser.Email = user.Email;
@@ -42,18 +45,21 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
                 await _userManager.UpdateAsync(dbUser);
             }
 
-            var createdUser = from u in _context.Users
-                              where u.Id == user.Id
-                              select new User
-                              {
-                                  Id = u.Id,
-                                  FirstName = u.FirstName,
-                                  LastName = u.LastName,
-                                  Email = u.Email,
-                                  UserName = u.UserName
-                              };
+            await SetUserRole(dbUser, user.RoleId);
 
-            return new SaveUserActionResult(action, await createdUser.SingleOrDefaultAsync());
+            return new SaveUserActionResult(action, dbUser.Id);
+        }
+
+        private async Task SetUserRole(AppUser user, int roleId)
+        {
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var newRole = await _roleManager.FindByIdAsync(roleId.ToString());
+
+            if (!userRoles.Contains(newRole.Name))
+            {
+                await _userManager.RemoveFromRolesAsync(user, userRoles);
+                await _userManager.AddToRoleAsync(user, newRole.Name);
+            }
         }
     }
 }

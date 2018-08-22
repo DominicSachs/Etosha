@@ -6,12 +6,14 @@ using Etosha.Web.Api.Infrastructure.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using System.IO;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Etosha.Web.Api
@@ -56,6 +58,9 @@ namespace Etosha.Web.Api
         .AddAuthorization()
         .AddDataAnnotations()
         .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+      services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)

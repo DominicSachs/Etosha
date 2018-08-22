@@ -1,0 +1,37 @@
+{
+    "actions": {
+        "add": "Add",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "login": "Login",
+        "logout": "Logout",
+        "save": "Save"
+    },
+    "menu": {
+        "home": "Home",
+        "users": "Users",
+        "stocks": "Stocks"
+    },
+    "stocks": {
+        "change": "Change",
+        "dayHigh": "High",
+        "dayLow": "Low",
+        "percent": "Percent",
+        "price": "Price",
+        "symbol": "Symbol"
+    },
+    "user": {
+        "deleteConfirm": "Do you want delete",
+        "email": "Email",
+        "firstName": "Firstname",
+        "lastName": "Lastname",
+        "role": "Role",
+        "password": "Password",
+        "userName": "Username"
+    },
+    "validation": {
+        "required": "You must enter a value.",
+        "email": "Email has an invalid format."
+    }
+}

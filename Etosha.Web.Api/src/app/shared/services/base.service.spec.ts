@@ -31,4 +31,14 @@ describe('BaseService', () => {
         expect(error).toBe('Email is invalid.\n');
       });
   });
+
+  it('sould return server error', () => {
+    const response = { headers: new Headers({'foo': 'bar'}), error: { type: 'BadRequest' } };
+
+    testObject.handleError(response).subscribe(
+      () => { },
+      (error) => {
+        expect(error).toBe('Server error');
+      });
+  });
 });

@@ -5,7 +5,7 @@ namespace Etosha.Server.Common.Actions.UserActions
 {
 	public class GetUserAction : AbstractAction<GetUserActionResult>
 	{
-		public GetUserAction(ActionCallerContext context, int id) : base(context)
+		public GetUserAction(ActionCallContext context, int id) : base(context)
 		{
 			UserId = id;
 		}
