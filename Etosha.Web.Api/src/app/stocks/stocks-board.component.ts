@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { HubConnection } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import { environment } from '../../environments/environment';
 import { Stock } from './stock.model';
 
@@ -16,12 +16,10 @@ export class StocksBoardComponent implements OnInit {
   dataSource: MatTableDataSource<Stock>;
 
   ngOnInit() {
-    new signalR.HubConnectionBuilder()
-        .withUrl(this.webSocketEndpoint
-        .configureLogging(signalR.LogLevel.Information)
-        .build(); )
-
-    // this.hubConnection = new HubConnection(environment.webSocketEndpoint);
+    this.hubConnection = new HubConnectionBuilder()
+        .withUrl(environment.webSocketEndpoint)
+        .configureLogging(LogLevel.Information)
+        .build();
 
     this.hubConnection
       .start()

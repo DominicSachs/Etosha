@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using System.IO;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Etosha.Web.Api
 {
@@ -35,7 +36,7 @@ namespace Etosha.Web.Api
       corsBuilder.WithOrigins("http://localhost:4200", "http://localhost:52017", "https://etosha.azurewebsites.net");
       corsBuilder.AllowCredentials();
       services.AddEtoshaServices();
-      services.AddEntityFramework(Configuration["ConnectionStrings:DefaultConnection"]);
+      services.AddEntityFramework(Configuration.GetConnectionString("DefaultConnection"));
       services.AddIdentityFramework(Configuration.GetSection("PasswordOptions").Get<PasswordOptions>());
       services.AddSingleton<IWebTokenBuilder, WebTokenBuilder>();
       services.AddJsonWebTokenConfiguration(Configuration);
@@ -53,7 +54,8 @@ namespace Etosha.Web.Api
           setup.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
         })
         .AddAuthorization()
-        .AddDataAnnotations();
+        .AddDataAnnotations()
+        .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
