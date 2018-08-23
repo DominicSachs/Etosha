@@ -43,7 +43,7 @@ test_script:
 - ps: dotnet test
 - ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\src')
 - ps: Set-Location -Path $path
-- ps: ng test --watch false --single-run --reporters=junit
+- ps: ng test --watch=false
 
 after_test:
 - ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\ng-tests')
