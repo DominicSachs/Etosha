@@ -17,6 +17,7 @@ export class LanguageChoiceComponent implements OnInit {
   }
 
   onLanguageChange(event) {
+    console.log(event);
     this.translateService.use(event.value);
   }
 }

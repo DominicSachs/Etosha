@@ -1,5 +1,5 @@
 <div class="language-wrapper">
-  <mat-select [(value)]="selected" (change)="onLanguageChange($event)" [ngClass]="selected">
+  <mat-select [(value)]="selected" (selectionChange)="onLanguageChange($event)" [ngClass]="selected">
     <mat-option value="de-DE">
       <img src="/assets/images/de.svg" width="80px" />
     </mat-option>
