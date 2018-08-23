@@ -1,20 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from './user.service';
-import { User } from './user.model';
-import { Regex } from '../shared/validation/regex.model';
-import { RoleService } from '../shared/services/role.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserRole } from '../shared/models/role.model';
+import { RoleService } from '../shared/services/role.service';
+import { Regex } from '../shared/validation/regex.model';
+import { User } from './user.model';
+import { UserService } from './user.service';
 
 @Component({
   templateUrl: './useredit.component.html',
   styleUrls: ['./useredit.component.scss']
 })
 export class UserEditComponent implements OnInit, OnDestroy {
-  userForm: FormGroup;
-  roles: Array<UserRole>;
   private routeSubscription: any;
+  userForm: FormGroup;
+  roles: UserRole[];
 
   constructor(private route: ActivatedRoute, private userService: UserService, private formBuilder: FormBuilder,
               private router: Router, private roleService: RoleService) {

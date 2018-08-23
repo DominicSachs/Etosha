@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { HubConnection } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import { environment } from '../../environments/environment';
 import { Stock } from './stock.model';
 
@@ -12,11 +12,14 @@ import { Stock } from './stock.model';
 export class StocksBoardComponent implements OnInit {
   private hubConnection: HubConnection;
   displayedColumns = ['symbol', 'price', 'dayHigh', 'dayLow', 'change', 'percentChange'];
-  stocks: Array<Stock>;
+  stocks: Stock[];
   dataSource: MatTableDataSource<Stock>;
 
   ngOnInit() {
-    this.hubConnection = new HubConnection(environment.webSocketEndpoint);
+    this.hubConnection = new HubConnectionBuilder()
+        .withUrl(environment.webSocketEndpoint)
+        .configureLogging(LogLevel.Information)
+        .build();
 
     this.hubConnection
       .start()
@@ -31,7 +34,7 @@ export class StocksBoardComponent implements OnInit {
         });
       });
 
-      this.hubConnection.on('marketOpened', () => {
+    this.hubConnection.on('marketOpened', () => {
         this.streamStocks();
       });
   }

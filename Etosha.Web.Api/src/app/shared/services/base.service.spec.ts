@@ -1,5 +1,5 @@
-import { BaseService } from './base.service';
 import { HttpHeaders } from '@angular/common/http';
+import { BaseService } from './base.service';
 
 class TestService extends BaseService {
   handleError(e: any) {
@@ -18,28 +18,26 @@ describe('BaseService', () => {
     const response = { headers: new Headers({'Application-Error': 'foo'}) };
 
     testObject.handleError(response).subscribe(
-      () => { },
-      (error) => {
+      () => { }, error => {
         expect(error).toBe('foo');
       });
   });
 
   it('sould return model error', () => {
-    const response = { headers: new Headers({'foo': 'bar'}), error: { 'email': 'Email is invalid.' } };
+    const response = { headers: new Headers({foo: 'bar'}), error: { email: 'Email is invalid.' } };
 
     testObject.handleError(response).subscribe(
-      () => { },
-      (error) => {
+      () => { }, error => {
         expect(error).toBe('Email is invalid.\n');
       });
   });
 
   it('sould return server error', () => {
-    const response = { headers: new Headers({'foo': 'bar'}), error: { type: 'BadRequest' } };
+    const response = { headers: new Headers({foo: 'bar'}), error: { type: 'BadRequest' } };
 
     testObject.handleError(response).subscribe(
       () => { },
-      (error) => {
+      error => {
         expect(error).toBe('Server error');
       });
   });

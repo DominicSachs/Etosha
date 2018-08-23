@@ -6,11 +6,11 @@ import {
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatSelectModule,
     MatSidenavModule,
     MatSortModule,
     MatTableModule,
-    MatToolbarModule,
-    MatSelectModule
+    MatToolbarModule
 } from '@angular/material';
 
 @NgModule({

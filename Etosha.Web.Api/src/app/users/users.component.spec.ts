@@ -1,15 +1,14 @@
-import { UsersComponent } from './users.component';
-import { UserService } from './user.service';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable, of } from 'rxjs';
 import { User } from './user.model';
+import { UserService } from './user.service';
+import { UsersComponent } from './users.component';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
   let userService: UserService;
 
   userService = <any>{
-    getUsers: () => Observable.of([])
+    getUsers: () => of([])
   };
 
   beforeEach(() => {
@@ -22,8 +21,7 @@ describe('UsersComponent', () => {
       { id: 2, firstName: 'B', lastName: 'B', userName: 'b@b.com', email: 'b@b.com', roleId: 1 }
     ];
 
-    spyOn(userService, 'getUsers').and.returnValue(Observable.of(users));
-
+    spyOn(userService, 'getUsers').and.returnValue(of(users));
     component.ngOnInit();
 
     expect(component.dataSource.data.length).toBe(2);

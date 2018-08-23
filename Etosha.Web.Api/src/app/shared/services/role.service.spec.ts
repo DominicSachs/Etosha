@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { RoleService } from './role.service';
 import { UserRole } from '../models/role.model';
+import { RoleService } from './role.service';
 
 describe('RoleService', () => {
   let httpClient: HttpClient;
@@ -10,7 +10,7 @@ describe('RoleService', () => {
 
   beforeEach(() => {
     httpClient = <any>{
-      get: _ => Observable.of({})
+      get: _ => of({})
     };
 
     service = new RoleService(httpClient);
@@ -22,7 +22,7 @@ describe('RoleService', () => {
       { id: 2, name: 'Users' }
     ];
 
-    spyOn(httpClient, 'get').and.returnValue(Observable.of(roles));
+    spyOn(httpClient, 'get').and.returnValue(of(roles));
 
     service.getRoles().subscribe(result => {
       expect(httpClient.get).toHaveBeenCalledWith(environment.apiEndpoint + '/roles');

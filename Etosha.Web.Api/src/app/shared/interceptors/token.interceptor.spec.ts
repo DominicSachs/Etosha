@@ -1,8 +1,8 @@
-import { Router } from '@angular/router';
 import { HttpRequest } from '@angular/common/http';
-import { TokenInterceptor } from './token.interceptor';
+import { Router } from '@angular/router';
+import { Observable, of, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs/Observable';
+import { TokenInterceptor } from './token.interceptor';
 
 describe('TokenInterceptor', () => {
   let testObject: TokenInterceptor;
@@ -27,14 +27,14 @@ describe('TokenInterceptor', () => {
     spyOn(next, 'handle').and.callFake(request => {
       expect(request.headers.get('Authorization')).toEqual('Bearer token');
       done();
-      return Observable.of({});
+      return of({});
     });
 
     testObject.intercept(new HttpRequest('get', '/', {}), next).subscribe(_ => { });
   });
 
   it('should navigate to login on 401', done => {
-    const next = <any>{ handle: _ => Observable.throw({ status: 401 }) };
+    const next = <any>{ handle: _ => throwError({ status: 401 }) };
 
     testObject.intercept(new HttpRequest('get', '/', {}), next).subscribe(_ => {
       expect(router.navigate).toHaveBeenCalledWith(['login']);
@@ -43,7 +43,7 @@ describe('TokenInterceptor', () => {
   });
 
   it('should navigate to login on 403', done => {
-    const next = <any>{ handle: _ => Observable.throw({ status: 403 }) };
+    const next = <any>{ handle: _ => throwError({ status: 403 }) };
 
     testObject.intercept(new HttpRequest('get', '/', {}), next).subscribe(_ => {
       expect(router.navigate).toHaveBeenCalledWith(['login']);
@@ -52,7 +52,7 @@ describe('TokenInterceptor', () => {
   });
 
   it('should throw an error if not 401 or 403', done => {
-    const next = <any>{ handle: _ => Observable.throw({ status: 400 }) };
+    const next = <any>{ handle: _ => throwError({ status: 400 }) };
 
     testObject.intercept(new HttpRequest('get', '/', {}), next).subscribe(_ => { }, error => {
       expect(error.status).toEqual(400);

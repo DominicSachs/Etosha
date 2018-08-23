@@ -3,7 +3,9 @@ using Etosha.Web.Api.Infrastructure.SampleData;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Threading.Channels;
 using System.Threading.Tasks;
+using Etosha.Web.Api.Extensions;
 
 namespace Etosha.Web.Api.Hubs
 {
@@ -21,9 +23,9 @@ namespace Etosha.Web.Api.Hubs
       return _stockTicker.GetAllStocks();
     }
 
-    public IObservable<Stock> StreamStocks()
+    public ChannelReader<Stock> StreamStocks()
     {
-      return _stockTicker.StreamStocks();
+      return _stockTicker.StreamStocks().AsChannelReader();
     }
 
     public string GetMarketState()

@@ -1,6 +1,6 @@
-import { LanguageChoiceComponent } from './language-choice.component';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { LanguageChoiceComponent } from './language-choice.component';
 
 describe('LanguageChoiceComponent', () => {
   let component: LanguageChoiceComponent;
@@ -8,8 +8,8 @@ describe('LanguageChoiceComponent', () => {
 
   beforeEach(() => {
     translateService = <any>{
-      setDefaultLang(language: string) { },
-      use: (language: string) => Observable.of({})
+      setDefaultLang: function(language: string) { },
+      use: (language: string) => of({})
     };
 
     component = new LanguageChoiceComponent(translateService);

@@ -11,9 +11,7 @@ namespace Etosha.Web.Api
   {
     public static void Main(string[] args)
     {
-      // BuildWebHost(args).Run();
-
-      var host = BuildWebHost(args);
+      var host = CreateWebHostBuilder(args).Build();
 
       using (var scope = host.Services.CreateScope())
       {
@@ -33,11 +31,10 @@ namespace Etosha.Web.Api
       host.Run();
     }
 
-    public static IWebHost BuildWebHost(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>()
-            .UseUrls("http://localhost:52017")
-            .CaptureStartupErrors(true)
-            .Build();
+    private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+      WebHost.CreateDefaultBuilder(args)
+        .UseStartup<Startup>()
+        .UseUrls("http://localhost:52017")
+        .CaptureStartupErrors(true);
   }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -37,7 +38,7 @@ namespace Etosha.Web.Api
       corsBuilder.WithOrigins("http://localhost:4200", "http://localhost:52017", "https://etosha.azurewebsites.net");
       corsBuilder.AllowCredentials();
       services.AddEtoshaServices();
-      services.AddEntityFramework(Configuration["ConnectionStrings:DefaultConnection"]);
+      services.AddEntityFramework(Configuration.GetConnectionString("DefaultConnection"));
       services.AddIdentityFramework(Configuration.GetSection("PasswordOptions").Get<PasswordOptions>());
       services.AddSingleton<IWebTokenBuilder, WebTokenBuilder>();
       services.AddJsonWebTokenConfiguration(Configuration);
@@ -55,7 +56,8 @@ namespace Etosha.Web.Api
           setup.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
         })
         .AddAuthorization()
-        .AddDataAnnotations();
+        .AddDataAnnotations()
+        .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 
       services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
