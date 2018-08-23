@@ -1,11 +1,11 @@
 {
   "rulesDirectory": [
-    "node_modules/codelyzer"
+    "node_modules/codelyzer",
+    "node_modules/rxjs-tslint"
   ],
   "extends": [
     "tslint:recommended",
-    "tslint-angular",
-    "rxjs-tslint-rules"
+    "tslint-angular"
   ],
   "linterOptions": {
     "exclude": [
@@ -72,9 +72,13 @@
       "never"
     ],
     "only-arrow-functions": false,
-    "rxjs-no-finnish": {
-      "severity": "error"
-    },
+
+    "rxjs-collapse-imports": true,
+    /* only tree-shakable methods */
+    "rxjs-no-static-observable-methods": true,
+    "rxjs-pipeable-operators-only": true,
+    "rxjs-proper-imports": true,
+
     "trailing-comma": [
       true,
       {
