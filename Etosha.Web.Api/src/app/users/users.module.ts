@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../shared/modules/material.module';
 import { SharedModule } from '../shared/modules/shared.module';
+import { RoleService } from '../shared/services/role.service';
 import { UserService } from './user.service';
 import { UserDeleteComponent } from './userdelete.component';
 import { UserEditComponent } from './useredit.component';
@@ -22,6 +23,6 @@ import { UsersComponent } from './users.component';
     FlexLayoutModule
   ],
   declarations: [UsersComponent, UserEditComponent, UserDeleteComponent],
-  providers: [UserService]
+  providers: [UserService, RoleService]
 })
 export class UsersModule { }
