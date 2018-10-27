@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://localhost:52017/api',
-  webSocketEndpoint: 'http://localhost:52017/stocks'
+  apiEndpoint: 'http://localhost:64377/api',
+  webSocketEndpoint: 'http://localhost:64377/stocks'
 };
