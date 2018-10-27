@@ -21,13 +21,12 @@ install:
 - ps: Install-Product node $env:nodejs_version
 - cmd: npm -g i npm@latest
 - cmd: npm -g i @angular/cli@latest
-- cmd: cd Etosha.Web.Api
+- cmd: cd Etosha.Web.Api/client-app
 - cmd: npm i
-- cmd: cd..
 before_build:
 - cmd: cd %APPVEYOR_BUILD_FOLDER%
 - cmd: dotnet restore
-- cmd: cd %APPVEYOR_BUILD_FOLDER%\Etosha.Web.Api\client-app\src
+- cmd: cd %APPVEYOR_BUILD_FOLDER%\Etosha.Web.Api\client-app
 - cmd: ng build --prod
 build:
   project: Etosha.sln
@@ -41,7 +40,7 @@ test_script:
 - ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Tests\Etosha.Web.Api.Tests')
 - ps: Set-Location -Path $path
 - ps: dotnet test
-- ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\client-app\src')
+- ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\client-app')
 - ps: Set-Location -Path $path
 - ps: ng test --watch=false
 
