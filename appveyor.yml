@@ -1,4 +1,4 @@
-version: 1.0.{build}
+111version: 1.0.{build}
 branches:
   only:
   - develop
@@ -27,7 +27,7 @@ install:
 before_build:
 - cmd: cd %APPVEYOR_BUILD_FOLDER%
 - cmd: dotnet restore
-- cmd: cd %APPVEYOR_BUILD_FOLDER%\Etosha.Web.Api\client-app
+- cmd: cd %APPVEYOR_BUILD_FOLDER%\Etosha.Web.Api\client-app\src
 - cmd: ng build --prod
 build:
   project: Etosha.sln
@@ -41,7 +41,7 @@ test_script:
 - ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Tests\Etosha.Web.Api.Tests')
 - ps: Set-Location -Path $path
 - ps: dotnet test
-- ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\client-app')
+- ps: $path = [io.path]::combine($env:APPVEYOR_BUILD_FOLDER, 'Etosha.Web.Api\client-app\src')
 - ps: Set-Location -Path $path
 - ps: ng test --watch=false
 
