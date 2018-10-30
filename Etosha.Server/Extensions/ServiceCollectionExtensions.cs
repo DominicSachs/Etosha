@@ -14,7 +14,6 @@ namespace Etosha.Server.Extensions
     {
         public static void AddEntityFramework(this IServiceCollection services, string connectionString)
         {
-            // services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
             services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
         }
 
