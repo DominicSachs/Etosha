@@ -17,7 +17,7 @@ environment:
   PATH: '%AppData%\npm;%AppData%\npm\node_modules\@angular\cli\bin;%PATH%'
   nodejs_version: 8
 install:
-- ps: choco install googlechrome
+- ps: choco install googlechrome --ignore-checksums
 - ps: Install-Product node $env:nodejs_version
 - cmd: npm -g i npm@latest
 - cmd: npm -g i @angular/cli@latest
