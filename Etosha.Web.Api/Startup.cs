@@ -7,71 +7,57 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Hosting;
 
 namespace Etosha.Web.Api
 {
     public class Startup
     {
-        private readonly ILogger<Startup> _logger;
+        private readonly IConfiguration _configuration;
 
-        public Startup(ILogger<Startup> logger, IConfiguration configuration)
+        public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-            _logger = logger;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEtoshaServices();
-            services.AddEntityFramework(Configuration.GetConnectionString("DefaultConnection"));
-            services.AddIdentityFramework(Configuration.GetSection("PasswordOptions").Get<PasswordOptions>());
+            services.AddEntityFramework(_configuration.GetConnectionString("DefaultConnection"));
+            services.AddIdentityFramework(_configuration.GetSection("PasswordOptions").Get<PasswordOptions>());
             services.AddSingleton<IWebTokenBuilder, WebTokenBuilder>();
-            services.AddJsonWebTokenConfiguration(Configuration);
+            services.AddJsonWebTokenConfiguration(_configuration);
             services.AddSignalR();
             services.AddScoped<StockTickerHub>();
             services.AddSingleton<StockTicker>();
-            services.AddMvcCore()
-              .AddJsonOptions(settings =>
-              {
-                  settings.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-              })
-              .AddJsonFormatters()
-              .AddAuthorization()
-              .AddDataAnnotations()
-              .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddControllers();
+            services.AddAuthentication();
+            services.AddAuthorization();            
             services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
-
-            services.AddSpaStaticFiles(config =>
-            {
-                config.RootPath = "client-app/dist";
-            });
+            services.AddSpaStaticFiles(config => config.RootPath = "client-app/dist" );
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<StockTickerHub>("/stocks");
-            });
-
-            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            app.UseMvc();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<StockTickerHub>("/stocks");
+            });
+            
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "client-app";
