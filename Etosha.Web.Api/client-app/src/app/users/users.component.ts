@@ -10,7 +10,8 @@ import { UserService } from './user.service';
 export class UsersComponent implements OnInit {
   displayedColumns = ['firstName', 'lastName', 'email', 'userName', 'actions'];
   dataSource: MatTableDataSource<User>;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: false })
+  sort: MatSort;
 
   constructor(private userService: UserService) { }
 
