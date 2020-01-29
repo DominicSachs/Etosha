@@ -7,7 +7,7 @@
   <span>Etosha</span>
   <div fxFlex fxLayoutAlign="end start" fxLayoutGap="20px">
     <language-choice></language-choice>
-    <a mat-raised-button *ngIf="!(isLoggedIn | async)" routerLink="/login" href="#">{{ 'actions.login' | translate }}</a>
+    <a mat-raised-button *ngIf="(isLoggedIn | async) === false" routerLink="/login" href="#">{{ 'actions.login' | translate }}</a>
     <button mat-raised-button *ngIf="(isLoggedIn | async)" (click)="logout()">{{ 'actions.logout' | translate }}</button>
   </div>
 </mat-toolbar>
