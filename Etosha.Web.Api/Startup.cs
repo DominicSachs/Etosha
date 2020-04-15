@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +24,7 @@ namespace Etosha.Web.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddEtoshaServices();
             services.AddEntityFramework(_configuration.GetConnectionString("DefaultConnection"));
             services.AddIdentityFramework(_configuration.GetSection("PasswordOptions").Get<PasswordOptions>());
@@ -47,9 +47,10 @@ namespace Etosha.Web.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(builder => builder.AllowCredentials().AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+            app.UseRouting();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
@@ -64,7 +65,7 @@ namespace Etosha.Web.Api
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }
