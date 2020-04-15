@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import { environment } from '../../environments/environment';
 import { Stock } from './stock.model';
