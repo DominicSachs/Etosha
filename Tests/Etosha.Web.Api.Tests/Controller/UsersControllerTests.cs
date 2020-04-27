@@ -1,13 +1,14 @@
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Etosha.Server.Common.Actions.UserActions;
 using Etosha.Server.Common.Execution;
 using Etosha.Server.Common.Models;
 using Etosha.Web.Api.Controllers;
 using FluentAssertions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Etosha.Web.Api.Tests.Controller
@@ -22,6 +23,15 @@ namespace Etosha.Web.Api.Tests.Controller
             _executor = Substitute.For<IActionExecutor>();
             var logger = Substitute.For<ILogger<UsersController>>();
             _testObject = new UsersController(new ClaimsPrincipal(), logger, _executor);
+        }
+
+        [Fact]
+        public void Has_Correct_Policy()
+        {
+            var type = _testObject.GetType();
+            var attributes = (AuthorizeAttribute[])type.GetCustomAttributes(typeof(AuthorizeAttribute), true);
+
+            attributes.Length.Should().Be(1);
         }
 
         [Fact]

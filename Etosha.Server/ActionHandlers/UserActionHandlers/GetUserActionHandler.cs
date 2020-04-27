@@ -1,10 +1,11 @@
-﻿using Etosha.Server.ActionHandlers.Base;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Etosha.Server.ActionHandlers.Base;
 using Etosha.Server.Common.Actions.UserActions;
 using Etosha.Server.Common.Models;
 using Etosha.Server.EntityFramework;
+using Etosha.Server.Specifications.UserSpecifications;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Etosha.Server.ActionHandlers.UserActionHandlers
 {
@@ -19,12 +20,13 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 
 		protected override async Task<GetUserActionResult> ExecuteInternal(GetUserAction action)
 		{
-			var users = from u in _context.Users
-                        join ur in _context.UserRoles on u.Id equals ur.UserId
-                        where u.Id == action.UserId
-						select new User(u.Id, u.FirstName, u.LastName, u.Email, u.UserName, ur.RoleId);
+			var user = await _context.Users
+								.Where(new UserIdSpecification(action.UserId).ToExpression())
+								.Join(_context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+								.Select(u => new User(u.User.Id, u.User.FirstName, u.User.LastName, u.User.Email, u.User.UserName, u.UserRole.RoleId))
+								.SingleOrDefaultAsync();
 
-			return new GetUserActionResult(action, await users.SingleOrDefaultAsync());
+			return new GetUserActionResult(action, user);
 		}
 	}
 }

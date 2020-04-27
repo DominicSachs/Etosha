@@ -1,11 +1,14 @@
-﻿using Etosha.Server.ActionHandlers.Base;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Etosha.Server.ActionHandlers.Base;
 using Etosha.Server.Common.Actions.UserActions;
 using Etosha.Server.Common.Models;
 using Etosha.Server.Common.Validation;
+using Etosha.Server.Entities;
 using Etosha.Server.EntityFramework;
+using Etosha.Server.Specifications;
+using Etosha.Server.Specifications.UserSpecifications;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Etosha.Server.ActionHandlers.UserActionHandlers
 {
@@ -22,12 +25,14 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
         {
             Require.ThatNotNull(action.ActionCallContext, nameof(action.ActionCallContext));
 
-            var users = from u in _context.Users
-                        join ur in _context.UserRoles on u.Id equals ur.UserId
-                        where u.Id != action.ActionCallContext.UserId
-                        select new User(u.Id, u.FirstName, u.LastName, u.Email, u.UserName, ur.RoleId);
+            var specification = new NotSpecification<AppUser>(new UserIdSpecification(action.ActionCallContext.UserId));
 
-            return new ListUserActionResult(action, await users.ToArrayAsync());
+            var users = await _context.Users
+                .Where(specification.ToExpression())
+                .Select(u => new User(u.Id, u.FirstName, u.LastName, u.Email, u.UserName))
+                .ToArrayAsync();
+
+            return new ListUserActionResult(action, users);
         }
     }
 }
