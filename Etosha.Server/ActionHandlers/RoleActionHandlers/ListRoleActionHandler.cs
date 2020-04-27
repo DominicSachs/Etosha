@@ -1,10 +1,10 @@
-﻿using Etosha.Server.ActionHandlers.Base;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Etosha.Server.ActionHandlers.Base;
 using Etosha.Server.Common.Actions.RoleActions;
 using Etosha.Server.Common.Models;
 using Etosha.Server.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Etosha.Server.ActionHandlers.RoleActionHandlers
 {
@@ -19,10 +19,9 @@ namespace Etosha.Server.ActionHandlers.RoleActionHandlers
 
         protected override async Task<ListRoleActionResult> ExecuteInternal(ListRoleAction action)
         {
-            var roles = from r in _context.Roles
-                        select new UserRole(r.Id, r.Name);
+            var roles = await _context.Roles.Select(r => new UserRole(r.Id, r.Name)).ToArrayAsync();
 
-            return new ListRoleActionResult(action, await roles.ToArrayAsync());
+            return new ListRoleActionResult(action, roles);
         }
     }
 }

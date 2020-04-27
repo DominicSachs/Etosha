@@ -1,54 +1,55 @@
 <div class="stock-ticker">
   <stocks-ticker [stocks]="stocks"></stocks-ticker>
 </div>
-<mat-table #table [dataSource]="dataSource">
-  <ng-container matColumnDef="symbol">
-    <mat-header-cell *matHeaderCellDef>{{ 'stocks.symbol' | translate }}</mat-header-cell>
-    <mat-cell *matCellDef="let stock">
-      <span class="mobile-label">{{ 'stocks.symbol' | translate }}:</span>
-      {{ stock.symbol }}
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="price">
-    <mat-header-cell *matHeaderCellDef>{{ 'stocks.price' | translate }}</mat-header-cell>
-    <mat-cell *matCellDef="let stock">
-      <span class="mobile-label">{{ 'stocks.price' | translate }}:</span>
-      {{ stock.price }}
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="dayHigh">
-    <mat-header-cell *matHeaderCellDef>{{ 'stocks.dayHigh' | translate }}</mat-header-cell>
-    <mat-cell *matCellDef="let stock">
-      <span class="mobile-label">{{ 'stocks.dayHigh' | translate }}:</span>
-      {{ stock.dayHigh }}
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="dayLow">
-    <mat-header-cell *matHeaderCellDef>{{ 'stocks.dayLow' | translate }}</mat-header-cell>
-    <mat-cell *matCellDef="let stock">
-      <span class="mobile-label">{{ 'stocks.dayLow' | translate }}:</span>
-      {{ stock.dayLow }}
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="change">
-    <mat-header-cell *matHeaderCellDef>{{ 'stocks.change' | translate }}</mat-header-cell>
-    <mat-cell *matCellDef="let stock">
-      <span class="mobile-label">{{ 'stocks.change' | translate }}:</span>
-      {{ stock.change }}
-      <mat-icon>{{ stock.lastChange >= 0 ? 'trending_up' : 'trending_down' }}</mat-icon>
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="percentChange">
-    <mat-header-cell *matHeaderCellDef>{{ 'stocks.percent' | translate }}</mat-header-cell>
-    <mat-cell *matCellDef="let stock">
-      <span class="mobile-label">{{ 'stocks.percent' | translate }}:</span>
-      {{ stock.percentChange | percent:'1.2-2' }}
-    </mat-cell>
-  </ng-container>
+<div class="p20">
+  <mat-table class="mat-elevation-z8" #table [dataSource]="dataSource">
+    <ng-container matColumnDef="symbol">
+      <mat-header-cell *matHeaderCellDef>{{ 'stocks.symbol' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let stock">
+        <span class="mobile-label">{{ 'stocks.symbol' | translate }}:</span>
+        {{ stock.symbol }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef>{{ 'stocks.price' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let stock">
+        <span class="mobile-label">{{ 'stocks.price' | translate }}:</span>
+        {{ stock.price }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dayHigh">
+      <mat-header-cell *matHeaderCellDef>{{ 'stocks.dayHigh' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let stock">
+        <span class="mobile-label">{{ 'stocks.dayHigh' | translate }}:</span>
+        {{ stock.dayHigh }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dayLow">
+      <mat-header-cell *matHeaderCellDef>{{ 'stocks.dayLow' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let stock">
+        <span class="mobile-label">{{ 'stocks.dayLow' | translate }}:</span>
+        {{ stock.dayLow }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="change">
+      <mat-header-cell *matHeaderCellDef>{{ 'stocks.change' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let stock">
+        <span class="mobile-label">{{ 'stocks.change' | translate }}:</span>
+        {{ stock.change }}
+        <mat-icon>{{ stock.lastChange >= 0 ? 'trending_up' : 'trending_down' }}</mat-icon>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="percentChange">
+      <mat-header-cell *matHeaderCellDef>{{ 'stocks.percent' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let stock">
+        <span class="mobile-label">{{ 'stocks.percent' | translate }}:</span>
+        {{ stock.percentChange | percent:'1.2-2' }}
+      </mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row 
-    *matRowDef="let row; columns: displayedColumns;"
-    [ngClass]="!row.hasChanged ? '' : row.lastChange >= 0 ? 'success' : 'danger'">
-  </mat-row>
-</mat-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+             [ngClass]="!row.hasChanged ? '' : row.lastChange >= 0 ? 'success' : 'danger'">
+    </mat-row>
+  </mat-table>
+</div>

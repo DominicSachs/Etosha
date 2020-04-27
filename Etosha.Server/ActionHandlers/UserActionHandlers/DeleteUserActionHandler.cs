@@ -1,10 +1,11 @@
-﻿using Etosha.Server.ActionHandlers.Base;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Etosha.Server.ActionHandlers.Base;
 using Etosha.Server.Common.Actions.UserActions;
 using Etosha.Server.Entities;
 using Etosha.Server.EntityFramework;
+using Etosha.Server.Specifications.UserSpecifications;
 using Microsoft.AspNetCore.Identity;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Etosha.Server.ActionHandlers.UserActionHandlers
 {
@@ -21,11 +22,8 @@ namespace Etosha.Server.ActionHandlers.UserActionHandlers
 
 		protected override async Task<DeleteUserActionResult> ExecuteInternal(DeleteUserAction action)
 		{
-			var user = from u in _context.Users
-					   where u.Id == action.UserId
-					   select u;
-
-			await _userManager.DeleteAsync(user.Single());
+			var user = _context.Users.Single(new UserIdSpecification(action.UserId).ToExpression());
+			await _userManager.DeleteAsync(user);
 
 			return new DeleteUserActionResult(action);
 		}

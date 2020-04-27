@@ -1,5 +1,5 @@
-﻿using Etosha.Server.Common.Models;
-using System;
+﻿using System;
+using Etosha.Server.Common.Models;
 
 namespace Etosha.Server.Common.Actions.Base
 {
