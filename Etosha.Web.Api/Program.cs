@@ -1,9 +1,9 @@
+using System;
 using Etosha.Server.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace Etosha.Web.Api
 {
@@ -32,11 +32,6 @@ namespace Etosha.Web.Api
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>()
-                        .UseUrls("http://localhost:52017");
-                });
+            Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>().UseUrls("http://localhost:64377"));
     }
 }
