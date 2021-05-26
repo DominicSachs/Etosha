@@ -8,8 +8,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "postinstall": "npm run build"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -28,7 +27,6 @@
     "@ngx-translate/core": "11.0.1",
     "@ngx-translate/http-loader": "4.0.0",
     "core-js": "3.6.4",
-    "node-sass": "4.13.1",
     "rxjs": "6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
