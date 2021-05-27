@@ -23,8 +23,8 @@ describe('TokenInterceptor', () => {
   });
 
   it('should inject authorization token into requests', done => {
-    const next = <any>{ handle: _ => { } };
-    spyOn(next, 'handle').and.callFake(request => {
+    const next = { handle: _ => { } } as any;
+    jest.spyOn(next, 'handle').mockImplementation((request: any) => {
       expect(request.headers.get('Authorization')).toEqual('Bearer token');
       done();
       return of({});
@@ -32,6 +32,7 @@ describe('TokenInterceptor', () => {
 
     testObject.intercept(new HttpRequest('get', '/', {}), next).subscribe(_ => { });
   });
+
 
   it('should navigate to login on 401', done => {
     const next = <any>{ handle: _ => throwError({ status: 401 }) };

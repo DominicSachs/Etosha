@@ -37,8 +37,8 @@ describe('LoginComponent', () => {
     });
 
     it('should navigate to return url', () => {
-        spyOn(router, 'navigateByUrl');
-        spyOn(authService, 'login').and.returnValue(of(true));
+        jest.spyOn(router, 'navigateByUrl');
+        jest.spyOn(authService, 'login').mockReturnValue(of(true));
 
         testObject.ngOnInit();
         testObject.onSubmit({ value: new LoginModel(), valid: true });
@@ -46,8 +46,8 @@ describe('LoginComponent', () => {
     });
 
     it('should navigate to default page without return url', () => {
-        spyOn(router, 'navigateByUrl');
-        spyOn(authService, 'login').and.returnValue(of(true));
+        jest.spyOn(router, 'navigateByUrl');
+        jest.spyOn(authService, 'login').mockReturnValue(of(true));
         activatedRoute.snapshot.queryParams.returnUrl = null;
         testObject.ngOnInit();
         testObject.onSubmit({ value: new LoginModel(), valid: true });
@@ -55,8 +55,8 @@ describe('LoginComponent', () => {
     });
 
     it('should do nothing on submit if !valid', () => {
-        spyOn(router, 'navigateByUrl');
-        spyOn(authService, 'login').and.returnValue(throwError(false));
+        jest.spyOn(router, 'navigateByUrl');
+        jest.spyOn(authService, 'login').mockReturnValue(throwError(false));
 
         testObject.onSubmit({ value: new LoginModel(), valid: true });
         expect(router.navigateByUrl).not.toHaveBeenCalled();

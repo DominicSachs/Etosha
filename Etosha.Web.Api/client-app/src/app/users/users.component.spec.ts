@@ -21,7 +21,7 @@ describe('UsersComponent', () => {
       { id: 2, firstName: 'B', lastName: 'B', userName: 'b@b.com', email: 'b@b.com', roleId: 1 }
     ];
 
-    spyOn(userService, 'getUsers').and.returnValue(of(users));
+    jest.spyOn(userService, 'getUsers').mockReturnValue(of(users));
     component.ngOnInit();
 
     expect(component.dataSource.data.length).toBe(2);

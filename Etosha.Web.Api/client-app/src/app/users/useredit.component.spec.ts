@@ -44,8 +44,8 @@ describe('UsereditComponent', () => {
 
     it('should unsubscribe', () => {
         const testSubscription = of({}).subscribe();
-        spyOn(activatedRoute.params, 'subscribe').and.returnValue(testSubscription);
-        spyOn(testSubscription, 'unsubscribe');
+        jest.spyOn(activatedRoute.params, 'subscribe').mockReturnValue(testSubscription);
+        jest.spyOn(testSubscription, 'unsubscribe');
         component.ngOnInit();
         component.ngOnDestroy();
         expect(testSubscription.unsubscribe).toHaveBeenCalled();
@@ -53,7 +53,7 @@ describe('UsereditComponent', () => {
 
     it('should init an existing user', () => {
         const user: User = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
-        spyOn(userService, 'getUser').and.returnValue(of(user));
+        jest.spyOn(userService, 'getUser').mockReturnValue(of(user));
         component.ngOnInit();
         expect(component.userForm.value.id).toBe(user.id);
         expect(component.userForm.value.firstName).toBe(user.firstName);
@@ -64,15 +64,15 @@ describe('UsereditComponent', () => {
     });
 
     it('should do nothing on submit if !valid', () => {
-        spyOn(userService, 'saveUser');
+        jest.spyOn(userService, 'saveUser');
         component.onSubmit({ value: new User(), valid: false });
         expect(userService.saveUser).not.toHaveBeenCalled();
     });
 
     it('should submit, call saveUser and navigate by url', () => {
         const user: User = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
-        spyOn(userService, 'saveUser').and.returnValue(of(user));
-        spyOn(router, 'navigateByUrl');
+        jest.spyOn(userService, 'saveUser').mockReturnValue(of(user));
+        jest.spyOn(router, 'navigateByUrl');
         component.onSubmit({ value: user, valid: true });
         expect(userService.saveUser).toHaveBeenCalledWith(user);
         expect(router.navigateByUrl).toHaveBeenCalledWith('/users');

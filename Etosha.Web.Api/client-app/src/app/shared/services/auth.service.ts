@@ -7,12 +7,13 @@ import { environment } from '../../../environments/environment';
 import { LoginModel } from '../models/login.model';
 import { TokenModel } from '../models/token.model';
 import { BaseService } from './base.service';
+import { WindowRef } from './window/window.ref';
 
 @Injectable()
 export class AuthService extends BaseService {
     isLoginSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private windowRef: WindowRef) {
         super();
     }
 
@@ -21,20 +22,20 @@ export class AuthService extends BaseService {
     }
 
     isAuthenticated(): boolean {
-        return !!localStorage.getItem('auth_token');
+        return !!this.windowRef.nativeWindow.localStorage.getItem('auth_token');
         // Check whether the token is expired and return
         // return !this.jwtHelper.isTokenExpired(token);
     }
 
     getToken(): string {
-        return localStorage.getItem('auth_token');
+        return this.windowRef.nativeWindow.localStorage.getItem('auth_token');
     }
 
     login(model: LoginModel): Observable<boolean> {
         return this.httpClient.post<TokenModel>(`${environment.apiEndpoint}/auth/login`, model).pipe(
             map((result: TokenModel) => {
                 if (result.token) {
-                    localStorage.setItem('auth_token', result.token);
+                    this.windowRef.nativeWindow.localStorage.setItem('auth_token', result.token);
                     this.isLoginSubject.next(true);
                     return true;
                 } else {
@@ -45,7 +46,7 @@ export class AuthService extends BaseService {
     }
 
     logout() {
-        localStorage.removeItem('auth_token');
+        this.windowRef.nativeWindow.localStorage.removeItem('auth_token');
         this.isLoginSubject.next(false);
     }
 }

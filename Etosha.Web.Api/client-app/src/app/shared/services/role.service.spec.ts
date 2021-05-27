@@ -22,7 +22,7 @@ describe('RoleService', () => {
       { id: 2, name: 'Users' }
     ];
 
-    spyOn(httpClient, 'get').and.returnValue(of(roles));
+    jest.spyOn(httpClient, 'get').mockReturnValue(of(roles));
 
     service.getRoles().subscribe(result => {
       expect(httpClient.get).toHaveBeenCalledWith(environment.apiEndpoint + '/roles');

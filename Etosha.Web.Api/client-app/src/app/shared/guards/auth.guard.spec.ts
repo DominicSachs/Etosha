@@ -27,7 +27,7 @@ describe('AuthGuard', () => {
 
   it('should navigate to login and return false', () => {
     state = <any>{ url: 'test' };
-    spyOn(authService, 'isAuthenticated').and.returnValue(false);
+    jest.spyOn(authService, 'isAuthenticated').mockReturnValue(false);
 
     const result = testObject.canActivate(null, state);
     expect(result).toBeFalsy();

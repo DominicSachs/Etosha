@@ -29,8 +29,8 @@ describe('UserDeleteComponent', () => {
 
     it('should unsubscribe', () => {
         const testSubscription = of({}).subscribe();
-        spyOn(activatedRoute.params, 'subscribe').and.returnValue(testSubscription);
-        spyOn(testSubscription, 'unsubscribe');
+        jest.spyOn(activatedRoute.params, 'subscribe').mockReturnValue(testSubscription);
+        jest.spyOn(testSubscription, 'unsubscribe');
         component.ngOnInit();
         component.ngOnDestroy();
 
@@ -39,7 +39,7 @@ describe('UserDeleteComponent', () => {
 
     it('should init an existing user', () => {
         const user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
-        spyOn(userService, 'getUser').and.returnValue(of(user));
+        jest.spyOn(userService, 'getUser').mockReturnValue(of(user));
         component.ngOnInit();
 
         expect(component.user).toBe(user);
@@ -48,8 +48,8 @@ describe('UserDeleteComponent', () => {
 
     it('should do nothing on submit if !valid', () => {
         component.user = { id: 1, firstName: 'Sam', lastName: 'Sample', email: 'sam@sample.com', userName: 'sam@sample.com', roleId: 1 };
-        spyOn(userService, 'deleteUser').and.returnValue(of({}));
-        spyOn(router, 'navigateByUrl');
+        jest.spyOn(userService, 'deleteUser').mockReturnValue(of({}));
+        jest.spyOn(router, 'navigateByUrl');
         component.delete();
 
         expect(userService.deleteUser).toHaveBeenCalledWith(component.user);

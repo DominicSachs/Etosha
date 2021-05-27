@@ -16,7 +16,7 @@ describe('LanguageChoiceComponent', () => {
   });
 
   it('should set default language on init', () => {
-    spyOn(translateService, 'setDefaultLang');
+    jest.spyOn(translateService, 'setDefaultLang');
 
     component.ngOnInit();
 
@@ -25,7 +25,7 @@ describe('LanguageChoiceComponent', () => {
   });
 
   it('should change the language with onLanguageChange', () => {
-    spyOn(translateService, 'use');
+    jest.spyOn(translateService, 'use');
 
     component.onLanguageChange({ value: 'de-DE' });
 
